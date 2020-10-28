@@ -864,14 +864,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 583640173}
     m_Modifications:
-    - target: {fileID: 519141076, guid: fff0318974c98e14eb4858cfff253b24, type: 3}
-      propertyPath: _moveSpeed
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 519141076, guid: fff0318974c98e14eb4858cfff253b24, type: 3}
-      propertyPath: _rotateSpeed
-      value: 120
-      objectReference: {fileID: 0}
     - target: {fileID: 2848263240690161905, guid: fff0318974c98e14eb4858cfff253b24, type: 3}
       propertyPath: m_Name
       value: Farmer
@@ -919,26 +911,6 @@ PrefabInstance:
     - target: {fileID: 4042198500370022485, guid: fff0318974c98e14eb4858cfff253b24, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4042198500370022485, guid: fff0318974c98e14eb4858cfff253b24, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4042198500370022485, guid: fff0318974c98e14eb4858cfff253b24, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5005992512218567777, guid: fff0318974c98e14eb4858cfff253b24, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5005992512218567777, guid: fff0318974c98e14eb4858cfff253b24, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0.8
-      objectReference: {fileID: 0}
-    - target: {fileID: 5005992512218567782, guid: fff0318974c98e14eb4858cfff253b24, type: 3}
-      propertyPath: m_Center.y
-      value: 0.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fff0318974c98e14eb4858cfff253b24, type: 3}

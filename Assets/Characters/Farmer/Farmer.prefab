@@ -385,6 +385,7 @@ GameObject:
   - component: {fileID: 4042198500370022485}
   - component: {fileID: 519141076}
   - component: {fileID: 5059023207090113534}
+  - component: {fileID: 7675026545934229287}
   m_Layer: 0
   m_Name: Farmer
   m_TagString: Untagged
@@ -420,10 +421,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 368ffd7bf5c3413439f2cf1ad73ff18a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _moveSpeed: 5
-  _rotateSpeed: 60
-  _jumpForce: 5
-  _jumpHeight: 2
 --- !u!143 &5059023207090113534
 CharacterController:
   m_ObjectHideFlags: 0
@@ -442,6 +439,22 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0.93, z: 0}
+--- !u!114 &7675026545934229287
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2848263240690161905}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 153176cdf121aee46863a96b3fa3d82c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _forwardAcceleration: 6
+  _maxFowardVelocity: 3
+  _rotateSpeed: 120
+  _jumpForce: 5
 --- !u!1 &3139965401649570088
 GameObject:
   m_ObjectHideFlags: 0

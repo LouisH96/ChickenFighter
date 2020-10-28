@@ -1,41 +1,71 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    //stats
+    [SerializeField] private float _forwardAcceleration = 6.0f;
+    [SerializeField] private float _maxFowardVelocity = 3.0f;
+    [SerializeField] private float _rotateSpeed = 60.0f;
     [SerializeField] private float _jumpForce = 5.0f;
+    private float _gravity = -9.81f;
 
-    private PositionMovementBehavior _movementBehavior;
-    private Rigidbody _rigidBody = null;
+    //components
+    private CharacterController _characterController = null;
+
+    //members
+    private Vector3 _currentAcceleration = Vector3.zero;
+    private Vector3 _currentVelocity = Vector3.zero;
 
     void Awake()
     {
-        _movementBehavior = GetComponent<PositionMovementBehavior>();
-        _rigidBody = GetComponent<Rigidbody>();
+        _characterController = GetComponent<CharacterController>();
     }
 
     void Update()
     {
-        if (_movementBehavior == null)
+        if (_characterController == null)
             return;
 
+        //get input
         float horizontalMovement = Input.GetAxis("MovementHorizontal");
         float verticalMovement = Input.GetAxis("MovementVertical");
+        float jumpInput = Input.GetAxis("Jump");
 
-        Vector3 movement = horizontalMovement * Vector3.right + verticalMovement * Vector3.forward;
-        movement = transform.rotation * movement;
-
-        _movementBehavior.SetDestinationByDirection(movement);
-
-        
+        //set currentAcceleration
+        _currentAcceleration.x = horizontalMovement * _rotateSpeed;
+        _currentAcceleration.z = verticalMovement * _forwardAcceleration;
+        _currentAcceleration.y = jumpInput;
     }
 
     void FixedUpdate()
     {
-        if (Input.GetAxis("Jump") > 0.0f && Mathf.Approximately(_rigidBody.velocity.y, Mathf.Epsilon))
+        //rotate
+        transform.Rotate(0, _currentAcceleration.x * Time.fixedDeltaTime, 0);
+
+        //forward movement
+        if (_currentAcceleration.z != 0.0f)
         {
-            _rigidBody.AddForce(transform.up * _jumpForce);
+            _currentVelocity.z += _currentAcceleration.z * Time.fixedDeltaTime;
+            _currentVelocity.z = Mathf.Clamp(_currentVelocity.z, -_maxFowardVelocity, _maxFowardVelocity);
         }
+        else
+            _currentVelocity.z = Mathf.MoveTowards(_currentVelocity.z, 0.0f, _forwardAcceleration * Time.fixedDeltaTime);
+
+        //jump
+        if (_currentAcceleration.y > 0.0f && _characterController.isGrounded)
+            _currentVelocity.y += _jumpForce;
+
+        //gravity
+        _currentVelocity.y += _gravity * Time.fixedDeltaTime;
+
+        //do movement
+        _characterController.Move(transform.TransformDirection(_currentVelocity) * Time.fixedDeltaTime);
+
+        //ground collision
+        if (_characterController.isGrounded)
+            _currentVelocity.y = 0.0f;
     }
 }

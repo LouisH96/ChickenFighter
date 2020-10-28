@@ -15,7 +15,7 @@ public class PlayerMovement : MonoBehaviour
     //components
     private CharacterController _characterController = null;
 
-    //members
+    //variables
     private Vector3 _currentAcceleration = Vector3.zero;
     private Vector3 _currentVelocity = Vector3.zero;
 
@@ -42,9 +42,17 @@ public class PlayerMovement : MonoBehaviour
 
     void FixedUpdate()
     {
-        //rotate
-        transform.Rotate(0, _currentAcceleration.x * Time.fixedDeltaTime, 0);
+        HandleRotation();
+        HandleMovement();
+    }
 
+    private void HandleRotation()
+    {
+        transform.Rotate(0, _currentAcceleration.x * Time.fixedDeltaTime, 0);
+    }
+
+    private void HandleMovement()
+    {
         //forward movement
         if (_currentAcceleration.z != 0.0f)
         {

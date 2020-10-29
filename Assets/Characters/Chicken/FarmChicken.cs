@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using UnityEngine;
 
-public class Chicken : MonoBehaviour
+public class FarmChicken : MonoBehaviour
 {
     //---Components---
     [SerializeField] private Renderer _highlightRenderer = null;

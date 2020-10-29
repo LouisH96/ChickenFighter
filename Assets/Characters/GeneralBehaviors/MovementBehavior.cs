@@ -47,16 +47,6 @@ public class MovementBehavior : MonoBehaviour
 
     private void HandleMovement()
     {
-
-
-        ////forward movement
-        //if (_acceleration != 0.0f)
-        //{
-        //    _currentVelocity.z += _acceleration * Time.fixedDeltaTime;
-        //    _currentVelocity.z = Mathf.Clamp(_currentVelocity.z, -_maxFowardVelocity, _maxFowardVelocity);
-        //}
-        //else
-
         //move
         _currentVelocity.z = Mathf.MoveTowards(_currentVelocity.z, _desiredVelocity, _forwardAcceleration * Time.fixedDeltaTime);
 

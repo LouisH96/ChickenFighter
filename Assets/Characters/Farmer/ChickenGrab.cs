@@ -12,11 +12,11 @@ public class ChickenGrab : MonoBehaviour
 
     void Update()
     {
-        HandlePickupNewChicken();
+        HandlePickupChicken();
         HandleDropChickens();
     }
 
-    private void HandlePickupNewChicken()
+    private void HandlePickupChicken()
     {
         if (Input.GetAxis("Action1") > 0.0f
             && _chickenToPickup)
@@ -24,11 +24,9 @@ public class ChickenGrab : MonoBehaviour
             Transform location = GetEmptyHoverLocation();
             Assert.IsNotNull(location); //if there is no location available, _chickenToPickup should be null
 
-            //disable chicken stuff
-            _chickenToPickup.EnableColliders(false);
-            _chickenToPickup.EnableMovementBehavior(false);
-            _chickenToPickup.EnableRigidBody(false);
+            //change chickenMode
             _chickenToPickup.EnableHighlight(false);
+            _chickenToPickup.Pickup();
 
             //move chicken
             _chickenToPickup.transform.parent = location;
@@ -39,20 +37,15 @@ public class ChickenGrab : MonoBehaviour
 
     private void HandleDropChickens()
     {
-        if(Input.GetAxis("Action2") > 0.0f
+        if (Input.GetAxis("Action2") > 0.0f
             && HasChickensPickedUp())
         {
-            foreach(Chicken chicken in GetPickedUpChickens())
+            foreach (Chicken chicken in GetPickedUpChickens())
             {
+                chicken.Throw(transform.forward * _chickenEjectionForce);
+
                 //unparent chicken
                 chicken.transform.parent = null;
-
-                //enable chicken stuff
-                chicken.EnableColliders(true);
-                chicken.EnableMovementBehavior(true);
-
-                //add force
-                chicken.GetComponent<Rigidbody>().AddForce(transform.forward * _chickenEjectionForce);
             }
         }
     }

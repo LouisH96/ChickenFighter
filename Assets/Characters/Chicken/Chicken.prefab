@@ -127,7 +127,6 @@ GameObject:
   - component: {fileID: 6929597890356740165}
   - component: {fileID: 5809183251691234726}
   - component: {fileID: 3399426455366176081}
-  - component: {fileID: 755945523023705550}
   m_Layer: 0
   m_Name: V_Neck
   m_TagString: Untagged
@@ -198,20 +197,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!136 &755945523023705550
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1070080752460394518}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1179456381874572912
 GameObject:
   m_ObjectHideFlags: 0
@@ -223,7 +208,6 @@ GameObject:
   - component: {fileID: 8315185822041580819}
   - component: {fileID: 7976355594147751566}
   - component: {fileID: 2852527820866621612}
-  - component: {fileID: 8203059717912609784}
   m_Layer: 0
   m_Name: V_Tail
   m_TagString: Untagged
@@ -294,19 +278,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &8203059717912609784
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1179456381874572912}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1447407288164327124
 GameObject:
   m_ObjectHideFlags: 0
@@ -476,7 +447,6 @@ GameObject:
   - component: {fileID: 1223149486417572738}
   - component: {fileID: 1520488956425263833}
   - component: {fileID: 4574671064658610582}
-  - component: {fileID: 2781841913652082531}
   m_Layer: 0
   m_Name: V_Body
   m_TagString: Chicken
@@ -548,19 +518,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &2781841913652082531
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2204448288267392385}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &3137275710183319115
 GameObject:
   m_ObjectHideFlags: 0
@@ -890,7 +847,6 @@ GameObject:
   - component: {fileID: 5725660484881333619}
   - component: {fileID: 4464676183931253135}
   - component: {fileID: 9099163804407611355}
-  - component: {fileID: 6526251082596496924}
   m_Layer: 0
   m_Name: V_Head
   m_TagString: Untagged
@@ -965,19 +921,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!135 &6526251082596496924
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6934018960737411903}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &6989601309137268860
 GameObject:
   m_ObjectHideFlags: 0
@@ -1070,7 +1013,6 @@ GameObject:
   - component: {fileID: 3993027531049117823}
   - component: {fileID: 9086674368680745050}
   - component: {fileID: 682860384793889510}
-  - component: {fileID: 5094853618455187675}
   m_Layer: 0
   m_Name: V_Beak
   m_TagString: Untagged
@@ -1141,20 +1083,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!136 &5094853618455187675
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7180546141783409523}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &8590251545747718134
 GameObject:
   m_ObjectHideFlags: 0
@@ -1314,6 +1242,8 @@ GameObject:
   - component: {fileID: 3870700837883658464}
   - component: {fileID: 5483913626745422275}
   - component: {fileID: 8918203423770793627}
+  - component: {fileID: 6015538650418269484}
+  - component: {fileID: 7836374183730322130}
   m_Layer: 0
   m_Name: Chicken
   m_TagString: Chicken
@@ -1379,8 +1309,8 @@ CharacterController:
   serializedVersion: 2
   m_Height: 0.37
   m_Radius: 0.15
-  m_SlopeLimit: 45
-  m_StepOffset: 0.3
+  m_SlopeLimit: 40
+  m_StepOffset: 0.1
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0.265, z: 0}
@@ -1426,3 +1356,32 @@ MonoBehaviour:
   _offset: 1
   _radius: 1
   _maxChange: 0.17453292
+--- !u!54 &6015538650418269484
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9182765650703088592}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 80
+  m_CollisionDetection: 0
+--- !u!65 &7836374183730322130
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9182765650703088592}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.25, y: 0.45, z: 0.37}
+  m_Center: {x: 0, y: 0.225, z: 0}

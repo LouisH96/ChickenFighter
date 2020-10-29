@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 2586456158921437198}
   - component: {fileID: 2586456158921437197}
   m_Layer: 0
-  m_Name: Cube
+  m_Name: ChickenGrab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -108,7 +108,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32cb3ea146aedc64293667fcacb16b14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _grabbedChickenLocations:
+  _chickenEjectionForce: 250
+  _hoverLocations:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}

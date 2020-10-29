@@ -8,7 +8,7 @@ public class Chicken : MonoBehaviour
 
     public void EnableMovementBehavior(bool enable)
     {
-        MonoBehaviour movement = GetComponent<PositionMovementBehavior>();
+        MovementBehavior movement = GetComponent<MovementBehavior>();
 
         if (movement)
             movement.enabled = enable;

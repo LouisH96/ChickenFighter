@@ -50,7 +50,6 @@ public class ChickenGrab : MonoBehaviour
                 //enable chicken stuff
                 chicken.EnableColliders(true);
                 chicken.EnableMovementBehavior(true);
-                chicken.EnableRigidBody(true);
 
                 //add force
                 chicken.GetComponent<Rigidbody>().AddForce(transform.forward * _chickenEjectionForce);

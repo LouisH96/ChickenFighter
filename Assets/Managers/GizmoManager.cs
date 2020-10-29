@@ -16,6 +16,7 @@ public class GizmoManager : MonoBehaviour
 
     //Settings
     public bool DrawWanderCircle = false;
+    public bool DrawMouseInWorld = false;
 
     //Set instance
     private void Awake()

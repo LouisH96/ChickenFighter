@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(CharacterController))]
 public class MovementBehavior : MonoBehaviour
 {
     //---Components---
@@ -15,11 +16,11 @@ public class MovementBehavior : MonoBehaviour
     private float _gravity = -9.81f;
 
     //public
-    private float _acceleration = 0.0f;
-    public float ForwardMovementRatio { set { _acceleration = value * _forwardAcceleration; } }
+    private float _desiredVelocity = 0.0f;
+    public float DesiredVelocityRatio { set { _desiredVelocity = value * _maxFowardVelocity; } }
 
     private float _rotation = 0.0f;
-    public float RotationRatio { set { _rotation = value * _rotateSpeed; } }
+    public float RotationRatio { set { _rotation = value * _rotateSpeed; } get { return _rotation / _rotateSpeed; } }
 
     private bool _shouldJump = false;
     public bool ShouldJump { set { _shouldJump = value; } }
@@ -46,17 +47,18 @@ public class MovementBehavior : MonoBehaviour
 
     private void HandleMovement()
     {
-        if (!_characterController)
-            return;
 
-        //forward movement
-        if (_acceleration != 0.0f)
-        {
-            _currentVelocity.z += _acceleration * Time.fixedDeltaTime;
-            _currentVelocity.z = Mathf.Clamp(_currentVelocity.z, -_maxFowardVelocity, _maxFowardVelocity);
-        }
-        else
-            _currentVelocity.z = Mathf.MoveTowards(_currentVelocity.z, 0.0f, _forwardAcceleration * Time.fixedDeltaTime);
+
+        ////forward movement
+        //if (_acceleration != 0.0f)
+        //{
+        //    _currentVelocity.z += _acceleration * Time.fixedDeltaTime;
+        //    _currentVelocity.z = Mathf.Clamp(_currentVelocity.z, -_maxFowardVelocity, _maxFowardVelocity);
+        //}
+        //else
+
+        //move
+        _currentVelocity.z = Mathf.MoveTowards(_currentVelocity.z, _desiredVelocity, _forwardAcceleration * Time.fixedDeltaTime);
 
         //jump
         if (_shouldJump && _characterController.isGrounded)

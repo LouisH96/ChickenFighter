@@ -19,7 +19,7 @@ public class PlayerMovement : MonoBehaviour
             return;
 
         //set inputs
-        _movementBehavior.ForwardMovementRatio = Input.GetAxis("MovementVertical");
+        _movementBehavior.DesiredVelocityRatio = Input.GetAxis("MovementVertical");
         _movementBehavior.RotationRatio = Input.GetAxis("MovementHorizontal");
         _movementBehavior.ShouldJump = Input.GetAxis("Jump") > 0.0f;
     }

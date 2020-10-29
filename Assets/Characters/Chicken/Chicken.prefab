@@ -1308,10 +1308,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2079164485539465916}
-  - component: {fileID: 594601101478052690}
   - component: {fileID: 8851051709382537436}
   - component: {fileID: 4936163509272940879}
   - component: {fileID: 6265518525291751168}
+  - component: {fileID: 3870700837883658464}
+  - component: {fileID: 5483913626745422275}
+  - component: {fileID: 8918203423770793627}
   m_Layer: 0
   m_Name: Chicken
   m_TagString: Chicken
@@ -1335,22 +1337,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &594601101478052690
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9182765650703088592}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1b029df43e749ec4fa1749521aa7b932, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _maxRatioChange: 0.5
-  _offset: 1
-  _radius: 1
-  _maxChange: 0.17453292
 --- !u!114 &8851051709382537436
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1398,3 +1384,45 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0.265, z: 0}
+--- !u!114 &3870700837883658464
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9182765650703088592}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1c3d3bfb6295b1419fb608f2cf76807, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _slowDownAngle: 35
+--- !u!114 &5483913626745422275
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9182765650703088592}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69d8a05d60a8999459d8f65252fc0ca1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _stopRadius: 0.25
+  _slowDownRadius: 1
+--- !u!114 &8918203423770793627
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9182765650703088592}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b029df43e749ec4fa1749521aa7b932, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _offset: 1
+  _radius: 1
+  _maxChange: 0.17453292

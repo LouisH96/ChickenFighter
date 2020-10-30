@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 [RequireComponent(typeof(FaceBehavior))]
@@ -17,14 +18,26 @@ public class SeekBehavior : MonoBehaviour
     private Vector3 _target = Vector3.zero;
     public Vector3 Target { set { _target = value; } get { return _target; } }
 
+    [SerializeField] private Transform _lockTarget = null;
+    public Transform LockTarget { set { _lockTarget = value; } get { return _lockTarget; } }
+
+    private bool _targetReached = false;
+    public bool TargetReached { get { return _targetReached; } }
+
+
+
     void Awake()
     {
         _movementBehavior = GetComponent<MovementBehavior>();
         _faceBehavior = GetComponent<FaceBehavior>();
+        _target = transform.position;
     }
 
     void Update()
     {
+        if (_lockTarget)
+            _target = _lockTarget.position;
+
         HandleRotation();
         HandleMovement();
     }
@@ -42,9 +55,11 @@ public class SeekBehavior : MonoBehaviour
         if (distanceToTargetSqr < _stopRadius * _stopRadius)
         {
             _movementBehavior.DesiredVelocityRatio = 0.0f;
+            _targetReached = true;
             return;
         }
 
+        _targetReached = false;
         float moveRatio = 1.0f;
         
         //slow if within slow-radius
@@ -57,5 +72,14 @@ public class SeekBehavior : MonoBehaviour
 
         //set move-ratio
         _movementBehavior.DesiredVelocityRatio = moveRatio;
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Handles.color = Color.red;
+        Handles.DrawWireDisc(_target, Vector3.up, _stopRadius);
+
+        Handles.color = new Color(1.0f, 0.5f, 0.0f);
+        Handles.DrawWireDisc(_target, Vector3.up, _slowDownRadius);
     }
 }

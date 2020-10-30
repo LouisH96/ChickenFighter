@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 6605551066294978309}
   - component: {fileID: 506490505267371537}
   - component: {fileID: 2058201370734401993}
+  - component: {fileID: 4221477660009688545}
   m_Layer: 0
   m_Name: FightChicken
   m_TagString: Untagged
@@ -111,6 +112,25 @@ MonoBehaviour:
   _stopRadius: 0.5
   _slowDownRadius: 1
   _lockTarget: {fileID: 0}
+--- !u!95 &4221477660009688545
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7691117774830869647}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 61fd3fbc8ecb63d4db5c392730ed8dc7, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1001 &8672820609948170728
 PrefabInstance:
   m_ObjectHideFlags: 0

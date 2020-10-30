@@ -870,7 +870,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 7691117774830869647, guid: 8f2ce959d8e956c44b25ed711eb426a8, type: 3}
       propertyPath: m_Name
-      value: FightChicken (1)
+      value: MouseChicken
       objectReference: {fileID: 0}
     - target: {fileID: 7708162046468556004, guid: 8f2ce959d8e956c44b25ed711eb426a8, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1150,16 +1150,16 @@ PrefabInstance:
     m_TransformParent: {fileID: 1395125479}
     m_Modifications:
     - target: {fileID: 2058201370734401993, guid: 8f2ce959d8e956c44b25ed711eb426a8, type: 3}
-      propertyPath: _lockTarget
-      value: 
-      objectReference: {fileID: 1084400623}
-    - target: {fileID: 2058201370734401993, guid: 8f2ce959d8e956c44b25ed711eb426a8, type: 3}
-      propertyPath: m_Enabled
-      value: 0
+      propertyPath: _stopRadius
+      value: 0.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 6605551066294978309, guid: 8f2ce959d8e956c44b25ed711eb426a8, type: 3}
+      propertyPath: _maxFowardVelocity
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7691117774830869647, guid: 8f2ce959d8e956c44b25ed711eb426a8, type: 3}
       propertyPath: m_Name
-      value: FightChicken
+      value: AttackChicken
       objectReference: {fileID: 0}
     - target: {fileID: 7708162046468556004, guid: 8f2ce959d8e956c44b25ed711eb426a8, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1205,8 +1205,7 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 2058201370734401993, guid: 8f2ce959d8e956c44b25ed711eb426a8, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8f2ce959d8e956c44b25ed711eb426a8, type: 3}
 --- !u!4 &988707983 stripped
 Transform:
@@ -1227,10 +1226,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 988707984}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fca40b5430b37bc4e80d7f349a0f3404, type: 3}
+  m_Script: {fileID: 11500000, guid: d5d3bbdf9f8921c4a848f07987a85f4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _lockTarget: {fileID: 1084400623}
+  _target: {fileID: 1084400625}
 --- !u!1 &1016005801
 GameObject:
   m_ObjectHideFlags: 0
@@ -1408,6 +1407,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7865b7039924eb546be7c7f1508c9a47, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1084400625
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1084400622}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5d3bbdf9f8921c4a848f07987a85f4e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _target: {fileID: 0}
 --- !u!1 &1164412210
 GameObject:
   m_ObjectHideFlags: 0

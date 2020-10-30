@@ -7,6 +7,7 @@ public class FightChicken : MonoBehaviour
 {
     //---Components---
     private SeekBehavior _seekBehavior = null;
+    private Animator _animator = null;
 
     //---Variables---
    [SerializeField] private FightChicken _target = null;
@@ -19,6 +20,7 @@ public class FightChicken : MonoBehaviour
     void Awake()
     {
         _seekBehavior = GetComponent<SeekBehavior>();
+        _animator = GetComponent<Animator>();
     }
 
     private void Start()
@@ -29,9 +31,14 @@ public class FightChicken : MonoBehaviour
 
     void Update()
     {
-        if(_seekBehavior &&_target && _seekBehavior.TargetReached)
+        if (_seekBehavior && _target && _seekBehavior.TargetReached)
         {
             //attack
+            _animator.SetBool("Attack", true);
+        }
+        else
+        {
+            _animator.SetBool("Attack", false);
         }
     }
 }

@@ -74,6 +74,7 @@ public class SeekBehavior : MonoBehaviour
         _movementBehavior.DesiredVelocityRatio = moveRatio;
     }
 
+#if UNITY_EDITOR
     private void OnDrawGizmosSelected()
     {
         Handles.color = Color.red;
@@ -82,4 +83,5 @@ public class SeekBehavior : MonoBehaviour
         Handles.color = new Color(1.0f, 0.5f, 0.0f);
         Handles.DrawWireDisc(_target, Vector3.up, _slowDownRadius);
     }
+#endif
 }

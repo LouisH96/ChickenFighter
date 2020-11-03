@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
@@ -29,12 +30,17 @@ public class WallAvoidance : MonoBehaviour
         _raycastTimer += Time.deltaTime;
         if (_raycastTimer >= _raycastInterval)
         {
-            DoRaycast();
+            FindEscapeDestination();
+            DoCornerCheck();
             _raycastTimer = 0.0f;
         }
     }
 
-    void DoRaycast()
+    private void DoCornerCheck()
+    {
+    }
+
+    void FindEscapeDestination()
     {
         Ray ray = new Ray(transform.position, transform.forward);
         if (Physics.Raycast(ray, out RaycastHit hit, _wallDetectionRadius, LayerMask.GetMask("StaticLevel", "DynamicLevel")))

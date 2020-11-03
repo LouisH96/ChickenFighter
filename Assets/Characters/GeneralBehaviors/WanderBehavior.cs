@@ -40,6 +40,8 @@ public class WanderBehavior : MonoBehaviour
         _currentAngle = MyUtils.ClampRadians(_currentAngle);
     }
 
+
+#if UNITY_EDITOR
     private void OnDrawGizmosSelected()
     {
         Vector3 target = transform.position;
@@ -51,4 +53,5 @@ public class WanderBehavior : MonoBehaviour
         target += MyUtils.DegreesToVectorXZ(_currentAngle) * _radius;
         Handles.DrawSolidDisc(target, Vector3.up, 0.05f);
     }
+#endif
 }

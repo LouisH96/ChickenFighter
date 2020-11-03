@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class WallAvoidance : MonoBehaviour
 {
@@ -15,10 +16,9 @@ public class WallAvoidance : MonoBehaviour
     private RaycastHit? _wallHit = null;
     private Vector3 _destination = Vector3.zero;
 
-    private Vector3 _wa = Vector3.zero;
-    private Vector3 _ha = Vector3.zero;
-
-    private Vector3 _toWall = Vector3.zero;
+    private Vector3 _debugToHitPos = Vector3.zero;
+    private Vector3 _debugToHitAvoidance = Vector3.zero;
+    private Vector3 _debugToGoal = Vector3.zero;
 
     void Start()
     {
@@ -32,75 +32,95 @@ public class WallAvoidance : MonoBehaviour
             DoRaycast();
             _raycastTimer = 0.0f;
         }
-
-        if (_wallHit != null)
-        {
-            Vector3 wallHit = ((RaycastHit)_wallHit).point;
-            Vector3 wallAvoidancePoint = wallHit + ((RaycastHit)_wallHit).normal * _wallAvoidanceDist;
-
-            Debug.DrawLine(transform.position, wallHit);
-            Debug.DrawLine(wallHit, wallAvoidancePoint);
-        }
-        else
-            Debug.DrawLine(transform.position, transform.position + transform.forward * _wallDetectionRadius);
-
     }
 
     void DoRaycast()
     {
         Ray ray = new Ray(transform.position, transform.forward);
         if (Physics.Raycast(ray, out RaycastHit hit, _wallDetectionRadius, LayerMask.GetMask("StaticLevel", "DynamicLevel")))
+        {
             _wallHit = hit;
+        }
         else
         {
             _wallHit = null;
             return;
         }
 
-        Vector3 uw = -hit.normal; //unitvector to wall
-        uw.y = 0.0f;
-        Vector3 uh = transform.forward; //unitvector to hit
-        uh.y = 0.0f;
-        float coshw = Vector3.Dot(uh, uw); //cos between towall and tohit
+        //if collide with wall
+        //calculate point that is _wallAvoidanceDistance in front of the hitPoint, along the hit.normal
+        //move it sideways parallel along the wall so it touches the _walldetectionradius of the player
+        //(will be (abit)wrong when hit & player y is not equal (cuz hit.distance))
+        //(doesn't work perfectly on round walls/surfaces, destination is not on _walldetectionradius)
+        //(doesn't work either when player is (almost) perpendicular to wall)
+        Vector2 wallNormal = new Vector2(hit.normal.x, hit.normal.z);
+        Vector2 toWallUnit = -wallNormal;
+       
+        Vector2 toHitUnit = new Vector2(transform.forward.x, transform.forward.z);
+        float cosHitAndWall = Vector2.Dot(toHitUnit, toWallUnit); //cos between the vector to the hit and the vector perpendicular to the wall
 
-        Vector3 w = uw * hit.distance * coshw; //to wall
-        Vector3 wa = w + hit.normal * _wallAvoidanceDist;  //towall - avoidance
+        float toWallDistance = hit.distance * cosHitAndWall;
+        Vector2 toWall = toWallUnit * toWallDistance; //vector from player to wall (perpendicular). (=projection toHit on toWallUnit)
+        Vector2 toWallAvoidance = toWall - toWallUnit * _wallAvoidanceDist; //toWall - _wallAvoidanceDist
 
-        _toWall = transform.position + w;
+        float goalSin = (toWallDistance - _wallAvoidanceDist) / _wallDetectionRadius; //unit-sin of the goal point
+        float goalCos = Mathf.Cos(Mathf.Asin(goalSin)); //unit-sin of the goal point
 
-        float waToUnitLength = wa.x / (-hit.normal.x * _wallDetectionRadius);
+        Vector2 playerPos = new Vector2(transform.position.x, transform.position.z);
+        Vector2 hitPos = new Vector2(hit.point.x, hit.point.z);
+        Vector2 toHit = hitPos - playerPos; //playerpos to hitpos
+        
+        Vector2 wallToHit = toHit - toWall; //vector from toWall to hitPoint (= from toWallAvoidance to toHitAvoidance, =a vector (not unit) in the direction to the goal) 
+        float wallToHitLength = Mathf.Sin(Mathf.Acos(cosHitAndWall)) * hit.distance;
 
-        float sinG = waToUnitLength; // sin of vector to goal
-        float cosG = Mathf.Cos(Mathf.Asin(sinG));
+        //fix if player is perpendicular to wall
+        if (wallToHitLength == 0.0f || float.IsNaN(wallToHitLength))
+        {
+            wallToHitLength = 1.0f;
+            wallToHit = Vector2.Perpendicular(toWallUnit);
+        }
 
-        Vector3 ha = hit.point - transform.position + hit.normal * _wallAvoidanceDist; //to hitposition - wallavoidance
+        float wallAvoidanceToGoalLength = goalCos * _wallDetectionRadius;
+        Vector2 wallAvoidanceToGoal = wallToHit * (wallAvoidanceToGoalLength / wallToHitLength);
 
-        _wa = wa + transform.position;
-        _ha = ha + transform.position;
+        Vector2 toGoal2D = toWallAvoidance + wallAvoidanceToGoal;
+        Vector3 toGoal3D = new Vector3(toGoal2D.x, 0.0f, toGoal2D.y);
 
-        Vector3 waToHa = (ha - wa);
-        float waToHaLength = Mathf.Sin(Mathf.Acos(coshw)) * hit.distance;
+        _destination = transform.position + toGoal3D;
 
-        Vector3 waToG = waToHa * ((cosG * _wallDetectionRadius) / waToHaLength);
-        _destination = transform.position + wa + waToG;
+        //set debug points
+        Vector2 toHitAvoidance = toWallAvoidance + wallToHit;
+        _debugToHitPos = new Vector3(toHit.x, transform.position.y, toHit.y);
+        _debugToHitAvoidance = new Vector3(toHitAvoidance.x, transform.position.y, toHitAvoidance.y);
+        _debugToGoal = new Vector3(toGoal2D.x, transform.position.y, toGoal2D.y);
+     }
 
-        Debug.DrawLine(transform.position + wa, transform.position + wa + waToHa, Color.white, 0.31f);
-    }
-
+#if UNITY_EDITOR
     private void OnDrawGizmosSelected()
     {
-#if UNITY_EDITOR
         Handles.color = Color.white;
         Handles.DrawWireDisc(transform.position, Vector3.up, _wallDetectionRadius);
 
         if (_wallHit != null)
         {
-            Gizmos.DrawSphere(_toWall, 0.1f);
-            Debug.DrawLine(_toWall, _toWall + ((RaycastHit)_wallHit).normal * Vector3.Distance(transform.position, _toWall));
-            Gizmos.DrawSphere(_destination, 0.1f);
-            Gizmos.DrawSphere(_ha, 0.1f);
-            Gizmos.DrawSphere(_wa, 0.1f);
+            //draw 'path' from player to goal
+            Vector3 start = transform.position;
+            Vector3 end = transform.position + _debugToHitPos;
+            Debug.DrawLine(start, end);
+
+            start = end;
+            end = transform.position + _debugToHitAvoidance;
+            Debug.DrawLine(start, end);
+
+            start = end;
+            end = transform.position + _debugToGoal;
+            Debug.DrawLine(start, end);
         }
-#endif
+        else
+        {
+            //draw detectionRay
+            Debug.DrawLine(transform.position, transform.position + transform.forward * _wallDetectionRadius);
+        }
     }
+#endif
 }

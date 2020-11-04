@@ -8,6 +8,7 @@ using UnityEngine.Assertions.Must;
 public class SeekBehavior2 : MovementBehavior2
 {
     //---Stats---
+    [SerializeField] protected float _recoverLostVelocityRatio = 0.0f;
 
     //---Variables---
     [SerializeField] protected Vector3 _target = Vector3.zero;
@@ -27,11 +28,23 @@ public class SeekBehavior2 : MovementBehavior2
     {
         MovementOutput output = new MovementOutput { IsValid = true, ShouldJump = false };
 
-        Vector3 v = _target - agent.transform.position;
-         v = agent.transform.InverseTransformDirection(v);
-        v = v.normalized * agent.MaxAngularVelocity; ;
+        Vector3 vel = _target - agent.transform.position;
+        vel = agent.transform.InverseTransformDirection(vel);
 
-        output.DesiredVelocity = new Vector2(v.x, v.z);
+        //recover lost velocity of going backwards
+        if (vel.z < 0.0f
+            && !agent.CanMoveBackwards)
+            vel.z = -vel.z * _recoverLostVelocityRatio;
+
+       if(!agent.CanMoveSideways)
+        {
+            float recover = vel.x * _recoverLostVelocityRatio;
+            vel.x -= recover;
+            vel.z += Mathf.Abs(recover);
+        }
+
+        vel = vel.normalized * agent.MaxAngularVelocity;
+        output.DesiredVelocity = new Vector2(vel.x, vel.z);
 
         return output;
     }

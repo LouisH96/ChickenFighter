@@ -1485,6 +1485,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c97e13b30c1d5e4b9b3ab954d97f783, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _recoverLostVelocityRatio: 0.5
   _target: {x: 0, y: 0, z: 0}
   _lockedTarget: {fileID: 0}
 --- !u!114 &1141474709

@@ -29,6 +29,7 @@ public class AutoRotationBehavior : FaceBehavior2
     {
         if (_direction != null)
             _target = agent.transform.position + (Vector3)_direction;
+
         return base.HandleRotation(agent);
     }
 }

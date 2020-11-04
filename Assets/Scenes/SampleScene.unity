@@ -1468,6 +1468,39 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _target: {fileID: 988707985}
+--- !u!1 &1141474705 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7960752787841304762, guid: 68a4ef0310da23047ab50f5f2a63e3fd, type: 3}
+  m_PrefabInstance: {fileID: 2207949036864637521}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1141474706
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1141474705}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c97e13b30c1d5e4b9b3ab954d97f783, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _target: {x: 0, y: 0, z: 0}
+  _lockedTarget: {fileID: 0}
+--- !u!114 &1141474709
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1141474705}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b29965cec22881469256367db04a94a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _slowDownAngle: 35
+  _target: {x: 0, y: 0, z: 0}
 --- !u!1 &1164412210
 GameObject:
   m_ObjectHideFlags: 0
@@ -2237,6 +2270,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1395125479}
     m_Modifications:
+    - target: {fileID: 4483098271759467072, guid: 68a4ef0310da23047ab50f5f2a63e3fd, type: 3}
+      propertyPath: _canMoveSideways
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4483098271759467072, guid: 68a4ef0310da23047ab50f5f2a63e3fd, type: 3}
+      propertyPath: _canMoveBackwards
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7514050923324001022, guid: 68a4ef0310da23047ab50f5f2a63e3fd, type: 3}
       propertyPath: m_LocalPosition.x
       value: -4

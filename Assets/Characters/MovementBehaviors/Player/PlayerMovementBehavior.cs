@@ -10,7 +10,7 @@ public class PlayerMovementBehavior : MovementBehavior2
         return new MovementOutput
         {
             IsValid = true,
-            DesiredForwardVelocity = Input.GetAxis("MovementVertical") * agent.MaxVelocity,
+            DesiredVelocity = new Vector2(0.0f, Input.GetAxis("MovementVertical") * agent.MaxVelocity),
             ShouldJump = Input.GetAxis("Jump") > 0.0f
         };
     }

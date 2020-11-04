@@ -5,9 +5,11 @@ using UnityEngine;
 
 public class FaceBehavior2 : RotationBehavior
 {
+    //---Stats---
+    [SerializeField] protected float _slowDownAngle = 35.0f;
+
     //---Variables---
     [SerializeField] protected Vector3 _target = Vector3.zero;
-    [SerializeField] protected float _slowDownAngle = 35.0f;
 
     //---Public---
     public Vector3 Target { get { return _target; } set { _target = value; } }

@@ -17,6 +17,8 @@ public class MovementAgent : MonoBehaviour
     [SerializeField] private float _acceleration = 6.0f;
     [SerializeField] private float _deacceleration = 6.0f;
     [SerializeField] private float _maxVelocity = 3.0f;
+    [SerializeField] private bool _canMoveSideways = false;
+    [SerializeField] private bool _canMoveBackwards = false;
     //jump
     [SerializeField] private float _jumpForce = 5.0f;
     [SerializeField] private float _gravity = -9.81f;
@@ -26,7 +28,7 @@ public class MovementAgent : MonoBehaviour
     //---Variables---
     private Vector3 _velocity = Vector3.zero;
     private float _angularVelocity = 0.0f;
-    private MovementOutput _movementOutput = new MovementOutput { IsValid = false, DesiredForwardVelocity = 0.0f, ShouldJump = false };
+    private MovementOutput _movementOutput = new MovementOutput { IsValid = false, DesiredVelocity = Vector2.zero, ShouldJump = false };
     private RotationOutput _rotationOutput = new RotationOutput { IsValid = false, DesiredAngularVelocity = 0.0f };
 
     //---Public---
@@ -38,6 +40,8 @@ public class MovementAgent : MonoBehaviour
     public float MaxAngularVelocity { get { return _maxAngularVelocity; } set { _maxAngularVelocity = value; } }
     public Vector3 Velocity { get { return _velocity; } set { _velocity = value; } }
     public float AngularVelocity { get { return _angularVelocity; } set { _angularVelocity = value; } }
+    public bool CanMoveSideways { get { return _canMoveSideways; } set { _canMoveSideways = value; } }
+    public bool CanMoveBackwards { get { return _canMoveBackwards; } set { _canMoveBackwards = value; } }
 
     //---Functions---
     void Awake()
@@ -71,8 +75,21 @@ public class MovementAgent : MonoBehaviour
         if (!output.IsValid || !_movementBehavior)
             return;
 
+        if (output.DesiredVelocity.sqrMagnitude > _maxVelocity * _maxVelocity)
+            output.DesiredVelocity = output.DesiredVelocity.normalized * _maxVelocity;
+
         //move
-        _velocity.z = Mathf.MoveTowards(_velocity.z, output.DesiredForwardVelocity, _acceleration * Time.fixedDeltaTime);
+        float acc = output.DesiredVelocity.y > _velocity.z ? _acceleration : _deacceleration;
+        _velocity.z = Mathf.MoveTowards(_velocity.z, output.DesiredVelocity.y, acc * Time.fixedDeltaTime);
+
+        if (_velocity.z < 0.0f && !_canMoveBackwards)
+            _velocity.z = 0.0f;
+
+        if (_canMoveSideways)
+        {
+            acc = output.DesiredVelocity.x > _velocity.x? _acceleration : _deacceleration;
+            _velocity.x = Mathf.MoveTowards(_velocity.x, output.DesiredVelocity.x, acc * Time.fixedDeltaTime);
+        }
 
         //jump
         if (output.ShouldJump && _characterController.isGrounded)

@@ -10,7 +10,7 @@ namespace Assets.Characters.MovementBehaviors
     public struct MovementOutput
     {
         public bool IsValid;
-        public float DesiredForwardVelocity;
+        public Vector2 DesiredVelocity;
         public bool ShouldJump;
     }
 }

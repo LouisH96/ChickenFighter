@@ -43,8 +43,11 @@ public class SeekBehavior2 : MovementBehavior2
             vel.z += Mathf.Abs(recover);
         }
 
-        vel = vel.normalized * agent.MaxAngularVelocity;
+        vel = vel.normalized * agent.MaxVelocity;
         output.DesiredVelocity = new Vector2(vel.x, vel.z);
+
+        if (agent.AutoRotation)
+            agent.AutoRotation.Target = _target;
 
         return output;
     }

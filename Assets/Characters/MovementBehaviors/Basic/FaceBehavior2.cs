@@ -14,12 +14,15 @@ public class FaceBehavior2 : RotationBehavior
     //---Public---
     public Vector3 Target { get { return _target; } set { _target = value; } }
 
-
     public override RotationOutput HandleRotation(MovementAgent agent)
     {
         RotationOutput output = new RotationOutput { IsValid = true, DesiredAngularVelocity = 0.0f };
 
-        float angle = Vector3.SignedAngle(agent.transform.forward, _target - agent.transform.position, Vector3.up);
+        Vector2 agentForward = new Vector2(agent.transform.forward.x, agent.transform.forward.z);
+        Vector2 targetPos = new Vector2(_target.x, _target.z);
+        Vector2 toTarget = new Vector2(_target.x - agent.transform.position.x, _target.z - agent.transform.position.z);
+
+        float angle = Vector2.SignedAngle(toTarget, agentForward);
 
         //no rotation needed if already facing target
         if (angle == 0.0f)

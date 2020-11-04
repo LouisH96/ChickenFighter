@@ -43,6 +43,17 @@ public class MovementAgent : MonoBehaviour
     public bool CanMoveSideways { get { return _canMoveSideways; } set { _canMoveSideways = value; } }
     public bool CanMoveBackwards { get { return _canMoveBackwards; } set { _canMoveBackwards = value; } }
 
+    public AutoRotationBehavior AutoRotation
+    {
+        get
+        {
+            if (_rotationBehavior != null && _rotationBehavior.GetType() == typeof(AutoRotationBehavior))
+                return (AutoRotationBehavior)_rotationBehavior;
+            else
+                return null;
+        }
+    }
+
     //---Functions---
     void Awake()
     {
@@ -115,6 +126,9 @@ public class MovementAgent : MonoBehaviour
         float angVel = output.DesiredAngularVelocity;
         if (angVel > MaxAngularVelocity)
             angVel = MaxAngularVelocity;
+        else
+        if (angVel < -MaxAngularVelocity)
+            angVel = -MaxAngularVelocity;
 
         transform.Rotate(0.0f, angVel * Time.fixedDeltaTime, 0.0f);
     }

@@ -1482,15 +1482,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1141474705}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: da5afcd594440bc41abc7ad720060ac6, type: 3}
+  m_Script: {fileID: 11500000, guid: d41993e2a5621e246a8100b5b1f4a814, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _recoverLostVelocityRatio: 0
   _target: {x: 0, y: 0, z: 0}
   _lockedTarget: {fileID: 0}
-  _slowdownRadius: 1
-  _slowestVelocityRatio: 0.4
-  _stopRadius: 0.25
 --- !u!114 &1141474709
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1500,7 +1497,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1141474705}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8b29965cec22881469256367db04a94a, type: 3}
+  m_Script: {fileID: 11500000, guid: dce9596ba3b486046be4218e272c7841, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _slowDownAngle: 35

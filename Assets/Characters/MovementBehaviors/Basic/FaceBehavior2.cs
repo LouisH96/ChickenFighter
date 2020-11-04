@@ -12,7 +12,7 @@ public class FaceBehavior2 : RotationBehavior
     [SerializeField] protected Vector3 _target = Vector3.zero;
 
     //---Public---
-    public Vector3 Target { get { return _target; } set { _target = value; } }
+    public virtual Vector3 Target { get { return _target; } set { _target = value; } }
 
     public override RotationOutput HandleRotation(MovementAgent agent)
     {

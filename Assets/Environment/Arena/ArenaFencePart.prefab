@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3583856671600830190}
   - component: {fileID: 3583856671600830191}
   - component: {fileID: 3583856671600830184}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Horizontal_Top
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -91,12 +91,12 @@ GameObject:
   m_Component:
   - component: {fileID: 3583856671823760920}
   - component: {fileID: 2896148808253911583}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: ArenaFencePart
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &3583856671823760920
 Transform:
@@ -140,7 +140,7 @@ GameObject:
   - component: {fileID: 3583856671981522844}
   - component: {fileID: 3583856671981522845}
   - component: {fileID: 3583856671981522846}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Horizontal_Middle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -221,7 +221,7 @@ GameObject:
   - component: {fileID: 3583856672770067772}
   - component: {fileID: 3583856672770067773}
   - component: {fileID: 3583856672770067774}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Vertical
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -302,7 +302,7 @@ GameObject:
   - component: {fileID: 3583856672895564310}
   - component: {fileID: 3583856672895564311}
   - component: {fileID: 3583856672895564304}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Horizontal_Bottom
   m_TagString: Untagged
   m_Icon: {fileID: 0}

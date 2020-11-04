@@ -21,6 +21,10 @@ public class WallAvoidance : MonoBehaviour
     private Vector3 _debugToHitAvoidance = Vector3.zero;
     private Vector3 _debugToGoal = Vector3.zero;
 
+    //---Public---
+    public bool HasWallHit { get { return _wallHit != null; } }
+    public Vector3 EscapePoint { get { return _destination; } }
+
     void Start()
     {
     }
@@ -38,6 +42,26 @@ public class WallAvoidance : MonoBehaviour
 
     private void DoCornerCheck()
     {
+        if (_wallHit == null)
+            return;
+
+        int checks = 8;
+
+        Vector3 rayVector = _destination - transform.position;
+        Ray ray = new Ray(transform.position, rayVector);
+        Quaternion rotation = Quaternion.Euler(0.0f, -360.0f / 8, 0.0f);
+
+        for (int i = 0; i < checks; i++)
+        {
+            if (!Physics.Raycast(ray, out RaycastHit hit, _wallDetectionRadius, LayerMask.GetMask("StaticLevel", "DynamicLevel")))
+            {
+                _destination = rayVector + transform.position;
+                return;
+            }
+
+            rayVector = rotation * rayVector;
+            ray.direction = rayVector;
+        }
     }
 
     void FindEscapeDestination()
@@ -61,7 +85,7 @@ public class WallAvoidance : MonoBehaviour
         //(doesn't work either when player is (almost) perpendicular to wall)
         Vector2 wallNormal = new Vector2(hit.normal.x, hit.normal.z);
         Vector2 toWallUnit = -wallNormal;
-       
+
         Vector2 toHitUnit = new Vector2(transform.forward.x, transform.forward.z);
         float cosHitAndWall = Vector2.Dot(toHitUnit, toWallUnit); //cos between the vector to the hit and the vector perpendicular to the wall
 
@@ -75,7 +99,7 @@ public class WallAvoidance : MonoBehaviour
         Vector2 playerPos = new Vector2(transform.position.x, transform.position.z);
         Vector2 hitPos = new Vector2(hit.point.x, hit.point.z);
         Vector2 toHit = hitPos - playerPos; //playerpos to hitpos
-        
+
         Vector2 wallToHit = toHit - toWall; //vector from toWall to hitPoint (= from toWallAvoidance to toHitAvoidance, =a vector (not unit) in the direction to the goal) 
         float wallToHitLength = Mathf.Sin(Mathf.Acos(cosHitAndWall)) * hit.distance;
 
@@ -99,11 +123,11 @@ public class WallAvoidance : MonoBehaviour
         _debugToHitPos = new Vector3(toHit.x, transform.position.y, toHit.y);
         _debugToHitAvoidance = new Vector3(toHitAvoidance.x, transform.position.y, toHitAvoidance.y);
         _debugToGoal = new Vector3(toGoal2D.x, transform.position.y, toGoal2D.y);
-     }
+    }
 
-#if UNITY_EDITOR
     private void OnDrawGizmosSelected()
     {
+#if UNITY_EDITOR
         Handles.color = Color.white;
         Handles.DrawWireDisc(transform.position, Vector3.up, _wallDetectionRadius);
 
@@ -127,6 +151,6 @@ public class WallAvoidance : MonoBehaviour
             //draw detectionRay
             Debug.DrawLine(transform.position, transform.position + transform.forward * _wallDetectionRadius);
         }
-    }
 #endif
+    }
 }

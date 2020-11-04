@@ -24,7 +24,10 @@ public class SeekBehavior : MonoBehaviour
     private bool _targetReached = false;
     public bool TargetReached { get { return _targetReached; } }
 
+    [SerializeField] private bool _useSlowDown = true;
+    public bool UseSlowDown { get { return _useSlowDown; } set { _useSlowDown = value; } }
 
+    
 
     void Awake()
     {
@@ -50,7 +53,7 @@ public class SeekBehavior : MonoBehaviour
     void HandleMovement()
     {
         float distanceToTargetSqr = Vector3.SqrMagnitude(_target - transform.position);
-        
+
         //stop if within stop-radius
         if (distanceToTargetSqr < _stopRadius * _stopRadius)
         {
@@ -61,11 +64,14 @@ public class SeekBehavior : MonoBehaviour
 
         _targetReached = false;
         float moveRatio = 1.0f;
-        
-        //slow if within slow-radius
-        float sqrSlowdownRadius = _slowDownRadius * _slowDownRadius;
-        if (sqrSlowdownRadius > 0.0f && distanceToTargetSqr < sqrSlowdownRadius)
-            moveRatio *= distanceToTargetSqr / sqrSlowdownRadius;
+
+        if (_useSlowDown)
+        {
+            //slow if within slow-radius
+            float sqrSlowdownRadius = _slowDownRadius * _slowDownRadius;
+            if (sqrSlowdownRadius > 0.0f && distanceToTargetSqr < sqrSlowdownRadius)
+                moveRatio *= distanceToTargetSqr / sqrSlowdownRadius;
+        }
 
         //slow based on rotation (0° -> full speed, 180° -> no speed)
         moveRatio *= 1.0f - Mathf.Abs(_faceBehavior.AngleRatio);
@@ -80,8 +86,11 @@ public class SeekBehavior : MonoBehaviour
         Handles.color = Color.red;
         Handles.DrawWireDisc(_target, Vector3.up, _stopRadius);
 
-        Handles.color = new Color(1.0f, 0.5f, 0.0f);
-        Handles.DrawWireDisc(_target, Vector3.up, _slowDownRadius);
+        if (_useSlowDown)
+        {
+            Handles.color = new Color(1.0f, 0.5f, 0.0f);
+            Handles.DrawWireDisc(_target, Vector3.up, _slowDownRadius);
+        }
     }
 #endif
 }

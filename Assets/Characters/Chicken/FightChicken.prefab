@@ -9,12 +9,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7708162046468556004}
-  - component: {fileID: 4736983727123670073}
   - component: {fileID: 4362372626238562069}
-  - component: {fileID: 6605551066294978309}
-  - component: {fileID: 506490505267371537}
-  - component: {fileID: 2058201370734401993}
   - component: {fileID: 4221477660009688545}
+  - component: {fileID: 1729599964681279194}
+  - component: {fileID: 3994008412168181909}
   m_Layer: 0
   m_Name: FightChicken
   m_TagString: Untagged
@@ -37,19 +35,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &4736983727123670073
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7691117774830869647}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 0
-  serializedVersion: 2
-  m_Size: {x: 0.25, y: 0.45, z: 0.37}
-  m_Center: {x: 0, y: 0.225, z: 0}
 --- !u!143 &4362372626238562069
 CharacterController:
   m_ObjectHideFlags: 0
@@ -68,50 +53,6 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0.265, z: 0}
---- !u!114 &6605551066294978309
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7691117774830869647}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 153176cdf121aee46863a96b3fa3d82c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _forwardAcceleration: 6
-  _maxFowardVelocity: 3
-  _rotateSpeed: 100
-  _jumpForce: 5
---- !u!114 &506490505267371537
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7691117774830869647}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b1c3d3bfb6295b1419fb608f2cf76807, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _slowDownAngle: 35
---- !u!114 &2058201370734401993
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7691117774830869647}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 69d8a05d60a8999459d8f65252fc0ca1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _stopRadius: 0.5
-  _slowDownRadius: 1
-  _lockTarget: {fileID: 0}
 --- !u!95 &4221477660009688545
 Animator:
   serializedVersion: 3
@@ -131,6 +72,43 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &1729599964681279194
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7691117774830869647}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5d3bbdf9f8921c4a848f07987a85f4e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _isAttacking: 0
+  _attackRange: 1
+  _enemy: {fileID: 0}
+--- !u!114 &3994008412168181909
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7691117774830869647}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85656e6ce5c8ae74caca9552eba75b76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _movementBehavior: {fileID: 0}
+  _rotationBehavior: {fileID: 0}
+  _acceleration: 4
+  _deacceleration: 4
+  _maxVelocity: 2
+  _canMoveSideways: 0
+  _canMoveBackwards: 0
+  _jumpForce: 5
+  _gravity: -9.81
+  _maxAngularVelocity: 120
 --- !u!1001 &8672820609948170728
 PrefabInstance:
   m_ObjectHideFlags: 0

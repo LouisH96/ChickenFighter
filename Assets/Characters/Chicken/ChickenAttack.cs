@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class ChickenAttack : MonoBehaviour
 {
-    //---Compoenents---
+    //---Components---
     private Animator _animator;
     private AttackZone _attackZone = null;
 
     [SerializeField] private bool _tryAttacking = true;
+    
 
     void Awake()
     {
@@ -19,11 +20,7 @@ public class ChickenAttack : MonoBehaviour
 
     void Update()
     {
-        if (_tryAttacking && _animator && _attackZone && _attackZone.Enemy)
-        {
-            _animator.SetBool("Attack", true);
-        }
-        else
-            _animator.SetBool("Attack", false);
+        bool canAttack = _tryAttacking && _animator && _attackZone && _attackZone.Enemy;
+        _animator.SetBool("Attack", canAttack);
     }
 }

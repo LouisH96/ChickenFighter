@@ -13,8 +13,10 @@ public class FightChicken : MonoBehaviour
     //[SerializeField] private float _attackRange = 1.0f;
 
     //---Variables--
-    //[SerializeField] private FightChicken _enemy = null;
+    [SerializeField] private FightChicken _enemy = null;
+    [SerializeField] private int _health = 50;
 
+    public FightChicken Enemy { get { return _enemy; } set { _enemy = value; } }
 
     void Awake()
     {
@@ -57,5 +59,13 @@ public class FightChicken : MonoBehaviour
         if (trans.childCount > 0)
             foreach (Transform t in trans)
                 AddTagRecursively(t, tag);
+    }
+
+    public void TakeDamage(int damage)
+    {
+        _health -= damage;
+
+        if (_health <= 0)
+            Destroy(this.gameObject);
     }
 }

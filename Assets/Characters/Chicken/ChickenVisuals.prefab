@@ -177,6 +177,7 @@ GameObject:
   - component: {fileID: 6340281645835409795}
   - component: {fileID: 2201551871572158886}
   - component: {fileID: 7632792215070767898}
+  - component: {fileID: 1430020982130210542}
   m_Layer: 0
   m_Name: V_Beak
   m_TagString: Untagged
@@ -247,6 +248,18 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &1430020982130210542
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 230050102217421455}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1cfe366dfad6e544bb153a6925d5541, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1702806743826927114
 GameObject:
   m_ObjectHideFlags: 0
@@ -638,7 +651,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2513728916624365683}
   m_Layer: 0
-  m_Name: Skeleton
+  m_Name: ChickenVisuals
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -4,7 +4,9 @@ using System.Collections.Generic;
 using System.Net.Http.Headers;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Assertions;
 using UnityEngine.Assertions.Must;
+using UnityEngine.Rendering;
 
 public class SeekBehavior : MovementBehavior
 {
@@ -12,18 +14,29 @@ public class SeekBehavior : MovementBehavior
     [SerializeField] protected float _recoverLostVelocityRatio = 0.0f;
 
     //---Variables---
-    [SerializeField] protected Vector3 _target = Vector3.zero;
+    [SerializeField] private Vector3 _target = Vector3.zero;
     [SerializeField] protected Transform _lockedTarget = null;
 
 
     //---Public---
-    public Vector3 Target { get { return _target; } set { _target = value; } }
+    public Vector3 Target
+    {
+        get { return _target; }
+        set
+        {
+            _target.x = value.x;
+            _target.z = value.z;
+        }
+    }
     public Transform LockedTarget { get { return _lockedTarget; } set { _lockedTarget = value; } }
 
     void Update()
     {
         if (_lockedTarget)
-            _target = _lockedTarget.position;
+        {
+            _target.x = _lockedTarget.position.x;
+            _target.z = _lockedTarget.position.z;
+        }
     }
 
     public override MovementOutput HandleMovement(MovementAgent agent)
@@ -58,7 +71,7 @@ public class SeekBehavior : MovementBehavior
     {
 #if UNITY_EDITOR
 
-        Debug.DrawLine(transform.position, _target);
+        Debug.DrawLine(transform.position, _target, Color.green);
 
 #endif
     }

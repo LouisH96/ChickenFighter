@@ -7,7 +7,7 @@ public class FleeBehavior : SeekBehavior
 {
     public override MovementOutput HandleMovement(MovementAgent agent)
     {
-        _target = agent.transform.position + agent.transform.position - _target;
+        Target = agent.transform.position + agent.transform.position - Target;
         return base.HandleMovement(agent);
     }
 }

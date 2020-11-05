@@ -178,6 +178,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Chicken_FenceBig (5)
       objectReference: {fileID: 0}
+    - target: {fileID: 9182765650703088592, guid: 5fd0fec97e1575e4ba888799f3aaab2c, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5fd0fec97e1575e4ba888799f3aaab2c, type: 3}
 --- !u!4 &50478878 stripped
@@ -306,7 +310,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3646685099449687513, guid: 5cece3273cb365d46bbdf5a484404bc6, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -0.05
       objectReference: {fileID: 0}
     - target: {fileID: 3646685099449687513, guid: 5cece3273cb365d46bbdf5a484404bc6, type: 3}
       propertyPath: m_LocalPosition.z
@@ -499,6 +503,10 @@ PrefabInstance:
     - target: {fileID: 9182765650703088592, guid: 5fd0fec97e1575e4ba888799f3aaab2c, type: 3}
       propertyPath: m_Name
       value: Chicken_FenceBig
+      objectReference: {fileID: 0}
+    - target: {fileID: 9182765650703088592, guid: 5fd0fec97e1575e4ba888799f3aaab2c, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5fd0fec97e1575e4ba888799f3aaab2c, type: 3}
@@ -761,6 +769,10 @@ PrefabInstance:
     - target: {fileID: 9182765650703088592, guid: 5fd0fec97e1575e4ba888799f3aaab2c, type: 3}
       propertyPath: m_Name
       value: Chicken_FenceBig (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 9182765650703088592, guid: 5fd0fec97e1575e4ba888799f3aaab2c, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5fd0fec97e1575e4ba888799f3aaab2c, type: 3}
@@ -1265,6 +1277,9 @@ MonoBehaviour:
   _recoverLostVelocityRatio: 0
   _target: {x: 0, y: 0, z: 0}
   _lockedTarget: {fileID: 0}
+  _slowdownRadius: 1
+  _slowestVelocityRatio: 0.2
+  _stopRadius: 0.25
   _raycastInterval: 0.3
   _wallDetectionRadius: 1.25
   _wallAvoidanceDist: 1
@@ -1331,6 +1346,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Farmer
       objectReference: {fileID: 0}
+    - target: {fileID: 2848263240690161905, guid: fff0318974c98e14eb4858cfff253b24, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4042198500370022485, guid: fff0318974c98e14eb4858cfff253b24, type: 3}
       propertyPath: m_LocalPosition.x
       value: 2.0000002
@@ -1374,6 +1393,10 @@ PrefabInstance:
     - target: {fileID: 4042198500370022485, guid: fff0318974c98e14eb4858cfff253b24, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8173298302668029679, guid: fff0318974c98e14eb4858cfff253b24, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fff0318974c98e14eb4858cfff253b24, type: 3}
@@ -1431,6 +1454,10 @@ PrefabInstance:
     - target: {fileID: 9182765650703088592, guid: 5fd0fec97e1575e4ba888799f3aaab2c, type: 3}
       propertyPath: m_Name
       value: Chicken_FenceBig (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 9182765650703088592, guid: 5fd0fec97e1575e4ba888799f3aaab2c, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5fd0fec97e1575e4ba888799f3aaab2c, type: 3}
@@ -1992,9 +2019,17 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1016005802}
     m_Modifications:
+    - target: {fileID: 1022177493, guid: 5fd0fec97e1575e4ba888799f3aaab2c, type: 3}
+      propertyPath: _recoverLostVelocityRatio
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1022177493, guid: 5fd0fec97e1575e4ba888799f3aaab2c, type: 3}
+      propertyPath: _stopRadius
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 2079164485539465916, guid: 5fd0fec97e1575e4ba888799f3aaab2c, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.29199696
+      value: 0.9
       objectReference: {fileID: 0}
     - target: {fileID: 2079164485539465916, guid: 5fd0fec97e1575e4ba888799f3aaab2c, type: 3}
       propertyPath: m_LocalPosition.y
@@ -2002,7 +2037,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2079164485539465916, guid: 5fd0fec97e1575e4ba888799f3aaab2c, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.95300055
+      value: -0.44
       objectReference: {fileID: 0}
     - target: {fileID: 2079164485539465916, guid: 5fd0fec97e1575e4ba888799f3aaab2c, type: 3}
       propertyPath: m_LocalRotation.x
@@ -2010,7 +2045,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2079164485539465916, guid: 5fd0fec97e1575e4ba888799f3aaab2c, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: 0.90598744
       objectReference: {fileID: 0}
     - target: {fileID: 2079164485539465916, guid: 5fd0fec97e1575e4ba888799f3aaab2c, type: 3}
       propertyPath: m_LocalRotation.z
@@ -2018,7 +2053,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2079164485539465916, guid: 5fd0fec97e1575e4ba888799f3aaab2c, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0.42330462
       objectReference: {fileID: 0}
     - target: {fileID: 2079164485539465916, guid: 5fd0fec97e1575e4ba888799f3aaab2c, type: 3}
       propertyPath: m_RootOrder
@@ -2030,7 +2065,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2079164485539465916, guid: 5fd0fec97e1575e4ba888799f3aaab2c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
+      value: 129.913
       objectReference: {fileID: 0}
     - target: {fileID: 2079164485539465916, guid: 5fd0fec97e1575e4ba888799f3aaab2c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
@@ -2228,6 +2263,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1016005802}
     m_Modifications:
+    - target: {fileID: 1022177493, guid: 5fd0fec97e1575e4ba888799f3aaab2c, type: 3}
+      propertyPath: _raycastInterval
+      value: 0.2
+      objectReference: {fileID: 0}
     - target: {fileID: 2079164485539465916, guid: 5fd0fec97e1575e4ba888799f3aaab2c, type: 3}
       propertyPath: m_LocalPosition.x
       value: -2.58
@@ -2276,6 +2315,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Chicken_FenceBig (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 9182765650703088592, guid: 5fd0fec97e1575e4ba888799f3aaab2c, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5fd0fec97e1575e4ba888799f3aaab2c, type: 3}
 --- !u!4 &1995153119 stripped
@@ -2290,6 +2333,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1395125479}
     m_Modifications:
+    - target: {fileID: 2803767931450471740, guid: 68a4ef0310da23047ab50f5f2a63e3fd, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4483098271759467072, guid: 68a4ef0310da23047ab50f5f2a63e3fd, type: 3}
       propertyPath: _canMoveSideways
       value: 0

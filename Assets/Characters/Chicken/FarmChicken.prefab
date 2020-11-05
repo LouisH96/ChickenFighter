@@ -95,7 +95,9 @@ GameObject:
   - component: {fileID: 6015538650418269484}
   - component: {fileID: 7836374183730322130}
   - component: {fileID: 8599592606678240760}
-  - component: {fileID: 1625245946961101276}
+  - component: {fileID: 1022177493}
+  - component: {fileID: 1022177495}
+  - component: {fileID: 1022177497}
   m_Layer: 0
   m_Name: FarmChicken
   m_TagString: Chicken
@@ -191,7 +193,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85656e6ce5c8ae74caca9552eba75b76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _movementBehavior: {fileID: 0}
+  _movementBehavior: {fileID: 1022177497}
   _rotationBehavior: {fileID: 0}
   _acceleration: 4
   _deacceleration: 6
@@ -201,7 +203,28 @@ MonoBehaviour:
   _jumpForce: 5
   _gravity: -9.81
   _maxAngularVelocity: 120
---- !u!114 &1625245946961101276
+--- !u!114 &1022177493
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9182765650703088592}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75cf8844b6078cc498933f1b52d92319, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _recoverLostVelocityRatio: 0.5
+  _target: {x: 0, y: 0, z: 0}
+  _lockedTarget: {fileID: 0}
+  _slowdownRadius: 0
+  _slowestVelocityRatio: 1
+  _stopRadius: 0.25
+  _raycastInterval: 0.2
+  _wallDetectionRadius: 1.5
+  _wallAvoidanceDist: 2
+--- !u!114 &1022177495
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -219,6 +242,21 @@ MonoBehaviour:
   _offset: 1
   _radius: 1
   _maxChange: 0.17453292
+--- !u!114 &1022177497
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9182765650703088592}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd069a63796cee14cadb8b750d979644, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _behaviors:
+  - {fileID: 1022177493}
+  - {fileID: 1022177495}
 --- !u!1001 &6960069075166523900
 PrefabInstance:
   m_ObjectHideFlags: 0

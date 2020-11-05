@@ -7,6 +7,6 @@ public class MouseSeekBehavior : SeekBehavior
 {
     void Update()
     {
-        _target = MySessionUtils.Instance.MouseInWorld;
+        Target = MySessionUtils.Instance.MouseInWorld;
     }
 }

@@ -6,6 +6,6 @@ public class MouseFleeBehavior : FleeBehavior
 {
     void Update()
     {
-        _target = MySessionUtils.Instance.GetWorldMousePosition();
+        Target = MySessionUtils.Instance.GetWorldMousePosition();
     }
 }

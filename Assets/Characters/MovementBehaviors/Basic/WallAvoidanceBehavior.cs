@@ -4,9 +4,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Assertions;
 using UnityEngine.UIElements;
 
-public class WallAvoidanceBehavior : SeekBehavior
+public class WallAvoidanceBehavior : ArriveBehavior
 {
     //---Stats---
     [SerializeField] private float _raycastInterval = 0.3f;
@@ -21,6 +22,10 @@ public class WallAvoidanceBehavior : SeekBehavior
     private Vector3 _debugToHitAvoidance = Vector3.zero;
     private Vector3 _debugToGoal = Vector3.zero;
 
+    private List<Vector3> _debugCornerChecks = new List<Vector3>();
+
+    private bool _isAvoidingWall = false;
+
     //---Public---
     public bool HasWallHit { get { return _wallHit != null; } }
 
@@ -30,13 +35,24 @@ public class WallAvoidanceBehavior : SeekBehavior
 
     public override MovementOutput HandleMovement(MovementAgent agent)
     {
-        if (!HasWallHit)
-            return new MovementOutput { IsValid = false };
-
-        FindEscapeDestination();
-        DoCornerCheck();
-
-        return base.HandleMovement(agent);
+        if (_isAvoidingWall)
+        {
+            MovementOutput output = base.HandleMovement(agent);
+            _isAvoidingWall = output.IsValid;
+            return output;
+        }
+        else
+        {
+            if (!HasWallHit)
+                return new MovementOutput { IsValid = false };
+            else
+            {
+                FindEscapeDestination();
+                DoCornerCheck();
+                _isAvoidingWall = true;
+                return this.HandleMovement(agent);
+            }
+        }
     }
 
     void Update()
@@ -45,13 +61,11 @@ public class WallAvoidanceBehavior : SeekBehavior
         if (_raycastTimer >= _raycastInterval)
         {
             CastWallDetectionRay();
-            FindEscapeDestination();
-            DoCornerCheck();
             _raycastTimer = 0.0f;
         }
     }
 
-    
+
     private void CastWallDetectionRay()
     {
         Ray ray = new Ray(transform.position, transform.forward);
@@ -66,17 +80,23 @@ public class WallAvoidanceBehavior : SeekBehavior
         if (_wallHit == null)
             return;
 
+        _debugCornerChecks.Clear();
         int checks = 8;
 
-        Vector3 rayVector = _target - transform.position;
-        Ray ray = new Ray(transform.position, rayVector);
-        Quaternion rotation = Quaternion.Euler(0.0f, -360.0f / 8, 0.0f);
+        float randomSign = UnityEngine.Random.value < 0.5 ? -1.0f : 1.0f;
 
+        Vector3 rayVector = Target - transform.position;
+        rayVector = rayVector.normalized * _wallDetectionRadius;
+        Ray ray = new Ray(transform.position, rayVector);
+        Quaternion rotation = Quaternion.Euler(0.0f, randomSign * 360.0f / checks, 0.0f);
+        
         for (int i = 0; i < checks; i++)
         {
+            _debugCornerChecks.Add(transform.position);
+            _debugCornerChecks.Add(transform.position + rayVector);
             if (!Physics.Raycast(ray, out RaycastHit hit, _wallDetectionRadius, LayerMask.GetMask("StaticLevel", "DynamicLevel")))
             {
-                _target = rayVector + transform.position;
+                Target = rayVector + transform.position;
                 return;
             }
 
@@ -87,16 +107,21 @@ public class WallAvoidanceBehavior : SeekBehavior
 
     void FindEscapeDestination()
     {
-        Ray ray = new Ray(transform.position, transform.forward);
-        if (Physics.Raycast(ray, out RaycastHit hit, _wallDetectionRadius, LayerMask.GetMask("StaticLevel", "DynamicLevel")))
-        {
-            _wallHit = hit;
-        }
-        else
-        {
-            _wallHit = null;
+        //Ray ray = new Ray(transform.position, transform.forward);
+        //if (Physics.Raycast(ray, out RaycastHit hit, _wallDetectionRadius, LayerMask.GetMask("StaticLevel", "DynamicLevel")))
+        //{
+        //    _wallHit = hit;
+        //}
+        //else
+        //{
+        //    _wallHit = null;
+        //    return;
+        //}
+
+        if (_wallHit == null)
             return;
-        }
+
+        RaycastHit hit = (RaycastHit)_wallHit;
 
         //if collide with wall
         //calculate point that is _wallAvoidanceDistance in front of the hitPoint, along the hit.normal
@@ -114,8 +139,17 @@ public class WallAvoidanceBehavior : SeekBehavior
         Vector2 toWall = toWallUnit * toWallDistance; //vector from player to wall (perpendicular). (=projection toHit on toWallUnit)
         Vector2 toWallAvoidance = toWall - toWallUnit * _wallAvoidanceDist; //toWall - _wallAvoidanceDist
 
-        float goalSin = (toWallDistance - _wallAvoidanceDist) / _wallDetectionRadius; //unit-sin of the goal point
+        float distToWallAvoidancePoint = toWallDistance - _wallAvoidanceDist;
+
+        float goalSin = distToWallAvoidancePoint / _wallDetectionRadius; //unit-sin of the goal point
+        if (goalSin > 1.0f)
+            goalSin = 1.0f;
+        else
+            if (goalSin < -1.0f)
+            goalSin = -1.0f;
+
         float goalCos = Mathf.Cos(Mathf.Asin(goalSin)); //unit-sin of the goal point
+
 
         Vector2 playerPos = new Vector2(transform.position.x, transform.position.z);
         Vector2 hitPos = new Vector2(hit.point.x, hit.point.z);
@@ -137,7 +171,7 @@ public class WallAvoidanceBehavior : SeekBehavior
         Vector2 toGoal2D = toWallAvoidance + wallAvoidanceToGoal;
         Vector3 toGoal3D = new Vector3(toGoal2D.x, 0.0f, toGoal2D.y);
 
-        _target = transform.position + toGoal3D;
+        Target = transform.position + toGoal3D;
 
         //set debug points
         Vector2 toHitAvoidance = toWallAvoidance + wallToHit;
@@ -146,7 +180,7 @@ public class WallAvoidanceBehavior : SeekBehavior
         _debugToGoal = new Vector3(toGoal2D.x, transform.position.y, toGoal2D.y);
     }
 
-    private void OnDrawGizmosSelected()
+    protected override void OnDrawGizmosSelected()
     {
 #if UNITY_EDITOR
         Handles.color = Color.white;
@@ -154,18 +188,28 @@ public class WallAvoidanceBehavior : SeekBehavior
 
         if (_wallHit != null)
         {
-            //draw 'path' from player to goal
-            Vector3 start = transform.position;
-            Vector3 end = transform.position + _debugToHitPos;
-            Debug.DrawLine(start, end);
+            if (_debugCornerChecks.Count > 2)
+            {
+                for (int i = 0; i < _debugCornerChecks.Count - 1; i++)
+                {
+                    Debug.DrawLine(_debugCornerChecks[i], _debugCornerChecks[i + 1]);
+                }
+            }
+            else
+            {
+                //draw 'path' from player to goal
+                Vector3 start = transform.position;
+                Vector3 end = transform.position + _debugToHitPos;
+                Debug.DrawLine(start, end);
 
-            start = end;
-            end = transform.position + _debugToHitAvoidance;
-            Debug.DrawLine(start, end);
+                start = end;
+                end = transform.position + _debugToHitAvoidance;
+                Debug.DrawLine(start, end);
 
-            start = end;
-            end = transform.position + _debugToGoal;
-            Debug.DrawLine(start, end);
+                start = end;
+                end = transform.position + _debugToGoal;
+                Debug.DrawLine(start, end);
+            }
         }
         else
         {

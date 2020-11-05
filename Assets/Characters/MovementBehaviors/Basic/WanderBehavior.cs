@@ -15,13 +15,16 @@ public class WanderBehavior : SeekBehavior
     //---Variables---
     private float _currentAngle = 0.0f; //in radians
 
-    public override MovementOutput HandleMovement(MovementAgent agent)
+    private void Update()
     {
         ChangeAngle();
+    }
 
-        _target = agent.transform.position;
-        _target += agent.transform.forward * _offset;
-        _target += MyUtils.DegreesToVectorXZ(_currentAngle) * _radius;
+    public override MovementOutput HandleMovement(MovementAgent agent)
+    {
+        Target = agent.transform.position;
+        Target += agent.transform.forward * _offset;
+        Target += MyUtils.DegreesToVectorXZ(_currentAngle) * _radius;
 
         return base.HandleMovement(agent);
     }

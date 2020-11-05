@@ -3,35 +3,38 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(SeekBehavior))]
+[RequireComponent(typeof(MovementAgent))]
 public class FightChicken : MonoBehaviour
 {
     //---Components---
-    private SeekBehavior _seekBehavior = null;
+    private ArriveBehavior _arriveBehavior = null;
     private Animator _animator = null;
+    private MovementAgent _movementAgent = null;
 
     //---Variables---
    [SerializeField] private FightChicken _target = null;
     public FightChicken Target
     {
         get { return _target; }
-        set { _target = value; if (_seekBehavior) _seekBehavior.LockTarget = _target.transform; }
+        set { _target = value; if (_arriveBehavior) _arriveBehavior.LockedTarget = _target.transform; }
     }
 
     void Awake()
     {
-        _seekBehavior = GetComponent<SeekBehavior>();
+        _arriveBehavior = GetComponent<ArriveBehavior>();
         _animator = GetComponent<Animator>();
+        _movementAgent = GetComponent<MovementAgent>();
     }
 
     private void Start()
     {
-        if (_seekBehavior && _target)
-            _seekBehavior.LockTarget = _target.transform;
+        if (_arriveBehavior && _target)
+            _arriveBehavior.LockedTarget = _target.transform;
     }
 
     void Update()
     {
-        if (_seekBehavior && _target && _seekBehavior.TargetReached)
+        if (_arriveBehavior && _target && _arriveBehavior.IsTargetReached(_movementAgent))
         {
             //attack
             _animator.SetBool("Attack", true);

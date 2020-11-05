@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerMovementBehavior : MovementBehavior2
+public class PlayerMovementBehavior : MovementBehavior
 {
     public override MovementOutput HandleMovement(MovementAgent agent)
     {

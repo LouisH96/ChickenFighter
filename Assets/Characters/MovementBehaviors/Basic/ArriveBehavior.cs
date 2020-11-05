@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-public class ArriveBehavior : SeekBehavior2
+public class ArriveBehavior : SeekBehavior
 {
     //---Stats---
     [SerializeField] private float _slowdownRadius = 1.0f;
@@ -29,7 +29,7 @@ public class ArriveBehavior : SeekBehavior2
         return output;
     }
 
-    public bool TargetReached(MovementAgent agent)
+    public bool IsTargetReached(MovementAgent agent)
     {
         return (agent.transform.position - _target).sqrMagnitude <= _stopRadius * _stopRadius;
     }

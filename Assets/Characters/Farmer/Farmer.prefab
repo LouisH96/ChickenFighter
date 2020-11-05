@@ -445,6 +445,8 @@ MonoBehaviour:
   _acceleration: 6
   _deacceleration: 6
   _maxVelocity: 3
+  _canMoveSideways: 0
+  _canMoveBackwards: 1
   _jumpForce: 5
   _gravity: -9.81
   _maxAngularVelocity: 120

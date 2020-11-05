@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MouseFleeBehavior : FleeBehavior2
+public class MouseFleeBehavior : FleeBehavior
 {
     void Update()
     {

@@ -3,7 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class MovementBehavior2 : MonoBehaviour
+[RequireComponent(typeof(MovementAgent))]
+public abstract class MovementBehavior : MonoBehaviour
 {
     abstract public MovementOutput HandleMovement(MovementAgent agent);
 }

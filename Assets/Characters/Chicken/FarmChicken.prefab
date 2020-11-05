@@ -91,15 +91,13 @@ GameObject:
   m_Component:
   - component: {fileID: 2079164485539465916}
   - component: {fileID: 8851051709382537436}
-  - component: {fileID: 4936163509272940879}
   - component: {fileID: 6265518525291751168}
-  - component: {fileID: 3870700837883658464}
-  - component: {fileID: 5483913626745422275}
-  - component: {fileID: 8918203423770793627}
   - component: {fileID: 6015538650418269484}
   - component: {fileID: 7836374183730322130}
+  - component: {fileID: 8599592606678240760}
+  - component: {fileID: 1625245946961101276}
   m_Layer: 0
-  m_Name: Chicken
+  m_Name: FarmChicken
   m_TagString: Chicken
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -134,22 +132,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _highlightRenderer: {fileID: 6415068326612369823}
---- !u!114 &4936163509272940879
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9182765650703088592}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 153176cdf121aee46863a96b3fa3d82c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _forwardAcceleration: 6
-  _maxFowardVelocity: 1
-  _rotateSpeed: 200
-  _jumpForce: 5
 --- !u!143 &6265518525291751168
 CharacterController:
   m_ObjectHideFlags: 0
@@ -168,48 +150,6 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0.265, z: 0}
---- !u!114 &3870700837883658464
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9182765650703088592}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b1c3d3bfb6295b1419fb608f2cf76807, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _slowDownAngle: 35
---- !u!114 &5483913626745422275
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9182765650703088592}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 69d8a05d60a8999459d8f65252fc0ca1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _stopRadius: 0.25
-  _slowDownRadius: 1
---- !u!114 &8918203423770793627
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9182765650703088592}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1b029df43e749ec4fa1749521aa7b932, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _offset: 1
-  _radius: 1
-  _maxChange: 0.17453292
 --- !u!54 &6015538650418269484
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -239,6 +179,46 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.25, y: 0.45, z: 0.37}
   m_Center: {x: 0, y: 0.225, z: 0}
+--- !u!114 &8599592606678240760
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9182765650703088592}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85656e6ce5c8ae74caca9552eba75b76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _movementBehavior: {fileID: 0}
+  _rotationBehavior: {fileID: 0}
+  _acceleration: 4
+  _deacceleration: 6
+  _maxVelocity: 1.5
+  _canMoveSideways: 0
+  _canMoveBackwards: 0
+  _jumpForce: 5
+  _gravity: -9.81
+  _maxAngularVelocity: 120
+--- !u!114 &1625245946961101276
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9182765650703088592}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fcf3c82ff00e2a645abfdab644929939, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _recoverLostVelocityRatio: 0
+  _target: {x: 0, y: 0, z: 0}
+  _lockedTarget: {fileID: 0}
+  _offset: 1
+  _radius: 1
+  _maxChange: 0.17453292
 --- !u!1001 &6960069075166523900
 PrefabInstance:
   m_ObjectHideFlags: 0

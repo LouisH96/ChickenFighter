@@ -1,11 +1,12 @@
-﻿using System;
+﻿using Assets.Characters.MovementBehaviors;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class WallAvoidance : MonoBehaviour
+public class WallAvoidanceBehavior : SeekBehavior
 {
     //---Stats---
     [SerializeField] private float _raycastInterval = 0.3f;
@@ -15,7 +16,6 @@ public class WallAvoidance : MonoBehaviour
     //---Variables---
     private float _raycastTimer = 0.0f;
     private RaycastHit? _wallHit = null;
-    private Vector3 _destination = Vector3.zero;
 
     private Vector3 _debugToHitPos = Vector3.zero;
     private Vector3 _debugToHitAvoidance = Vector3.zero;
@@ -23,10 +23,20 @@ public class WallAvoidance : MonoBehaviour
 
     //---Public---
     public bool HasWallHit { get { return _wallHit != null; } }
-    public Vector3 EscapePoint { get { return _destination; } }
 
     void Start()
     {
+    }
+
+    public override MovementOutput HandleMovement(MovementAgent agent)
+    {
+        if (!HasWallHit)
+            return new MovementOutput { IsValid = false };
+
+        FindEscapeDestination();
+        DoCornerCheck();
+
+        return base.HandleMovement(agent);
     }
 
     void Update()
@@ -34,10 +44,21 @@ public class WallAvoidance : MonoBehaviour
         _raycastTimer += Time.deltaTime;
         if (_raycastTimer >= _raycastInterval)
         {
+            CastWallDetectionRay();
             FindEscapeDestination();
             DoCornerCheck();
             _raycastTimer = 0.0f;
         }
+    }
+
+    
+    private void CastWallDetectionRay()
+    {
+        Ray ray = new Ray(transform.position, transform.forward);
+        if (Physics.Raycast(ray, out RaycastHit hit, _wallDetectionRadius, LayerMask.GetMask("StaticLevel", "DynamicLevel")))
+            _wallHit = hit;
+        else
+            _wallHit = null;
     }
 
     private void DoCornerCheck()
@@ -47,7 +68,7 @@ public class WallAvoidance : MonoBehaviour
 
         int checks = 8;
 
-        Vector3 rayVector = _destination - transform.position;
+        Vector3 rayVector = _target - transform.position;
         Ray ray = new Ray(transform.position, rayVector);
         Quaternion rotation = Quaternion.Euler(0.0f, -360.0f / 8, 0.0f);
 
@@ -55,7 +76,7 @@ public class WallAvoidance : MonoBehaviour
         {
             if (!Physics.Raycast(ray, out RaycastHit hit, _wallDetectionRadius, LayerMask.GetMask("StaticLevel", "DynamicLevel")))
             {
-                _destination = rayVector + transform.position;
+                _target = rayVector + transform.position;
                 return;
             }
 
@@ -116,7 +137,7 @@ public class WallAvoidance : MonoBehaviour
         Vector2 toGoal2D = toWallAvoidance + wallAvoidanceToGoal;
         Vector3 toGoal3D = new Vector3(toGoal2D.x, 0.0f, toGoal2D.y);
 
-        _destination = transform.position + toGoal3D;
+        _target = transform.position + toGoal3D;
 
         //set debug points
         Vector2 toHitAvoidance = toWallAvoidance + wallToHit;

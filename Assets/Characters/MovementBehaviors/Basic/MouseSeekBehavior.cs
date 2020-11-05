@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEditorInternal;
 using UnityEngine;
 
-public class MouseSeekBehavior2 : SeekBehavior2
+public class MouseSeekBehavior : SeekBehavior
 {
     void Update()
     {

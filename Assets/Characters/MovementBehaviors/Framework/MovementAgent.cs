@@ -9,7 +9,7 @@ public class MovementAgent : MonoBehaviour
 {
     //---Components---
     private CharacterController _characterController;
-    [SerializeField] private MovementBehavior2 _movementBehavior;
+    [SerializeField] private MovementBehavior _movementBehavior;
     [SerializeField] private RotationBehavior _rotationBehavior;
 
     //---Stats---
@@ -60,10 +60,17 @@ public class MovementAgent : MonoBehaviour
         _characterController = GetComponent<CharacterController>();
 
         if (!_movementBehavior)
-            _movementBehavior = GetComponent<MovementBehavior2>();
+            _movementBehavior = GetComponent<MovementBehavior>();
 
         if (!_rotationBehavior)
+        {
             _rotationBehavior = GetComponent<RotationBehavior>();
+            if(!_rotationBehavior)
+            {
+                _rotationBehavior =gameObject.AddComponent<AutoRotationBehavior>();
+            }
+        }
+
     }
 
     void Update()

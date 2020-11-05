@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AutoRotationBehavior : FaceBehavior2
+public class AutoRotationBehavior : FaceBehavior
 {
     //---Variables
     private Vector3? _direction = null;

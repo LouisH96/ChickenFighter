@@ -2,10 +2,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Net.Http.Headers;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Assertions.Must;
 
-public class SeekBehavior2 : MovementBehavior2
+public class SeekBehavior : MovementBehavior
 {
     //---Stats---
     [SerializeField] protected float _recoverLostVelocityRatio = 0.0f;
@@ -13,6 +14,7 @@ public class SeekBehavior2 : MovementBehavior2
     //---Variables---
     [SerializeField] protected Vector3 _target = Vector3.zero;
     [SerializeField] protected Transform _lockedTarget = null;
+
 
     //---Public---
     public Vector3 Target { get { return _target; } set { _target = value; } }
@@ -50,5 +52,14 @@ public class SeekBehavior2 : MovementBehavior2
             agent.AutoRotation.Target = _target;
 
         return output;
+    }
+
+    protected virtual void OnDrawGizmosSelected()
+    {
+#if UNITY_EDITOR
+
+        Debug.DrawLine(transform.position, _target);
+
+#endif
     }
 }

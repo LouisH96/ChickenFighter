@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MouseFaceBehavior : FaceBehavior2
+public class MouseFaceBehavior : FaceBehavior
 { 
     void Update()
     {

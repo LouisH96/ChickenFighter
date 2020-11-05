@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FaceBehavior2 : RotationBehavior
+public class FaceBehavior : RotationBehavior
 {
     //---Stats---
     [SerializeField] protected float _slowDownAngle = 35.0f;

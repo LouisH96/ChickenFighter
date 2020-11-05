@@ -32,6 +32,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 6538808042599768475}
+  - {fileID: 1099118305446031232}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -48,8 +49,8 @@ CharacterController:
   serializedVersion: 2
   m_Height: 0.37
   m_Radius: 0.225
-  m_SlopeLimit: 40
-  m_StepOffset: 0.1
+  m_SlopeLimit: 20
+  m_StepOffset: 0.01
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0.265, z: 0}
@@ -109,6 +110,60 @@ MonoBehaviour:
   _jumpForce: 5
   _gravity: -9.81
   _maxAngularVelocity: 120
+--- !u!1 &7925454464466066228
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1099118305446031232}
+  - component: {fileID: 701553296067756089}
+  - component: {fileID: 8215964258768045913}
+  m_Layer: 0
+  m_Name: AttackZone
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1099118305446031232
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7925454464466066228}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.346, z: 0.327}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 7708162046468556004}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!33 &701553296067756089
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7925454464466066228}
+  m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!136 &8215964258768045913
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7925454464466066228}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 0.06
+  m_Height: 0.3
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &8672820609948170728
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -162,9 +217,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7476075661050378027, guid: 839566d29a1a5224d9b30eb4a925c9d2, type: 3}
       propertyPath: m_Name
-      value: ChickenVisuals
+      value: Skeleton
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6153137239671703024, guid: 839566d29a1a5224d9b30eb4a925c9d2, type: 3}
+    - {fileID: 8678141788712038566, guid: 839566d29a1a5224d9b30eb4a925c9d2, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 839566d29a1a5224d9b30eb4a925c9d2, type: 3}
 --- !u!4 &6538808042599768475 stripped
 Transform:

@@ -9,4 +9,14 @@ public abstract class MovementBehavior : MonoBehaviour
     public bool ShowDebugInfo = true;
 
     abstract public MovementOutput HandleMovement(MovementAgent agent);
+
+    void OnEnable()
+    {
+        ShowDebugInfo = true;
+    }
+
+    void OnDisable()
+    {
+        ShowDebugInfo = false;
+    }
 }

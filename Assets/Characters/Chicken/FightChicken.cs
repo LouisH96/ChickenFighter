@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class FightChicken : MonoBehaviour
@@ -36,5 +37,16 @@ public class FightChicken : MonoBehaviour
         {
             _animator.SetBool("Attack", false);
         }
+    }
+
+    void OnDrawGizmosSelected()
+    {
+#if UNITY_EDITOR
+        if (_isAttacking)
+        {
+            Handles.color = Color.cyan;
+            Handles.DrawWireDisc(transform.position, Vector3.up, _attackRange);
+        }
+#endif
     }
 }

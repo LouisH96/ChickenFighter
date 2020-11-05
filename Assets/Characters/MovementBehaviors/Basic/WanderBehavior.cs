@@ -39,10 +39,14 @@ public class WanderBehavior : SeekBehavior
     protected override void OnDrawGizmosSelected()
     {
 #if UNITY_EDITOR
+        if (!ShowDebugInfo)
+            return;
+
         base.OnDrawGizmosSelected();
 
         Handles.color = Color.white;
         Handles.DrawWireDisc(transform.position + transform.forward * _offset, Vector3.up, _radius);
+        Handles.DrawSolidDisc(Target, Vector3.up, 0.05f);
 #endif
     }
 }

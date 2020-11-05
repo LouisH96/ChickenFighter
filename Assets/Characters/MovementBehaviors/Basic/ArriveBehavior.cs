@@ -12,6 +12,7 @@ public class ArriveBehavior : SeekBehavior
     [SerializeField] private float _stopRadius = 0.25f;
 
     //---Public---
+    public float StopRadius { get{ return _stopRadius; } set { _stopRadius = value; } }
 
     public override MovementOutput HandleMovement(MovementAgent agent)
     {
@@ -41,6 +42,9 @@ public class ArriveBehavior : SeekBehavior
 #if UNITY_EDITOR
     protected override void OnDrawGizmosSelected()
     {
+        if (!ShowDebugInfo)
+            return;
+
         Handles.color = Color.red;
         Handles.DrawWireDisc(Target, Vector3.up, _stopRadius);
 

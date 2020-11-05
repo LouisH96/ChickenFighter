@@ -6,5 +6,7 @@ using UnityEngine;
 [RequireComponent(typeof(MovementAgent))]
 public abstract class MovementBehavior : MonoBehaviour
 {
+    public bool ShowDebugInfo = true;
+
     abstract public MovementOutput HandleMovement(MovementAgent agent);
 }

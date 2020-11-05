@@ -25,6 +25,7 @@ public class WallAvoidanceBehavior : ArriveBehavior
     private List<Vector3> _debugCornerChecks = new List<Vector3>();
 
     private bool _isAvoidingWall = false;
+    private bool _recast = false;
 
     //---Public---
     public bool HasWallHit { get { return _wallHit != null; } }
@@ -43,6 +44,14 @@ public class WallAvoidanceBehavior : ArriveBehavior
         }
         else
         {
+            if (_recast)
+            {
+                CastWallDetectionRay();
+                FindEscapeDestination();
+                DoCornerCheck();
+                _recast = false;
+            }
+
             if (!HasWallHit)
                 return new MovementOutput { IsValid = false };
             else
@@ -60,7 +69,7 @@ public class WallAvoidanceBehavior : ArriveBehavior
         _raycastTimer += Time.deltaTime;
         if (_raycastTimer >= _raycastInterval)
         {
-            CastWallDetectionRay();
+            _recast = true; ;
             _raycastTimer = 0.0f;
         }
     }
@@ -89,7 +98,7 @@ public class WallAvoidanceBehavior : ArriveBehavior
         rayVector = rayVector.normalized * _wallDetectionRadius;
         Ray ray = new Ray(transform.position, rayVector);
         Quaternion rotation = Quaternion.Euler(0.0f, randomSign * 360.0f / checks, 0.0f);
-        
+
         for (int i = 0; i < checks; i++)
         {
             _debugCornerChecks.Add(transform.position);
@@ -107,17 +116,6 @@ public class WallAvoidanceBehavior : ArriveBehavior
 
     void FindEscapeDestination()
     {
-        //Ray ray = new Ray(transform.position, transform.forward);
-        //if (Physics.Raycast(ray, out RaycastHit hit, _wallDetectionRadius, LayerMask.GetMask("StaticLevel", "DynamicLevel")))
-        //{
-        //    _wallHit = hit;
-        //}
-        //else
-        //{
-        //    _wallHit = null;
-        //    return;
-        //}
-
         if (_wallHit == null)
             return;
 
@@ -183,6 +181,9 @@ public class WallAvoidanceBehavior : ArriveBehavior
     protected override void OnDrawGizmosSelected()
     {
 #if UNITY_EDITOR
+        if (!ShowDebugInfo)
+            return;
+
         Handles.color = Color.white;
         Handles.DrawWireDisc(transform.position, Vector3.up, _wallDetectionRadius);
 
@@ -190,9 +191,10 @@ public class WallAvoidanceBehavior : ArriveBehavior
         {
             if (_debugCornerChecks.Count > 2)
             {
-                for (int i = 0; i < _debugCornerChecks.Count - 1; i++)
+                for (int i = 0; i < _debugCornerChecks.Count - 1; i += 2)
                 {
-                    Debug.DrawLine(_debugCornerChecks[i], _debugCornerChecks[i + 1]);
+                    Color color = i == _debugCornerChecks.Count - 2 ? Color.yellow : Color.white;
+                    Debug.DrawLine(_debugCornerChecks[i], _debugCornerChecks[i + 1], color);
                 }
             }
             else
@@ -209,7 +211,12 @@ public class WallAvoidanceBehavior : ArriveBehavior
                 start = end;
                 end = transform.position + _debugToGoal;
                 Debug.DrawLine(start, end);
+
+                Debug.DrawLine(transform.position, Target, Color.green);
             }
+
+            Handles.color = Color.red;
+            Handles.DrawWireDisc(Target, Vector3.up, base.StopRadius);
         }
         else
         {

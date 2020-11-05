@@ -90,6 +90,9 @@ public class MovementAgent : MonoBehaviour
 
     private void HandleMovement(MovementOutput output)
     {
+        if (!CharacterController.enabled)
+            return;
+
         if (!output.IsValid || !_movementBehavior)
             return;
 
@@ -126,6 +129,9 @@ public class MovementAgent : MonoBehaviour
 
     private void HandleRotation(RotationOutput output)
     {
+        if (!CharacterController.enabled)
+            return;
+
         if (!output.IsValid || !_rotationBehavior)
             return;
 

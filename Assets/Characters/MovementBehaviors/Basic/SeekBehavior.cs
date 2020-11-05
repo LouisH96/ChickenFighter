@@ -70,6 +70,8 @@ public class SeekBehavior : MovementBehavior
     protected virtual void OnDrawGizmosSelected()
     {
 #if UNITY_EDITOR
+        if (!ShowDebugInfo)
+            return;
 
         Debug.DrawLine(transform.position, _target, Color.green);
 

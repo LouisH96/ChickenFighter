@@ -1,5 +1,64 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!65 &5807552521500877081
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 618515709494642276}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.0000001, y: 1, z: 1.0000001}
+  m_Center: {x: 0, y: -0.00000011920929, z: 0}
+--- !u!54 &2504619125574217284
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 618515709494642276}
+  serializedVersion: 2
+  m_Mass: 0.0000001
+  m_Drag: 0
+  m_AngularDrag: 0
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 0
+--- !u!136 &5345965299765894989
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1590506585719617538}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.7
+  m_Height: 2.93
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: -0.000000044703484}
+--- !u!54 &1133867465642539935
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1590506585719617538}
+  serializedVersion: 2
+  m_Mass: 0.0000001
+  m_Drag: 0
+  m_AngularDrag: 0
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 0
 --- !u!1 &7691117774830869647
 GameObject:
   m_ObjectHideFlags: 0
@@ -13,6 +72,7 @@ GameObject:
   - component: {fileID: 4221477660009688545}
   - component: {fileID: 1729599964681279194}
   - component: {fileID: 3994008412168181909}
+  - component: {fileID: 7972707567287781955}
   m_Layer: 0
   m_Name: FightChicken
   m_TagString: Untagged
@@ -85,9 +145,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5d3bbdf9f8921c4a848f07987a85f4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _isAttacking: 0
-  _attackRange: 1
-  _enemy: {fileID: 0}
 --- !u!114 &3994008412168181909
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -110,6 +167,19 @@ MonoBehaviour:
   _jumpForce: 5
   _gravity: -9.81
   _maxAngularVelocity: 120
+--- !u!114 &7972707567287781955
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7691117774830869647}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32d12ee641614e343afe7e3398291ad2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _tryAttacking: 1
 --- !u!1 &7925454464466066228
 GameObject:
   m_ObjectHideFlags: 0
@@ -121,6 +191,7 @@ GameObject:
   - component: {fileID: 1099118305446031232}
   - component: {fileID: 701553296067756089}
   - component: {fileID: 8215964258768045913}
+  - component: {fileID: 3039989752175938116}
   m_Layer: 0
   m_Name: AttackZone
   m_TagString: Untagged
@@ -164,6 +235,47 @@ CapsuleCollider:
   m_Height: 0.3
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &3039989752175938116
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7925454464466066228}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4294ee1a2a6828a46984e60983511bf6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!65 &5974746372132843177
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 458500332737764757}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1.81, z: 0.97}
+  m_Center: {x: 0, y: -0.33, z: 0}
+--- !u!54 &3910423318233061029
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 458500332737764757}
+  serializedVersion: 2
+  m_Mass: 0.0000001
+  m_Drag: 0
+  m_AngularDrag: 0
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 0
 --- !u!1001 &8672820609948170728
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -226,5 +338,20 @@ PrefabInstance:
 --- !u!4 &6538808042599768475 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2513728916624365683, guid: 839566d29a1a5224d9b30eb4a925c9d2, type: 3}
+  m_PrefabInstance: {fileID: 8672820609948170728}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &458500332737764757 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9079511916126020733, guid: 839566d29a1a5224d9b30eb4a925c9d2, type: 3}
+  m_PrefabInstance: {fileID: 8672820609948170728}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &618515709494642276 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8127137667378380684, guid: 839566d29a1a5224d9b30eb4a925c9d2, type: 3}
+  m_PrefabInstance: {fileID: 8672820609948170728}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1590506585719617538 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7948450049142882794, guid: 839566d29a1a5224d9b30eb4a925c9d2, type: 3}
   m_PrefabInstance: {fileID: 8672820609948170728}
   m_PrefabAsset: {fileID: 0}

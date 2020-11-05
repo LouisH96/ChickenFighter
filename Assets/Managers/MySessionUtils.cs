@@ -7,10 +7,11 @@ public class MySessionUtils : MonoBehaviour
     private static MySessionUtils _instance = null;
     public static MySessionUtils Instance { get { return _instance; } }
 
-
+    [SerializeField] private float _timeScale = 1.0f;
     private Plane _cursorMovementPlane;
     private Vector3 _mouseInWorld = Vector3.zero;
     public Vector3 MouseInWorld { get { return _mouseInWorld; } }
+
 
     void Awake()
     {
@@ -22,6 +23,7 @@ public class MySessionUtils : MonoBehaviour
     void Update()
     {
         _mouseInWorld = GetWorldMousePosition();
+        Time.timeScale = _timeScale;
     }
 
     private void OnDrawGizmos()

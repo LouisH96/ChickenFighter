@@ -4,10 +4,10 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Enemy
-  - Friendly
   - Pickup
   - Chicken
+  - TeamA
+  - TeamB
   layers:
   - Default
   - TransparentFX
@@ -18,8 +18,8 @@ TagManager:
   - 
   - 
   - Ground
-  - Enemy
-  - Friendly
+  - TeamA
+  - TeamB
   - StaticLevel
   - DynamicLevel
   - 

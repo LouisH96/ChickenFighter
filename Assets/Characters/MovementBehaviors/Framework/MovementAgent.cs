@@ -54,6 +54,10 @@ public class MovementAgent : MonoBehaviour
         }
     }
 
+    public MovementBehavior MovementBehavior { get { return _movementBehavior; } set { _movementBehavior = value; } }
+    public RotationBehavior RotationBehavior { get { return _rotationBehavior; } set { _rotationBehavior = value; } }
+
+
     //---Functions---
     void Awake()
     {

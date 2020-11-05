@@ -10,6 +10,7 @@ public class ChickenAttack : MonoBehaviour
 
     [SerializeField] private bool _tryAttacking = true;
     
+    public bool TryAttacking { get { return _tryAttacking; } set { _tryAttacking = value; } }
 
     void Awake()
     {

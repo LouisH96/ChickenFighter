@@ -100,8 +100,12 @@ GameObject:
   - component: {fileID: 4362372626238562069}
   - component: {fileID: 4221477660009688545}
   - component: {fileID: 1729599964681279194}
-  - component: {fileID: 3994008412168181909}
   - component: {fileID: 7972707567287781955}
+  - component: {fileID: 3994008412168181909}
+  - component: {fileID: 7865572916867924128}
+  - component: {fileID: 7684097392306040977}
+  - component: {fileID: 2821839367832252773}
+  - component: {fileID: 4618600908664277013}
   m_Layer: 0
   m_Name: FightChicken
   m_TagString: Untagged
@@ -174,6 +178,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5d3bbdf9f8921c4a848f07987a85f4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _flee: {fileID: 7865572916867924128}
+  _chase: {fileID: 4618600908664277013}
+  _fleeTime: 5
+  _chaseTime: 5
+  _behaviorTimeRandomRatio: 0.2
+  _enemy: {fileID: 0}
+  _health: 50
+--- !u!114 &7972707567287781955
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7691117774830869647}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32d12ee641614e343afe7e3398291ad2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _tryAttacking: 1
 --- !u!114 &3994008412168181909
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -196,7 +220,7 @@ MonoBehaviour:
   _jumpForce: 5
   _gravity: -9.81
   _maxAngularVelocity: 120
---- !u!114 &7972707567287781955
+--- !u!114 &7865572916867924128
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -205,10 +229,70 @@ MonoBehaviour:
   m_GameObject: {fileID: 7691117774830869647}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 32d12ee641614e343afe7e3398291ad2, type: 3}
+  m_Script: {fileID: 11500000, guid: bd069a63796cee14cadb8b750d979644, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _tryAttacking: 1
+  ShowDebugInfo: 1
+  _behaviors:
+  - {fileID: 7684097392306040977}
+  - {fileID: 2821839367832252773}
+--- !u!114 &7684097392306040977
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7691117774830869647}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75cf8844b6078cc498933f1b52d92319, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowDebugInfo: 1
+  _recoverLostVelocityRatio: 0.75
+  _target: {x: 0, y: 0, z: 0}
+  _lockedTarget: {fileID: 0}
+  _slowdownRadius: 0
+  _slowestVelocityRatio: 1
+  _stopRadius: 0.35
+  _raycastInterval: 0.2
+  _wallDetectionRadius: 2
+  _wallAvoidanceDist: 2.5
+--- !u!114 &2821839367832252773
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7691117774830869647}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a56c0d1e669bb344ab1f94a1a94a6de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowDebugInfo: 1
+  _recoverLostVelocityRatio: 0.75
+  _target: {x: 0, y: 0, z: 0}
+  _lockedTarget: {fileID: 0}
+--- !u!114 &4618600908664277013
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7691117774830869647}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c2aac6a494b6ab488283a84d85ea990, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowDebugInfo: 1
+  _recoverLostVelocityRatio: 0.5
+  _target: {x: 0, y: 0, z: 0}
+  _lockedTarget: {fileID: 0}
+  _slowdownRadius: 1
+  _slowestVelocityRatio: 0.2
+  _stopRadius: 0.25
 --- !u!1 &7925454464466066228
 GameObject:
   m_ObjectHideFlags: 0

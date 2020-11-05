@@ -23,6 +23,8 @@ public class FightChicken : MonoBehaviour
 
     public FightChicken Enemy { get { return _enemy; } set { _enemy = value; } }
 
+    public float HealthRatio { get { return _health / 50.0f; } }
+
     void Awake()
     {
         AddTagRecursively(transform, tag);

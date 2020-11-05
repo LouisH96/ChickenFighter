@@ -789,6 +789,30 @@ PrefabInstance:
       propertyPath: _enemy
       value: 
       objectReference: {fileID: 1513537772}
+    - target: {fileID: 2861846858876240258, guid: 8f2ce959d8e956c44b25ed711eb426a8, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 52bd5f92e2b24a64ab53627fa5c7824b, type: 2}
+    - target: {fileID: 4027939695482914117, guid: 8f2ce959d8e956c44b25ed711eb426a8, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 52bd5f92e2b24a64ab53627fa5c7824b, type: 2}
+    - target: {fileID: 4565835725872978104, guid: 8f2ce959d8e956c44b25ed711eb426a8, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 52bd5f92e2b24a64ab53627fa5c7824b, type: 2}
+    - target: {fileID: 6852243219138678708, guid: 8f2ce959d8e956c44b25ed711eb426a8, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 52bd5f92e2b24a64ab53627fa5c7824b, type: 2}
+    - target: {fileID: 7389726197662382031, guid: 8f2ce959d8e956c44b25ed711eb426a8, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 52bd5f92e2b24a64ab53627fa5c7824b, type: 2}
+    - target: {fileID: 7661952060199571582, guid: 8f2ce959d8e956c44b25ed711eb426a8, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 52bd5f92e2b24a64ab53627fa5c7824b, type: 2}
     - target: {fileID: 7691117774830869647, guid: 8f2ce959d8e956c44b25ed711eb426a8, type: 3}
       propertyPath: m_Name
       value: FightChickenB

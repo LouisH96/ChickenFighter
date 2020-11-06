@@ -47,6 +47,11 @@ public class Chicken : MonoBehaviour
         set { _animator.SetBool("Attack", value); }
     }
 
+    public bool isHighLighted
+    {
+        get { return _highlightRenderer.enabled; }
+    }
+
     public float CurrentHealthRatio { get { return _currentHealth / _stats.Health; } }
     public float CurrentHealth { get { return _currentHealth; } }
     public float MaxHealth { get { return _stats.Health; } }

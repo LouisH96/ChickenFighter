@@ -10,26 +10,42 @@ public class UIManager : MonoBehaviour
     [SerializeField] private ChickenBattle _battle = null;
     [SerializeField] private List<UI_FightChickenStats> _stats;
 
+    [SerializeField] private List<UI_FightChickenStats> _pickedUpStats;
+    [SerializeField] private ChickenGrab _chickenGrab = null;
 
     void Start()
     {
-       //_stats = gameObject.GetComponents<UI_FightChickenStats>().ToList();
+        //_stats = gameObject.GetComponents<UI_FightChickenStats>().ToList();
+
     }
 
     // Update is called once per frame
     void Update()
     {
         List<Chicken> chickens = _battle.GetAllChickens();
-        for (int i= 0; i < _stats.Count; i++)
+        for (int i = 0; i < _stats.Count; i++)
         {
-            if(i < chickens.Count && !_battle.IsPaused)
+            if (i < chickens.Count && !_battle.IsPaused)
             {
                 _stats[i].gameObject.SetActive(true);
                 _stats[i].Chicken = chickens[i];
             }
             else
                 _stats[i].gameObject.SetActive(false);
+        }
 
+        List<Chicken> pickedUpChicks = _chickenGrab.GetPickedUpChickens();
+        for (int i = 0; i < _pickedUpStats.Count; i++)
+        {
+            if (i < pickedUpChicks.Count)
+            {
+                _pickedUpStats[i].gameObject.SetActive(true);
+                _pickedUpStats[i].Chicken = pickedUpChicks[i];
+            }
+            else
+            {
+                _pickedUpStats[i].gameObject.SetActive(false);
+            }
         }
     }
 }

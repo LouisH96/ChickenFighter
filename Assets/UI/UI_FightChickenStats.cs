@@ -21,6 +21,8 @@ public class UI_FightChickenStats : MonoBehaviour
     private float _oldSpeed;
     private float _oldAcceleration;
 
+    [SerializeField] private Image _statsBg = null;
+
     public Chicken Chicken
     {
         get
@@ -57,12 +59,14 @@ public class UI_FightChickenStats : MonoBehaviour
     private static Color _defaultTextColor = new Color32(50,50,50, 255);
     private static Color _defaultHPTextColor = new Color32(0,0,0, 255);
 
+    [SerializeField] private Color _defaultBgColor = new Color32(255,255,255, 255);
+    [SerializeField] private Color _highlightedBgColor = new Color32(205,205,0, 255);
+
     [SerializeField] private Color _upgradedStatColor = new Color32(255, 255, 0, 255);
 
     // Start is called before the first frame update
     void Start()
     {
-
     }
 
     // Update is called once per frame
@@ -112,6 +116,12 @@ public class UI_FightChickenStats : MonoBehaviour
 
             _hptext.text = Chicken.name + ": " + Chicken.CurrentHealth + "/" + Chicken.MaxHealth;
             _hp.transform.localScale = new Vector3(Chicken.CurrentHealthRatio, 1, 1);
+
+            if (Chicken.isHighLighted)
+                _statsBg.color = _highlightedBgColor;
+            else
+                _statsBg.color = _defaultBgColor;
+
         }
         else
         {

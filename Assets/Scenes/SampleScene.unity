@@ -1823,6 +1823,17 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1761495251 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5005992512218567781, guid: fff0318974c98e14eb4858cfff253b24, type: 3}
+  m_PrefabInstance: {fileID: 1040119640}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32cb3ea146aedc64293667fcacb16b14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1773054693
 GameObject:
   m_ObjectHideFlags: 0
@@ -2076,6 +2087,10 @@ PrefabInstance:
       propertyPath: _battle
       value: 
       objectReference: {fileID: 1299537014}
+    - target: {fileID: 1951686649807316410, guid: 11965e7d66825284a839f8bb58a3bfca, type: 3}
+      propertyPath: _chickenGrab
+      value: 
+      objectReference: {fileID: 1761495251}
     - target: {fileID: 2080624022528350952, guid: 11965e7d66825284a839f8bb58a3bfca, type: 3}
       propertyPath: _upgradedStatColor.r
       value: 0.16982403

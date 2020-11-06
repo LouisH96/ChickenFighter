@@ -1444,6 +1444,10 @@ PrefabInstance:
       propertyPath: _hoverLocations.Array.data[4]
       value: 
       objectReference: {fileID: 5608459836955703375}
+    - target: {fileID: 2586456158921437197, guid: d9859ca1dcbc424428ee5cdbb2b01a7b, type: 3}
+      propertyPath: _chickenEjectionForce
+      value: 190
+      objectReference: {fileID: 0}
     - target: {fileID: 2586456158921437198, guid: d9859ca1dcbc424428ee5cdbb2b01a7b, type: 3}
       propertyPath: m_Size.x
       value: 1.2

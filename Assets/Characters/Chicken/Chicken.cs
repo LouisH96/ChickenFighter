@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -58,6 +59,23 @@ public class Chicken : MonoBehaviour
     {
         ChangeState(_state);
         _currentHealth = _stats.Health;
+    }
+
+    public void OnMaxHealthUpgraded(float amount)
+    {
+        _currentHealth += amount;
+
+        if (_currentHealth > _stats.Health)
+            _currentHealth = _stats.Health;
+    }
+    public void OnMaxSpeedUpgraded()
+    {
+        _movement.Agent.MaxVelocity = _stats.MaxSpeed;
+    }
+
+    public void OnAccelerationUpgraded()
+    {
+        _movement.Agent.Acceleration = _stats.Acceleration;
     }
 
     public void ChangeState(ChickenState newState)
@@ -163,7 +181,6 @@ public class Chicken : MonoBehaviour
     {
         _currentHealth -= damage;
 
-        Debug.Log("Damage " + _currentHealth);
         if (_currentHealth <= 0.0f)
         {
             if (_battle)

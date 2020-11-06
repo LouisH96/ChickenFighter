@@ -187,7 +187,7 @@ MonoBehaviour:
   _maxSpeed: 2
   _acceleration: 4
   _damage: 1
-  _age: 1
+  _chicken: {fileID: 1144447749319598529}
 --- !u!143 &2867103570543149643
 CharacterController:
   m_ObjectHideFlags: 0

@@ -16,6 +16,10 @@ public class Beak2 : MonoBehaviour
 
         if (_chicken.IsEnemy(bodyPart.Chicken))
         {
+            if(bodyPart.Chicken.CurrentHealth <= _chicken.Stats.Damage)
+            {
+                _chicken.Stats.UpgradeRandomStat();
+            }
             bodyPart.Chicken.Damage(_chicken.Stats.Damage);
         }
     }

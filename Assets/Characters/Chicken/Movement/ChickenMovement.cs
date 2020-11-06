@@ -17,6 +17,8 @@ public class ChickenMovement : MonoBehaviour
 
     //---Public---
     public Chicken.ChickenState State { get { return _chickenState; } }
+    public MovementAgent Agent { get { return _agent; } }
+
     void Awake()
     {
         if (!_agent)

@@ -8,7 +8,7 @@ public class Chicken : MonoBehaviour
 {
     public enum ChickenState
     {
-        Farm, Fight, None
+        Farm, Fight, PickedUp, Thrown, None
     }
 
     //---Components---
@@ -17,6 +17,7 @@ public class Chicken : MonoBehaviour
     [SerializeField] private ChickenMovement _movement = null;
     [SerializeField] private FarmChicken2 _farmChicken = null;
     [SerializeField] private FightChicken2 _fightChicken = null;
+    [SerializeField] private Renderer _highlightRenderer = null;
 
     //---Variables---
     [SerializeField] private ChickenState _state = ChickenState.None;
@@ -30,13 +31,35 @@ public class Chicken : MonoBehaviour
         ChangeState(_state);
     }
 
-    private void ChangeState(ChickenState newState)
+    public void ChangeState(ChickenState newState)
     {
         _movement.ChangeState(newState);
+        _physical.ChangeState(newState);
 
         _farmChicken.enabled = newState == ChickenState.Farm;
         _fightChicken.enabled = newState == ChickenState.Fight;
 
         _state = newState;
+    }
+
+    public void SetHighlight(bool isHighlighted)
+    {
+        _highlightRenderer.enabled = isHighlighted;
+    }
+
+    public void PickUp(Transform parent)
+    {
+        _physical.SetPickedupState(parent);
+        _movement.ChangeState(ChickenState.PickedUp);
+
+        _state = ChickenState.PickedUp;
+    }
+
+    public void Throw(Vector3 force)
+    {
+        _physical.SetThrownState(force);
+        _movement.ChangeState(ChickenState.Thrown);
+
+        _state = ChickenState.Thrown;
     }
 }

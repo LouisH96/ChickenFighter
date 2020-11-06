@@ -8,7 +8,7 @@ public class ChickenGrab : MonoBehaviour
 {
     [SerializeField] private float _chickenEjectionForce = 100.0f;
     [SerializeField] private Transform[] _hoverLocations = null;
-    private FarmChicken _chickenToPickup = null;
+    private Chicken _chickenToPickup = null;
 
     void Update()
     {
@@ -25,12 +25,10 @@ public class ChickenGrab : MonoBehaviour
             Assert.IsNotNull(location); //if there is no location available, _chickenToPickup should be null
 
             //change chickenMode
-            _chickenToPickup.EnableHighlight(false);
-            _chickenToPickup.Pickup();
+            _chickenToPickup.SetHighlight(false);
+            _chickenToPickup.PickUp(location);
 
             //move chicken
-            _chickenToPickup.transform.parent = location;
-            _chickenToPickup.transform.localPosition = Vector3.zero;
             _chickenToPickup = null;
         }
     }
@@ -40,12 +38,9 @@ public class ChickenGrab : MonoBehaviour
         if (Input.GetAxis("Action2") > 0.0f
             && HasChickensPickedUp())
         {
-            foreach (FarmChicken chicken in GetPickedUpChickens())
+            foreach (Chicken chicken in GetPickedUpChickens())
             {
                 chicken.Throw(transform.forward * _chickenEjectionForce);
-
-                //unparent chicken
-                chicken.transform.parent = null;
             }
         }
     }
@@ -53,7 +48,7 @@ public class ChickenGrab : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         //is chicken?
-        FarmChicken chicken = GetChickenFromCollider(other);
+        Chicken chicken = GetChickenFromCollider(other);
         if (!chicken)
             return;
 
@@ -72,7 +67,7 @@ public class ChickenGrab : MonoBehaviour
     private void OnTriggerExit(Collider other)
     {
         //is chicken?
-        FarmChicken chicken = GetChickenFromCollider(other);
+        Chicken chicken = GetChickenFromCollider(other);
         if (!chicken)
             return;
 
@@ -82,73 +77,73 @@ public class ChickenGrab : MonoBehaviour
 
 
     //---Helperfunctions---
-    private FarmChicken GetChickenFromCollider(Collider collider)
+    private Chicken GetChickenFromCollider(Collider collider)
     {
-        if (!collider.gameObject.CompareTag("Chicken"))
+        if (collider.GetType() != typeof(CharacterController))
             return null;
 
-        return collider.GetComponentInParent<FarmChicken>();
+       return collider.gameObject.GetComponent<Chicken>();
     }
 
-    private void SetChickenToPickup(FarmChicken chicken)
-    {
-        if (!chicken)
-            return;
+private void SetChickenToPickup(Chicken chicken)
+{
+    if (!chicken)
+        return;
 
-        if (_chickenToPickup)
-            UnsetChickenToPickup();
+    if (_chickenToPickup)
+        UnsetChickenToPickup();
 
-        _chickenToPickup = chicken;
-        _chickenToPickup.EnableHighlight(true);
-    }
+    _chickenToPickup = chicken;
+    _chickenToPickup.SetHighlight(true);
+}
 
-    private void UnsetChickenToPickup()
-    {
-        if (!_chickenToPickup)
-            return;
+private void UnsetChickenToPickup()
+{
+    if (!_chickenToPickup)
+        return;
 
-        _chickenToPickup.EnableHighlight(false);
-        _chickenToPickup = null;
-    }
+    _chickenToPickup.SetHighlight(false);
+    _chickenToPickup = null;
+}
 
-    private Transform GetEmptyHoverLocation()
-    {
-        //location is empty if it has no childs
-        foreach (Transform location in _hoverLocations)
-            if (location.childCount == 0)
-                return location;
+private Transform GetEmptyHoverLocation()
+{
+    //location is empty if it has no childs
+    foreach (Transform location in _hoverLocations)
+        if (location.childCount == 0)
+            return location;
 
-        return null;
-    }
+    return null;
+}
 
-    private bool IsChickenAlreadyPickedup(FarmChicken chicken)
-    {
-        foreach (Transform location in _hoverLocations)
-            if (location.childCount == 1)
-                if (location.GetChild(0) == chicken)
-                    return true;
-
-        return false;
-    }
-
-    private bool HasChickensPickedUp()
-    {
-        if (_hoverLocations.Length == 0)
-            return false;
-
-        foreach (Transform location in _hoverLocations)
-            if (location.childCount > 0)
+private bool IsChickenAlreadyPickedup(Chicken chicken)
+{
+    foreach (Transform location in _hoverLocations)
+        if (location.childCount == 1)
+            if (location.GetChild(0) == chicken)
                 return true;
 
-        return false;
-    }
+    return false;
+}
 
-    private List<FarmChicken> GetPickedUpChickens()
-    {
-        return _hoverLocations
-            .Where(l => l.childCount > 0)
-            .Select(l => l.GetChild(0))
-            .Select(c => c.GetComponent<FarmChicken>())
-            .ToList();
-    }
+private bool HasChickensPickedUp()
+{
+    if (_hoverLocations.Length == 0)
+        return false;
+
+    foreach (Transform location in _hoverLocations)
+        if (location.childCount > 0)
+            return true;
+
+    return false;
+}
+
+private List<Chicken> GetPickedUpChickens()
+{
+    return _hoverLocations
+        .Where(l => l.childCount > 0)
+        .Select(l => l.GetChild(0))
+        .Select(c => c.GetComponent<Chicken>())
+        .ToList();
+}
 }

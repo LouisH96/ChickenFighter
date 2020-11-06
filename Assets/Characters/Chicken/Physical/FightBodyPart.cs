@@ -11,7 +11,6 @@ public class FightBodyPart : MonoBehaviour
     [SerializeField] private Collider _collider = null;
 
     //---Stats---
-    private float _awakeRigidbodyMass = -1.0f;
 
     void Awake()
     {
@@ -21,8 +20,13 @@ public class FightBodyPart : MonoBehaviour
         Assert.IsNotNull(_collider, this.name + " has no collider");
     }
 
+    private void OnEnable()
+    {
+        _collider.enabled = false;
+    }
+
     private void OnDisable()
     {
-        
+        _collider.enabled = false;
     }
 }

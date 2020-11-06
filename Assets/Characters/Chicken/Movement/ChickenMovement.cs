@@ -47,6 +47,8 @@ public class ChickenMovement : MonoBehaviour
 
         if (newState == Chicken.ChickenState.Farm)
             _agent.MovementBehavior = _farmBehavior;
+        else if (newState == Chicken.ChickenState.PickedUp)
+            _agent.MovementBehavior = null;
 
         _chickenState = newState;
     }

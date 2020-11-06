@@ -147,6 +147,6 @@ public class MovementAgent : MonoBehaviour
         if (angVel < -MaxAngularVelocity)
             angVel = -MaxAngularVelocity;
 
-        transform.Rotate(0.0f, angVel * Time.fixedDeltaTime, 0.0f);
+        _characterController.transform.Rotate(0.0f, angVel * Time.fixedDeltaTime, 0.0f);
     }
 }

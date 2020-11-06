@@ -26,4 +26,13 @@ public class PriorityBehavior : MovementBehavior
 
         return new MovementOutput { IsValid = false };
     }
+
+    private void OnEnable()
+    {
+        _behaviors.ForEach(b => b.enabled = true);
+    }
+    private void OnDisable()
+    {
+        _behaviors.ForEach(b => b.enabled = false);
+    }
 }

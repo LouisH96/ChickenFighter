@@ -814,7 +814,6 @@ GameObject:
   m_Component:
   - component: {fileID: 3356782341382698271}
   - component: {fileID: 4116565722343901612}
-  - component: {fileID: 6597622942754655028}
   m_Layer: 0
   m_Name: ChickenPhysical
   m_TagString: Untagged
@@ -853,24 +852,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 547f6aac62299994ca18674833d580f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!143 &6597622942754655028
-CharacterController:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7761808636174096967}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Height: 0
-  m_Radius: 0.175
-  m_SlopeLimit: 5
-  m_StepOffset: 0.001
-  m_SkinWidth: 0.08
-  m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 0.24, z: 0}
 --- !u!1 &8248280165523687697
 GameObject:
   m_ObjectHideFlags: 0
@@ -1326,14 +1307,14 @@ PrefabInstance:
       objectReference: {fileID: 2531554052291607702}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 990d416c497e0bc4a8888f1c9106ec90, type: 3}
---- !u!4 &4230125474384414224 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 3851380785510115779, guid: 990d416c497e0bc4a8888f1c9106ec90, type: 3}
-  m_PrefabInstance: {fileID: 1136797028326305747}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1631748867825187048 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1829468794138285883, guid: 990d416c497e0bc4a8888f1c9106ec90, type: 3}
+  m_PrefabInstance: {fileID: 1136797028326305747}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &4230125474384414224 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3851380785510115779, guid: 990d416c497e0bc4a8888f1c9106ec90, type: 3}
   m_PrefabInstance: {fileID: 1136797028326305747}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5789936234919811993

@@ -6,19 +6,37 @@ using UnityEngine.Assertions;
 
 public class Chicken : MonoBehaviour
 {
-    //---Components---
-    private ChickenStats _stats = null;
-    private ChickenPhysical _physical = null;
-    private ChickenMovement _movement = null;
+    public enum ChickenState
+    {
+        Farm, Fight, None
+    }
 
-    //---Public---
-    
+    //---Components---
+    [SerializeField] private ChickenStats _stats = null;
+    [SerializeField] private ChickenPhysical _physical = null;
+    [SerializeField] private ChickenMovement _movement = null;
+    [SerializeField] private FarmChicken2 _farmChicken = null;
+    [SerializeField] private FightChicken2 _fightChicken = null;
+
+    //---Variables---
+    [SerializeField] private ChickenState _state = ChickenState.None;
 
     void Awake()
     {
-        _stats = GetComponent<ChickenStats>();
-        _physical = GetComponent<ChickenPhysical>();
-        _movement = GetComponent<ChickenMovement>();
+    }
 
+    private void Start()
+    {
+        ChangeState(_state);
+    }
+
+    private void ChangeState(ChickenState newState)
+    {
+        _movement.ChangeState(newState);
+
+        _farmChicken.enabled = newState == ChickenState.Farm;
+        _fightChicken.enabled = newState == ChickenState.Fight;
+
+        _state = newState;
     }
 }

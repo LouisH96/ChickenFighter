@@ -138,7 +138,7 @@ private bool HasChickensPickedUp()
     return false;
 }
 
-private List<Chicken> GetPickedUpChickens()
+public List<Chicken> GetPickedUpChickens()
 {
     return _hoverLocations
         .Where(l => l.childCount > 0)

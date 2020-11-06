@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -9,96 +10,166 @@ public class ChickenBattle : MonoBehaviour
     [SerializeField] private List<List<Chicken>> _teams = new List<List<Chicken>>();
 
     [SerializeField] private bool _isFarmBattle = true;
-    private bool _fightPaused = false;
+    private bool _fightPaused = true;
 
     // Start is called before the first frame update
     void Start()
     {
-        StartBattle();
+
     }
 
     // Update is called once per frame
     void Update()
     {
-
+       // Debug.Log("isPauzed: " + _fightPaused);
     }
 
     public void StartBattle()
     {
         _teams.SelectMany(t => t)
              .ToList()
-             .ForEach(c => c.StartBattle(this));
+             .Where(c => c.CanFight()).ToList()
+             .ForEach(c => c.WakeupFromBattlePause());
     }
 
     public void EndBattle()
     {
-        //foreach(List<Chicken> team in _teams)
-        //{
+        foreach (Chicken chicken in _teams.SelectMany(t => t))
+        {
+            Assert.IsNotNull(chicken, "chicken should not be null");
+            chicken.RemoveFromBattle();
+        }
 
-        //}
-        //if(_chickenA)
-        //{
-        //    Chicken a = _chickenA;
-        //    _chickenA = null;
-        //    a.EndBattle();
-        //}
-
-        //if(_chickenB)
-        //{
-        //    Chicken b = _chickenB;
-        //    _chickenB = null;
-        //    b.EndBattle();
-        //}
+        Assert.IsTrue(_fightPaused, "fight should be paused cause less then 2 teams with active chickens");
     }
 
     public void PauzeBattle()
     {
-        _fightPaused = true;
-
         foreach (var chicken in _teams.SelectMany(t => t))
-            chicken.ChangeState(Chicken.ChickenState.Farm);
+            chicken.PauzeBattle();
+
+        _fightPaused = true;
     }
 
     public List<Chicken> AddChickenToNewTeam(Chicken chicken)
     {
+        if (_teams.Any(team => team.Contains(chicken)))
+        {
+            return null;
+        }
+
         List<Chicken> newTeam = new List<Chicken>() { chicken };
         _teams.Add(newTeam);
-        chicken.StartBattle(this);
+        chicken.AddToBattle(this);
 
-        if (_fightPaused)
-        {
-            _fightPaused = false;
+        if (ShouldBePaused())
+            PauzeBattle();
+        else
             StartBattle();
-        }
 
         return newTeam;
     }
 
     public void AddChickenToTeam(Chicken chicken, List<Chicken> team)
     {
+        if (_teams.Any(t => t.Contains(chicken)))
+        {
+            return;
+        }
+
         if (_teams.Contains(team))
         {
             team.Add(chicken);
-            chicken.StartBattle(this);
+            chicken.AddToBattle(this);
         }
 
-        if (_fightPaused)
-        {
-            _fightPaused = false;
+        if (ShouldBePaused())
+            PauzeBattle();
+        else
             StartBattle();
-        }
+    }
+
+    public void OnChickenWakeUp(Chicken chicken)
+    {
+        if (!_teams.Any(t=> t.Contains(chicken)))
+            return;
+
+        if (!ShouldBePaused())
+            StartBattle();
+    }
+
+    public bool ShouldBePaused()
+    {
+        return _teams.Count(t => t.Any(c => c.CanFight())) < 2;
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (_isFarmBattle
-            && other.GetType() == typeof(CharacterController)
-            && other.CompareTag("Chicken"))
+        List<Chicken> enteredChickens = GetChickensFromCollider(other);
+
+        if (enteredChickens != null)
         {
-            Debug.Log("add chicken to battle");
-            AddChickenToNewTeam(other.GetComponentInParent<Chicken>());
+            foreach (var chicken in enteredChickens)
+            {
+                Debug.Log("add " + chicken.name + " to battle");
+                AddChickenToNewTeam(chicken);
+            }
         }
     }
+    private void OnTriggerExit(Collider other)
+    {
+        List<Chicken> enteredChickens = GetChickensFromCollider(other);
+
+        if (enteredChickens != null)
+        {
+            foreach (var chicken in enteredChickens)
+            {
+                Debug.Log("remove " + chicken.name + " from battle");
+                RemoveChickenOutOfBattle(chicken);
+            }
+        }
+    }
+
+    private List<Chicken> GetChickensFromCollider(Collider other)
+    {
+        Chicken thrownChicken = IsThrownChicken(other);
+
+        if (thrownChicken != null)
+            return new List<Chicken> { thrownChicken };
+
+        Farmer farmer = IsFarmer(other);
+
+        if (farmer != null)
+                 return farmer.GrabbedChickens;
+
+        else return null;
+    }
+
+    public Farmer IsFarmer(Collider other)
+    {
+        if (other.GetType() == typeof(CharacterController))
+        {
+            if (other.CompareTag("Player"))
+            {
+                return other.GetComponent<Farmer>();
+            }
+        }
+
+        return null;
+    }
+
+    public Chicken IsThrownChicken(Collider other)
+    {
+        if (other.CompareTag("Chicken"))
+        {
+            if (other.GetType() == typeof(BoxCollider))
+            {
+                return other.transform.parent.GetComponent<Chicken>();
+            }
+        }
+        return null;
+    }
+
     public void RemoveChickenOutOfBattle(Chicken chicken)
     {
         List<Chicken> allyTeam = GetAllyTeam(chicken);
@@ -109,9 +180,9 @@ public class ChickenBattle : MonoBehaviour
         if (allyTeam.Count == 0)
             _teams.Remove(allyTeam);
 
-        chicken.EndBattle();
+        chicken.RemoveFromBattle();
 
-        if (_teams.Count == 1)
+        if (ShouldBePaused())
             PauzeBattle();
     }
 

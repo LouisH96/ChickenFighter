@@ -96,29 +96,59 @@ public class Chicken : MonoBehaviour
         _state = ChickenState.Thrown;
     }
 
-    public void StartBattle(ChickenBattle battle)
+    public void AddToBattle(ChickenBattle battle)
     {
-        if (_battle && _battle != battle)
-            _battle.RemoveChickenOutOfBattle(this);
+        if (_battle == battle)
+            return;
 
+        if (_battle)
+            _battle.RemoveChickenOutOfBattle(this);
+        
         _battle = battle;
 
-        if (_state != ChickenState.PickedUp || _state != ChickenState.Thrown)
+        if (CanFight())
             ChangeState(ChickenState.Fight);
     }
 
-    public void EndBattle()
+    public void RemoveFromBattle()
     {
         if (!_battle)
             return;
 
+        _battle.RemoveChickenOutOfBattle(this);
         _battle = null;
-        ChangeState(ChickenState.Farm);
+
+        if (_state == ChickenState.Fight)
+            ChangeState(ChickenState.Farm);
+    }
+
+    public void WakeupFromBattlePause()
+    {
+        if(!IsPauzedFromBattle())
+            return ;
+
+        ChangeState(ChickenState.Fight);
     }
 
     public bool IsInBattle()
     {
         return _battle != null;
+    }
+
+    public bool IsPauzedFromBattle()
+    {
+        return IsInBattle() && _state != ChickenState.Fight;
+    }
+
+    public bool CanFight()
+    {
+        return _state == ChickenState.Farm || _state == ChickenState.Fight;
+    }
+
+    public void PauzeBattle()
+    {
+        if (_state == ChickenState.Fight)
+            ChangeState(ChickenState.Farm);
     }
 
     public bool IsEnemy(Chicken possibleEnemy)

@@ -387,9 +387,10 @@ GameObject:
   - component: {fileID: 8173298302668029679}
   - component: {fileID: 4877462478482154627}
   - component: {fileID: 8268940518415280875}
+  - component: {fileID: 8176644822301920950}
   m_Layer: 0
   m_Name: Farmer
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -440,6 +441,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85656e6ce5c8ae74caca9552eba75b76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _characterController: {fileID: 0}
   _movementBehavior: {fileID: 4877462478482154627}
   _rotationBehavior: {fileID: 8268940518415280875}
   _acceleration: 6
@@ -475,6 +477,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8fccb2b3003ecc7498eb604c281c9c1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &8176644822301920950
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2848263240690161905}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0db2bb41ae49940419712f6e9885ad05, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _chickenGrab: {fileID: 5005992512218567781}
 --- !u!1 &3139965401649570088
 GameObject:
   m_ObjectHideFlags: 0
@@ -1452,3 +1467,14 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2586456158921437193, guid: d9859ca1dcbc424428ee5cdbb2b01a7b, type: 3}
   m_PrefabInstance: {fileID: 7393832547000493160}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &5005992512218567781 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2586456158921437197, guid: d9859ca1dcbc424428ee5cdbb2b01a7b, type: 3}
+  m_PrefabInstance: {fileID: 7393832547000493160}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32cb3ea146aedc64293667fcacb16b14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

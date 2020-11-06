@@ -48,10 +48,11 @@ public class ChickenPhysical : MonoBehaviour
         {
             _tryToGetOutOfThrownState = false;
 
+
+            _chicken.ChangeState(Chicken.ChickenState.Farm);
+
             if (_chicken.IsInBattle())
-                _chicken.ChangeState(Chicken.ChickenState.Fight);
-            else
-                _chicken.ChangeState(_beforePickupState);
+                _chicken.Battle.OnChickenWakeUp(_chicken);
         }
     }
 

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -114,7 +115,7 @@ public class UI_FightChickenStats : MonoBehaviour
             _speed.text = "Speed:" + _oldSpeed;
             _acceleration.text = "Acceleration:" + _oldAcceleration;
 
-            _hptext.text = Chicken.name + ": " + Chicken.CurrentHealth + "/" + Chicken.MaxHealth;
+            _hptext.text = Chicken.name + ": " + String.Format("{0:0.0}", Chicken.CurrentHealth) + "/" + Chicken.MaxHealth;
             _hp.transform.localScale = new Vector3(Chicken.CurrentHealthRatio, 1, 1);
 
             if (Chicken.isHighLighted)

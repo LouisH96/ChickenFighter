@@ -10,6 +10,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private ChickenBattle _battle = null;
     [SerializeField] private List<UI_FightChickenStats> _stats;
 
+    [SerializeField] private UI_FightChickenStats _highlightedStats;
     [SerializeField] private List<UI_FightChickenStats> _pickedUpStats;
     [SerializeField] private ChickenGrab _chickenGrab = null;
 
@@ -47,5 +48,8 @@ public class UIManager : MonoBehaviour
                 _pickedUpStats[i].gameObject.SetActive(false);
             }
         }
+
+        _highlightedStats.gameObject.SetActive(_chickenGrab.HighlightedChicken != null);
+        _highlightedStats.Chicken = _chickenGrab.HighlightedChicken;
     }
 }

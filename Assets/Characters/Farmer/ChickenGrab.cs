@@ -10,6 +10,8 @@ public class ChickenGrab : MonoBehaviour
     [SerializeField] private Transform[] _hoverLocations = null;
     private Chicken _chickenToPickup = null;
 
+    public Chicken HighlightedChicken { get { return _chickenToPickup; } }
+
     void Update()
     {
         HandlePickupChicken();

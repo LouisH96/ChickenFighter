@@ -66,6 +66,13 @@ public class Chicken : MonoBehaviour
         _currentHealth = _stats.Health;
     }
 
+    private void Update()
+    {
+        _currentHealth += _stats.HealthRegen * Time.deltaTime;
+        if (_currentHealth > _stats.Health)
+            _currentHealth = _stats.Health;
+    }
+
     public void OnMaxHealthUpgraded(float amount)
     {
         _currentHealth += amount;
@@ -126,7 +133,7 @@ public class Chicken : MonoBehaviour
 
         if (_battle)
             _battle.RemoveChickenOutOfBattle(this);
-        
+
         _battle = battle;
 
         if (CanFight())
@@ -147,8 +154,8 @@ public class Chicken : MonoBehaviour
 
     public void WakeupFromBattlePause()
     {
-        if(!IsPauzedFromBattle())
-            return ;
+        if (!IsPauzedFromBattle())
+            return;
 
         ChangeState(ChickenState.Fight);
     }

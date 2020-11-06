@@ -183,7 +183,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _health: 50
-  _healthRegen: 1
+  _healthRegen: 0.5
   _maxSpeed: 2
   _acceleration: 4
   _damage: 1

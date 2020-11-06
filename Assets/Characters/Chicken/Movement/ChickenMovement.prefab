@@ -1,0 +1,230 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &4908779257407216049
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8904083026725168111}
+  - component: {fileID: 588357019314442579}
+  - component: {fileID: 3930603769210975951}
+  m_Layer: 0
+  m_Name: ChickenMovement
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8904083026725168111
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4908779257407216049}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 2246288238634576301}
+  - {fileID: 7372870102522610883}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &588357019314442579
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4908779257407216049}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a5631e2366a91b4eba8210dddc1d6d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _agent: {fileID: 3930603769210975951}
+  _farmBehavior: {fileID: 0}
+  _chickenFightMovement: {fileID: 0}
+--- !u!114 &3930603769210975951
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4908779257407216049}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85656e6ce5c8ae74caca9552eba75b76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _characterController: {fileID: 0}
+  _movementBehavior: {fileID: 0}
+  _rotationBehavior: {fileID: 0}
+  _acceleration: 6
+  _deacceleration: 6
+  _maxVelocity: 3
+  _canMoveSideways: 0
+  _canMoveBackwards: 0
+  _jumpForce: 5
+  _gravity: -9.81
+  _maxAngularVelocity: 120
+--- !u!1 &7637929780944703331
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2246288238634576301}
+  - component: {fileID: 7080244756047402399}
+  - component: {fileID: 5128822932544903775}
+  - component: {fileID: 183722726173291972}
+  m_Layer: 0
+  m_Name: FarmBehaviors
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2246288238634576301
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7637929780944703331}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 8904083026725168111}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7080244756047402399
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7637929780944703331}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd069a63796cee14cadb8b750d979644, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowDebugInfo: 1
+  _behaviors:
+  - {fileID: 5128822932544903775}
+  - {fileID: 183722726173291972}
+--- !u!114 &5128822932544903775
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7637929780944703331}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75cf8844b6078cc498933f1b52d92319, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowDebugInfo: 1
+  _recoverLostVelocityRatio: 0.5
+  _target: {x: 0, y: 0, z: 0}
+  _lockedTarget: {fileID: 0}
+  _slowdownRadius: 0
+  _slowestVelocityRatio: 1
+  _stopRadius: 0.3
+  _raycastInterval: 0.2
+  _wallDetectionRadius: 1.5
+  _wallAvoidanceDist: 2
+--- !u!114 &183722726173291972
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7637929780944703331}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fcf3c82ff00e2a645abfdab644929939, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowDebugInfo: 1
+  _recoverLostVelocityRatio: 0
+  _target: {x: 0, y: 0, z: 0}
+  _lockedTarget: {fileID: 0}
+  _offset: 1
+  _radius: 1
+  _maxChange: 0.17453292
+--- !u!1001 &4424088901897501047
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 8904083026725168111}
+    m_Modifications:
+    - target: {fileID: 1143154723247666263, guid: f9d8dcbb136119d49b750bd115da4527, type: 3}
+      propertyPath: _agent
+      value: 
+      objectReference: {fileID: 3930603769210975951}
+    - target: {fileID: 6056985887340020620, guid: f9d8dcbb136119d49b750bd115da4527, type: 3}
+      propertyPath: m_Name
+      value: ChickenFightMovement
+      objectReference: {fileID: 0}
+    - target: {fileID: 6571938371511025076, guid: f9d8dcbb136119d49b750bd115da4527, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6571938371511025076, guid: f9d8dcbb136119d49b750bd115da4527, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6571938371511025076, guid: f9d8dcbb136119d49b750bd115da4527, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6571938371511025076, guid: f9d8dcbb136119d49b750bd115da4527, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6571938371511025076, guid: f9d8dcbb136119d49b750bd115da4527, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6571938371511025076, guid: f9d8dcbb136119d49b750bd115da4527, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6571938371511025076, guid: f9d8dcbb136119d49b750bd115da4527, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6571938371511025076, guid: f9d8dcbb136119d49b750bd115da4527, type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6571938371511025076, guid: f9d8dcbb136119d49b750bd115da4527, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6571938371511025076, guid: f9d8dcbb136119d49b750bd115da4527, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6571938371511025076, guid: f9d8dcbb136119d49b750bd115da4527, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: f9d8dcbb136119d49b750bd115da4527, type: 3}
+--- !u!4 &7372870102522610883 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6571938371511025076, guid: f9d8dcbb136119d49b750bd115da4527, type: 3}
+  m_PrefabInstance: {fileID: 4424088901897501047}
+  m_PrefabAsset: {fileID: 0}

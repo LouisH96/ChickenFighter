@@ -4,11 +4,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(CharacterController))]
 public class MovementAgent : MonoBehaviour
 {
     //---Components---
-    private CharacterController _characterController;
+    [SerializeField] private CharacterController _characterController;
     [SerializeField] private MovementBehavior _movementBehavior;
     [SerializeField] private RotationBehavior _rotationBehavior;
 
@@ -61,7 +60,8 @@ public class MovementAgent : MonoBehaviour
     //---Functions---
     void Awake()
     {
-        _characterController = GetComponent<CharacterController>();
+        if (!_characterController)
+            _characterController = GetComponent<CharacterController>();
 
         if (!_movementBehavior)
             _movementBehavior = GetComponent<MovementBehavior>();
@@ -69,9 +69,9 @@ public class MovementAgent : MonoBehaviour
         if (!_rotationBehavior)
         {
             _rotationBehavior = GetComponent<RotationBehavior>();
-            if(!_rotationBehavior)
+            if (!_rotationBehavior)
             {
-                _rotationBehavior =gameObject.AddComponent<AutoRotationBehavior>();
+                _rotationBehavior = gameObject.AddComponent<AutoRotationBehavior>();
             }
         }
 
@@ -112,7 +112,7 @@ public class MovementAgent : MonoBehaviour
 
         if (_canMoveSideways)
         {
-            acc = output.DesiredVelocity.x > _velocity.x? _acceleration : _deacceleration;
+            acc = output.DesiredVelocity.x > _velocity.x ? _acceleration : _deacceleration;
             _velocity.x = Mathf.MoveTowards(_velocity.x, output.DesiredVelocity.x, acc * Time.fixedDeltaTime);
         }
 

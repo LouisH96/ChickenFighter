@@ -21,15 +21,17 @@ public class ChickenBattle : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-       // Debug.Log("isPauzed: " + _fightPaused);
     }
 
-    public void StartBattle()
+    public void TryStartBattle()
     {
         _teams.SelectMany(t => t)
              .ToList()
              .Where(c => c.CanFight()).ToList()
              .ForEach(c => c.WakeupFromBattlePause());
+
+        if(!ShouldBePaused())
+           _fightPaused = false; 
     }
 
     public void EndBattle()
@@ -39,6 +41,8 @@ public class ChickenBattle : MonoBehaviour
             Assert.IsNotNull(chicken, "chicken should not be null");
             chicken.RemoveFromBattle();
         }
+
+        _fightPaused = true;
 
         Assert.IsTrue(_fightPaused, "fight should be paused cause less then 2 teams with active chickens");
     }
@@ -65,7 +69,7 @@ public class ChickenBattle : MonoBehaviour
         if (ShouldBePaused())
             PauzeBattle();
         else
-            StartBattle();
+            TryStartBattle();
 
         return newTeam;
     }
@@ -86,7 +90,7 @@ public class ChickenBattle : MonoBehaviour
         if (ShouldBePaused())
             PauzeBattle();
         else
-            StartBattle();
+            TryStartBattle();
     }
 
     public void OnChickenWakeUp(Chicken chicken)
@@ -95,7 +99,7 @@ public class ChickenBattle : MonoBehaviour
             return;
 
         if (!ShouldBePaused())
-            StartBattle();
+            TryStartBattle();
     }
 
     public bool ShouldBePaused()
@@ -111,7 +115,7 @@ public class ChickenBattle : MonoBehaviour
         {
             foreach (var chicken in enteredChickens)
             {
-                Debug.Log("add " + chicken.name + " to battle");
+                //Debug.Log("add " + chicken.name + " to battle");
                 AddChickenToNewTeam(chicken);
             }
         }
@@ -124,7 +128,7 @@ public class ChickenBattle : MonoBehaviour
         {
             foreach (var chicken in enteredChickens)
             {
-                Debug.Log("remove " + chicken.name + " from battle");
+                //Debug.Log("remove " + chicken.name + " from battle");
                 RemoveChickenOutOfBattle(chicken);
             }
         }

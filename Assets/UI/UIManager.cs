@@ -12,6 +12,9 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Image _hpA = null;
     [SerializeField] private Image _hpB = null;
 
+    [SerializeField] private Text _hpTextA = null;
+    [SerializeField] private Text _hpTextB = null;
+
     void Start()
     {
 
@@ -29,5 +32,15 @@ public class UIManager : MonoBehaviour
             _hpB.transform.localScale = new Vector3(_chickenB.HealthRatio, 1, 1);
         else
             _hpB.transform.localScale = new Vector3(0.0f, 1, 1);
+
+        if (_hpTextA)
+            _hpTextA.text = _chickenA.CurrentHealth + "/" + _chickenA.MaxHealth;
+        else
+            _hpTextA.text = "0";
+
+        if (_hpTextB)
+            _hpTextB.text = _chickenB.CurrentHealth + "/" + _chickenB.MaxHealth;
+        else
+            _hpTextB.text = "0";
     }
 }

@@ -11,6 +11,7 @@ public class FightChicken : MonoBehaviour
     [SerializeField] private SeekBehavior _chase = null;
     private MovementAgent _agent = null;
     private ChickenAttack _chickenAttack = null;
+    private ChickenStats _chickenStats = null;
 
     //---Stats---
     [SerializeField] private float _fleeTime = 5.0f;
@@ -19,17 +20,26 @@ public class FightChicken : MonoBehaviour
 
     //---Variables--
     [SerializeField] private FightChicken _enemy = null;
-    [SerializeField] private int _health = 50;
+    [SerializeField] private float _currentHealth = 1.0f;
 
     public FightChicken Enemy { get { return _enemy; } set { _enemy = value; } }
 
-    public float HealthRatio { get { return _health / 50.0f; } }
+    public float HealthRatio { get { return _currentHealth / 50.0f; } }
+
+    public int CurrentHealth { get { return (int)_currentHealth; } }
+    public int MaxHealth { get { return (int)_chickenStats.Health; } }
+
 
     void Awake()
     {
         AddTagRecursively(transform, tag);
         _agent = GetComponent<MovementAgent>();
         _chickenAttack = GetComponent<ChickenAttack>();
+        _chickenStats = GetComponent<ChickenStats>();
+        _currentHealth = _chickenStats.Health;
+
+        _agent.MaxVelocity = _chickenStats.MaxSpeed;
+        _agent.Acceleration = _chickenStats.Acceleration;
     }
 
     private void Start()
@@ -85,9 +95,9 @@ public class FightChicken : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-        _health -= damage;
+        _currentHealth -= damage;
 
-        if (_health <= 0)
+        if (_currentHealth <= 0)
             Destroy(this.gameObject);
     }
 

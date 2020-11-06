@@ -106,6 +106,7 @@ GameObject:
   - component: {fileID: 7684097392306040977}
   - component: {fileID: 2821839367832252773}
   - component: {fileID: 4618600908664277013}
+  - component: {fileID: 7930111765049922191}
   m_Layer: 0
   m_Name: FightChicken
   m_TagString: Untagged
@@ -184,7 +185,7 @@ MonoBehaviour:
   _chaseTime: 5
   _behaviorTimeRandomRatio: 0.2
   _enemy: {fileID: 0}
-  _health: 50
+  _currentHealth: 50
 --- !u!114 &7972707567287781955
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -293,6 +294,24 @@ MonoBehaviour:
   _slowdownRadius: 1
   _slowestVelocityRatio: 0.2
   _stopRadius: 0.25
+--- !u!114 &7930111765049922191
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7691117774830869647}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d7d7c3633d3ce443839a92bf1ad2b1b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _health: 50
+  _healthRegen: 1
+  _maxSpeed: 2
+  _acceleration: 1
+  _damage: 1
+  _age: 1
 --- !u!1 &7925454464466066228
 GameObject:
   m_ObjectHideFlags: 0

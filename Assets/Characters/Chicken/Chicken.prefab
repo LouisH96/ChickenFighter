@@ -153,8 +153,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _health: 50
   _healthRegen: 1
-  _maxSpeed: 3
-  _acceleration: 6
+  _maxSpeed: 2
+  _acceleration: 4
   _damage: 1
   _age: 1
 --- !u!114 &3832126103694070761
@@ -339,6 +339,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4698597076384118910}
     m_Modifications:
+    - target: {fileID: 588357019314442579, guid: e2a98162bc345cf4abfa94c25487d549, type: 3}
+      propertyPath: _chicken
+      value: 
+      objectReference: {fileID: 1144447749319598529}
     - target: {fileID: 3930603769210975951, guid: e2a98162bc345cf4abfa94c25487d549, type: 3}
       propertyPath: _characterController
       value: 

@@ -22,6 +22,9 @@ public class Chicken : MonoBehaviour
     //---Variables---
     [SerializeField] private ChickenState _state = ChickenState.None;
 
+    //---Public---
+    public ChickenStats Stats { get{ return _stats; } }
+
     void Awake()
     {
     }

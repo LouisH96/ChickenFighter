@@ -5,6 +5,7 @@ using UnityEngine;
 public class ChickenMovement : MonoBehaviour
 {
     //---Components---
+    [SerializeField] private Chicken _chicken = null;
     [SerializeField] private MovementAgent _agent = null;
 
     //---Behaviors---
@@ -46,7 +47,16 @@ public class ChickenMovement : MonoBehaviour
         _chickenFightMovement.enabled = newState == Chicken.ChickenState.Fight;
 
         if (newState == Chicken.ChickenState.Farm)
+        {
             _agent.MovementBehavior = _farmBehavior;
+            _agent.MaxVelocity = _chicken.Stats.MaxSpeed * 0.75f;
+            _agent.Acceleration = _chicken.Stats.Acceleration * 0.75f;
+        }
+        else if (newState==Chicken.ChickenState.Fight)
+        {
+            _agent.MaxVelocity = _chicken.Stats.MaxSpeed;
+            _agent.Acceleration = _chicken.Stats.Acceleration;
+        }
         else if (newState == Chicken.ChickenState.PickedUp)
             _agent.MovementBehavior = null;
 

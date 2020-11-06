@@ -8,7 +8,7 @@ public class AttackZone : MonoBehaviour
     //---Components---
     [SerializeField] private Chicken _chicken = null;
 
-    private Chicken _attackingChicken = null;
+    private List<FightBodyPart> _targets = new List<FightBodyPart>();
 
     // Start is called before the first frame update
     void Start()
@@ -19,7 +19,9 @@ public class AttackZone : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        _targets.RemoveAll(p => p == null);
+        if (_targets.Count == 0)
+            _chicken.IsAttacking = false;
     }
 
     void OnTriggerEnter(Collider other)
@@ -31,7 +33,7 @@ public class AttackZone : MonoBehaviour
 
         if (_chicken.IsEnemy(bodyPart.Chicken))
         {
-            _attackingChicken = bodyPart.Chicken;
+            _targets.Add(bodyPart);
             _chicken.IsAttacking = true;
         }
     }
@@ -43,10 +45,12 @@ public class AttackZone : MonoBehaviour
         if (!bodyPart)
             return;
 
-        if (_attackingChicken == bodyPart.Chicken)
+        if (_targets.Contains(bodyPart))
         {
-            _chicken.IsAttacking = false;
-            _attackingChicken = null;
+            _targets.Remove(bodyPart);
+
+            if (_targets.Count == 0)
+                _chicken.IsAttacking = false;
         }
     }
 }

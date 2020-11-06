@@ -47,7 +47,11 @@ public class ChickenPhysical : MonoBehaviour
         if (_generalRigidbody.velocity.sqrMagnitude < 0.1f)
         {
             _tryToGetOutOfThrownState = false;
-            _chicken.ChangeState(_beforePickupState);
+
+            if (_chicken.IsInBattle())
+                _chicken.ChangeState(Chicken.ChickenState.Fight);
+            else
+                _chicken.ChangeState(_beforePickupState);
         }
     }
 

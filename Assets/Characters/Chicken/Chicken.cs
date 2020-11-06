@@ -25,16 +25,16 @@ public class Chicken : MonoBehaviour
     private float _currentHealth = 50.0f;
 
     //---Public---
-    public ChickenStats Stats { get{ return _stats; } }
+    public ChickenStats Stats { get { return _stats; } }
 
     public ChickenBattle Battle { get { return _battle; } }
 
-    public Chicken BattleEnemy
+    public Chicken BattleClosestEnemy
     {
         get
         {
             if (_battle)
-                return _battle.GetEnemy(this);
+                return _battle.GetClosestEnemy(this);
             else
                 return null;
         }
@@ -45,7 +45,7 @@ public class Chicken : MonoBehaviour
         get { return _animator.GetBool("Attack"); }
         set { _animator.SetBool("Attack", value); }
     }
-    
+
     public float CurrentHealthRatio { get { return _currentHealth / _stats.Health; } }
     public float CurrentHealth { get { return _currentHealth; } }
     public float MaxHealth { get { return _stats.Health; } }
@@ -98,22 +98,27 @@ public class Chicken : MonoBehaviour
 
     public void StartBattle(ChickenBattle battle)
     {
-        if (_battle)
-            _battle.EndBattle();
+        if (_battle && _battle != battle)
+            _battle.RemoveChickenOutOfBattle(this);
 
         _battle = battle;
 
-        ChangeState(ChickenState.Fight);
+        if (_state != ChickenState.PickedUp || _state != ChickenState.Thrown)
+            ChangeState(ChickenState.Fight);
     }
 
     public void EndBattle()
     {
-        if (_battle)
-            _battle.EndBattle();
+        if (!_battle)
+            return;
 
         _battle = null;
-
         ChangeState(ChickenState.Farm);
+    }
+
+    public bool IsInBattle()
+    {
+        return _battle != null;
     }
 
     public bool IsEnemy(Chicken possibleEnemy)
@@ -128,11 +133,13 @@ public class Chicken : MonoBehaviour
     {
         _currentHealth -= damage;
 
-        Debug.Log("Damage "+_currentHealth);
+        Debug.Log("Damage " + _currentHealth);
         if (_currentHealth <= 0.0f)
         {
             if (_battle)
-                _battle.EndBattle();
+            {
+                _battle.RemoveChickenOutOfBattle(this);
+            }
             Destroy(this.gameObject);
         }
     }

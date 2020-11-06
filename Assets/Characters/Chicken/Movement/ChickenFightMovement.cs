@@ -19,12 +19,24 @@ public class ChickenFightMovement : MonoBehaviour
     [SerializeField] private float _attackDuration = 5.0f;
     [SerializeField] private float _maxDurationOffRatio = 0.5f; //desired time can be off with x percentage of normal duration
     private float _behaviorTimeLeft = 0.0f;
+    [SerializeField] private float _changeTargetInterval = 0.5f;
+    private float _changeTargetTimer = 0.0f;
 
     void Update()
     {
         _behaviorTimeLeft -= Time.deltaTime;
         if (_behaviorTimeLeft <= 0.0f)
             SwapBehavior();
+
+        _changeTargetTimer += Time.deltaTime;
+        if (_changeTargetTimer > _changeTargetInterval)
+        {
+            Chicken closest = _chicken.BattleClosestEnemy;
+            
+            _fleeBehavior.LockedTarget = closest.transform;
+            _seekBehavior.LockedTarget = closest.transform;
+            _changeTargetTimer = 0.0f;
+        }
     }
 
     private void SwapBehavior()
@@ -37,12 +49,12 @@ public class ChickenFightMovement : MonoBehaviour
 
     private void OnEnable()
     {
-        Chicken enemy = _chicken.BattleEnemy;
-        if (!enemy)
+        Chicken closest = _chicken.BattleClosestEnemy;
+        if (!closest)
             return;
 
-        _fleeBehavior.LockedTarget = enemy.transform;
-        _seekBehavior.LockedTarget = enemy.transform;
+        _fleeBehavior.LockedTarget = closest.transform;
+        _seekBehavior.LockedTarget = closest.transform;
 
         if (Random.value < 0.5f)
             SetRetreatBehavior();

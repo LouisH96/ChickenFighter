@@ -25,8 +25,15 @@ public class Chicken : MonoBehaviour
     private ChickenBattle _battle = null;
     private float _currentHealth = 50.0f;
 
+    [SerializeField] private float _breedInterval = 100.0f;
+    private float _breedTimer = 0.0f;
+    private bool _isBreedable = false;
+
+    private static List<Chicken> _allChickens = new List<Chicken>();
+    [SerializeField] private float _sqrBreedRange = 4.0f;
+
     //---Public---
-    public ChickenStats Stats { get { return _stats; } }
+    public ChickenStats Stats { get { return _stats; } set { _stats = value; } }
 
     public ChickenBattle Battle { get { return _battle; } }
 
@@ -58,12 +65,15 @@ public class Chicken : MonoBehaviour
 
     void Awake()
     {
+        _breedTimer = UnityEngine.Random.Range(0.0f, _breedInterval);
     }
 
     private void Start()
     {
         ChangeState(_state);
         _currentHealth = _stats.Health;
+
+        _allChickens.Add(this);
     }
 
     private void Update()
@@ -71,6 +81,36 @@ public class Chicken : MonoBehaviour
         _currentHealth += _stats.HealthRegen * Time.deltaTime;
         if (_currentHealth > _stats.Health)
             _currentHealth = _stats.Health;
+
+        if (!_isBreedable)
+        {
+            _breedTimer += Time.deltaTime;
+            if (_breedTimer > _breedInterval)
+            {
+                _isBreedable = true;
+            }
+        }
+        else
+        {
+            TryBreed();
+        }
+    }
+
+    private void TryBreed()
+    {
+        Chicken partner = _allChickens
+            .Where(c => c!= this && c._battle == null)
+            .FirstOrDefault(c => (c.transform.position - transform.position).sqrMagnitude < _sqrBreedRange);
+
+        if(partner)
+        {
+            GameObject childChicken =  Instantiate(this.gameObject);
+            _stats.BreedStats(partner.Stats, childChicken.GetComponent<ChickenStats>());
+
+            partner._breedTimer = 0.0f;
+            _breedTimer = 0.0f;
+            _isBreedable = false;
+        }
     }
 
     public void OnMaxHealthUpgraded(float amount)
@@ -199,6 +239,7 @@ public class Chicken : MonoBehaviour
             {
                 _battle.RemoveChickenOutOfBattle(this);
             }
+            _allChickens.Remove(this);
             Destroy(this.gameObject);
         }
     }

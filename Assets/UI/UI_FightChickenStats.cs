@@ -110,10 +110,10 @@ public class UI_FightChickenStats : MonoBehaviour
                 _oldAcceleration = Chicken.Stats.Acceleration;
             }
 
-            _damage.text = "Damage:" + _oldDamage;
-            _hpRegen.text = "HP Regen:" + _oldHpRegen;
-            _speed.text = "Speed:" + _oldSpeed;
-            _acceleration.text = "Acceleration:" + _oldAcceleration;
+            _damage.text = "Damage:" + String.Format("{0:0.0}", _oldDamage);
+            _hpRegen.text = "HP Regen:" + String.Format("{0:0.0}", _oldHpRegen);
+            _speed.text = "Speed:" + String.Format("{0:0.0}", _oldSpeed);
+            _acceleration.text = "Acceleration:" + String.Format("{0:0.0}", _oldAcceleration);
 
             _hptext.text = Chicken.name + ": " + String.Format("{0:0.0}", Chicken.CurrentHealth) + "/" + Chicken.MaxHealth;
             _hp.transform.localScale = new Vector3(Chicken.CurrentHealthRatio, 1, 1);

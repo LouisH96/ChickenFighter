@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -11,6 +12,8 @@ public class ChickenBattle : MonoBehaviour
 
     [SerializeField] private bool _isFarmBattle = true;
     private bool _fightPaused = true;
+
+    public bool IsPaused { get { return _fightPaused; } }
 
     // Start is called before the first frame update
     void Start()
@@ -91,6 +94,11 @@ public class ChickenBattle : MonoBehaviour
             PauzeBattle();
         else
             TryStartBattle();
+    }
+
+    public List<Chicken> GetAllChickens()
+    {
+        return _teams.SelectMany(t => t).ToList();
     }
 
     public void OnChickenWakeUp(Chicken chicken)

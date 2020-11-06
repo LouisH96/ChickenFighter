@@ -2060,6 +2060,10 @@ PrefabInstance:
       propertyPath: _chickenB
       value: 
       objectReference: {fileID: 575998195}
+    - target: {fileID: 1951686649807316410, guid: 11965e7d66825284a839f8bb58a3bfca, type: 3}
+      propertyPath: _battle
+      value: 
+      objectReference: {fileID: 1299537014}
     - target: {fileID: 2825697884239624571, guid: 11965e7d66825284a839f8bb58a3bfca, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

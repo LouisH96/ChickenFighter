@@ -6,8 +6,8 @@ using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
-    [SerializeField] private FightChicken _chickenA = null;
-    [SerializeField] private FightChicken _chickenB = null;
+    [SerializeField] private Chicken _chickenA = null;
+    [SerializeField] private Chicken _chickenB = null;
 
     [SerializeField] private Image _hpA = null;
     [SerializeField] private Image _hpB = null;
@@ -24,12 +24,12 @@ public class UIManager : MonoBehaviour
     void Update()
     {
         if (_chickenA)
-            _hpA.transform.localScale = new Vector3(_chickenA.HealthRatio, 1, 1);
+            _hpA.transform.localScale = new Vector3(_chickenA.CurrentHealthRatio, 1, 1);
         else
             _hpA.transform.localScale = new Vector3(0.0f, 1, 1);
 
         if (_chickenB)
-            _hpB.transform.localScale = new Vector3(_chickenB.HealthRatio, 1, 1);
+            _hpB.transform.localScale = new Vector3(_chickenB.CurrentHealthRatio, 1, 1);
         else
             _hpB.transform.localScale = new Vector3(0.0f, 1, 1);
 

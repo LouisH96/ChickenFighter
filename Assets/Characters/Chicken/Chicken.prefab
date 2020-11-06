@@ -81,6 +81,36 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &1475510659239127333
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6217479702954512528}
+  m_Layer: 0
+  m_Name: Battle
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6217479702954512528
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1475510659239127333}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4698597076384118910}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3506942077838322750
 GameObject:
   m_ObjectHideFlags: 0
@@ -94,6 +124,7 @@ GameObject:
   - component: {fileID: 9130331117962152763}
   - component: {fileID: 2867103570543149643}
   - component: {fileID: 7574887795398570963}
+  - component: {fileID: 8400908323452236361}
   m_Layer: 0
   m_Name: Chicken
   m_TagString: Untagged
@@ -115,6 +146,8 @@ Transform:
   - {fileID: 8548885308080717677}
   - {fileID: 880926317188579030}
   - {fileID: 6758181311942557190}
+  - {fileID: 6217479702954512528}
+  - {fileID: 8236209126323138777}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -134,6 +167,8 @@ MonoBehaviour:
   _physical: {fileID: 6996034789979718622}
   _movement: {fileID: 9187983227317439594}
   _highlightRenderer: {fileID: 873419495765846316}
+  _attackZone: {fileID: 8103873357112265071}
+  _animator: {fileID: 8400908323452236361}
   _state: 0
 --- !u!114 &9130331117962152763
 MonoBehaviour:
@@ -187,6 +222,93 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 80
   m_CollisionDetection: 0
+--- !u!95 &8400908323452236361
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3506942077838322750}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 61fd3fbc8ecb63d4db5c392730ed8dc7, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!1 &6951858224026087955
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8236209126323138777}
+  - component: {fileID: 663658750123102786}
+  - component: {fileID: 6942228539914907704}
+  - component: {fileID: 8103873357112265071}
+  m_Layer: 13
+  m_Name: AttackZone
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8236209126323138777
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6951858224026087955}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.346, z: 0.327}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4698597076384118910}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!33 &663658750123102786
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6951858224026087955}
+  m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!136 &6942228539914907704
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6951858224026087955}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 0.06
+  m_Height: 0.3
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &8103873357112265071
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6951858224026087955}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4294ee1a2a6828a46984e60983511bf6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _chicken: {fileID: 1144447749319598529}
 --- !u!1001 &6356287878160419442
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -194,6 +316,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4698597076384118910}
     m_Modifications:
+    - target: {fileID: 205920026159181857, guid: ae40b607bad172d4d8da3e3d84a70f06, type: 3}
+      propertyPath: _chicken
+      value: 
+      objectReference: {fileID: 1144447749319598529}
+    - target: {fileID: 467713050602670418, guid: ae40b607bad172d4d8da3e3d84a70f06, type: 3}
+      propertyPath: _chicken
+      value: 
+      objectReference: {fileID: 1144447749319598529}
+    - target: {fileID: 814174834574752377, guid: ae40b607bad172d4d8da3e3d84a70f06, type: 3}
+      propertyPath: m_Layer
+      value: 13
+      objectReference: {fileID: 0}
     - target: {fileID: 3356782341382698271, guid: ae40b607bad172d4d8da3e3d84a70f06, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -250,6 +384,14 @@ PrefabInstance:
       propertyPath: _generalRigidbody
       value: 
       objectReference: {fileID: 7574887795398570963}
+    - target: {fileID: 7376994887483075727, guid: ae40b607bad172d4d8da3e3d84a70f06, type: 3}
+      propertyPath: _chicken
+      value: 
+      objectReference: {fileID: 1144447749319598529}
+    - target: {fileID: 7616701147841423407, guid: ae40b607bad172d4d8da3e3d84a70f06, type: 3}
+      propertyPath: _chicken
+      value: 
+      objectReference: {fileID: 1144447749319598529}
     - target: {fileID: 7761808636174096967, guid: ae40b607bad172d4d8da3e3d84a70f06, type: 3}
       propertyPath: m_Name
       value: Physical

@@ -21,7 +21,7 @@ public class ChickenAttack : MonoBehaviour
 
     void Update()
     {
-        bool canAttack = _tryAttacking && _animator && _attackZone && _attackZone.Enemy;
+        bool canAttack = _tryAttacking && _animator && _attackZone;
         _animator.SetBool("Attack", canAttack);
     }
 }

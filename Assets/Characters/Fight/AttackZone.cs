@@ -5,42 +5,48 @@ using UnityEngine;
 
 public class AttackZone : MonoBehaviour
 {
-    private static List<string> _teamTags = new List<string>{ "TeamA", "TeamB" };
+    //---Components---
+    [SerializeField] private Chicken _chicken = null;
 
-    private string _enemyTag;
-    private GameObject _enemy = null;
+    private Chicken _attackingChicken = null;
 
-    public GameObject Enemy { get { return _enemy; } }
+    // Start is called before the first frame update
     void Start()
     {
-        _enemyTag = _teamTags.FirstOrDefault(t => !CompareTag(t));
+
     }
 
+    // Update is called once per frame
     void Update()
     {
+
     }
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag(_enemyTag))
-            _enemy = other.gameObject;
+        FightBodyPart bodyPart = other.gameObject.GetComponent<FightBodyPart>();
+
+        if (!bodyPart)
+            return;
+
+        if (_chicken.IsEnemy(bodyPart.Chicken))
+        {
+            _attackingChicken = bodyPart.Chicken;
+            _chicken.IsAttacking = true;
+        }
     }
 
-    void OnTriggerExit(Collider other)
+    private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject == _enemy)
-            _enemy = null;
+        FightBodyPart bodyPart = other.gameObject.GetComponent<FightBodyPart>();
+
+        if (!bodyPart)
+            return;
+
+        if (_attackingChicken == bodyPart.Chicken)
+        {
+            _chicken.IsAttacking = false;
+            _attackingChicken = null;
+        }
     }
-
-   // void OnCollisionEnter(Collision collision)
-   // {
-   //     if (collision.gameObject.CompareTag(_enemyTag))
-   //     _enemy = collision.gameObject;
-   // }
-
-   //void OnCollisionExit(Collision collision)
-   // {
-   //     if (collision.gameObject == _enemy)
-   //         _enemy = null;
-   // }
 }

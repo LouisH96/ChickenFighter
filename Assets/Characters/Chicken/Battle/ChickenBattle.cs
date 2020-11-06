@@ -40,15 +40,27 @@ public class ChickenBattle : MonoBehaviour
     {
         if(_chickenA)
         {
-            _chickenA.EndBattle();
+            Chicken a = _chickenA;
             _chickenA = null;
+            a.EndBattle();
         }
 
         if(_chickenB)
         {
-            _chickenB.EndBattle();
+            Chicken b = _chickenB;
             _chickenB = null;
+            b.EndBattle();
         }
+    }
+
+    public bool IsEnemy(Chicken ally, Chicken possibleEnemy)
+    {
+        if (_chickenA == ally && _chickenB == possibleEnemy)
+            return true;
+        else
+        if (_chickenB == ally && _chickenA == possibleEnemy)
+            return true;
+        else return false;
     }
 
     public Chicken GetEnemy(Chicken chicken)

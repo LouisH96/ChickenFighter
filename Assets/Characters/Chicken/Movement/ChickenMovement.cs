@@ -42,9 +42,9 @@ public class ChickenMovement : MonoBehaviour
 
     public void  ChangeState(Chicken.ChickenState newState)
     {
-        _agent.enabled = newState != Chicken.ChickenState.None;
         _farmBehavior.enabled = newState == Chicken.ChickenState.Farm;
         _chickenFightMovement.enabled = newState == Chicken.ChickenState.Fight;
+        _agent.enabled = newState != Chicken.ChickenState.None;
 
         if (newState == Chicken.ChickenState.Farm)
         {

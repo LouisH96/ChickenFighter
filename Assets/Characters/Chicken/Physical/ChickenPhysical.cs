@@ -110,6 +110,7 @@ public class ChickenPhysical : MonoBehaviour
 
     public void SetThrownState(Vector3 force)
     {
+        _bodyParts.ForEach(b => b.enabled = false);
         _generalCollider.enabled = true;
         _generalRigidbody.isKinematic = false;
 
@@ -130,7 +131,12 @@ public class ChickenPhysical : MonoBehaviour
 
     private void SetFightState()
     {
-        _state = Chicken.ChickenState.Fight;
+        _bodyParts.ForEach(b => b.enabled = true);
+        _generalCollider.enabled = false;
+        _generalRigidbody.isKinematic = true;
+        _characterController.enabled = true;
+        _beak.enabled = true;
 
+        _state = Chicken.ChickenState.Fight;
     }
 }

@@ -14,8 +14,8 @@ public class Attacker : MonoBehaviour
 
     void Update()
     {
-        if (_attackZone.Enemy != null)
-            Attack();
+        //if (_attackZone.Enemy != null)
+        //    Attack();
         
     }
 

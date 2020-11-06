@@ -70,7 +70,7 @@ public class ChickenFightMovement : MonoBehaviour
         _agent.MovementBehavior = _retreatBehavior;
         _retreatBehavior.enabled = true;
 
-        _behaviorTimeLeft = _retreatDuration * (1.0f + Random.Range(_maxDurationOffRatio, _maxDurationOffRatio));
+        _behaviorTimeLeft = _retreatDuration * (1.0f + Random.Range(-_maxDurationOffRatio, _maxDurationOffRatio));
     }
 
     private void SetAttackBehavior()
@@ -83,6 +83,6 @@ public class ChickenFightMovement : MonoBehaviour
         _agent.MovementBehavior = _attackBehavior;
         _attackBehavior.enabled = true;
 
-        _behaviorTimeLeft = _attackDuration * (1.0f + Random.Range(_maxDurationOffRatio, _maxDurationOffRatio));
+        _behaviorTimeLeft = _attackDuration * (1.0f + Random.Range(-_maxDurationOffRatio, _maxDurationOffRatio));
     }
 }

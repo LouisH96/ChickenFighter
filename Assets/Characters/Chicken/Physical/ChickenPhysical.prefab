@@ -814,6 +814,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3356782341382698271}
   - component: {fileID: 4116565722343901612}
+  - component: {fileID: 168234613674634205}
   m_Layer: 0
   m_Name: ChickenPhysical
   m_TagString: Untagged
@@ -852,6 +853,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 547f6aac62299994ca18674833d580f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _chicken: {fileID: 0}
+  _body: {fileID: 0}
+  _characterController: {fileID: 0}
+  _generalCollider: {fileID: 168234613674634205}
+  _generalRigidbody: {fileID: 0}
+--- !u!65 &168234613674634205
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7761808636174096967}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 0
+  serializedVersion: 2
+  m_Size: {x: 0.34, y: 0.38, z: 0.34}
+  m_Center: {x: 0, y: 0.2, z: 0}
 --- !u!1 &8248280165523687697
 GameObject:
   m_ObjectHideFlags: 0
@@ -1307,14 +1326,14 @@ PrefabInstance:
       objectReference: {fileID: 2531554052291607702}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 990d416c497e0bc4a8888f1c9106ec90, type: 3}
---- !u!1 &1631748867825187048 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1829468794138285883, guid: 990d416c497e0bc4a8888f1c9106ec90, type: 3}
-  m_PrefabInstance: {fileID: 1136797028326305747}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &4230125474384414224 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3851380785510115779, guid: 990d416c497e0bc4a8888f1c9106ec90, type: 3}
+  m_PrefabInstance: {fileID: 1136797028326305747}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1631748867825187048 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1829468794138285883, guid: 990d416c497e0bc4a8888f1c9106ec90, type: 3}
   m_PrefabInstance: {fileID: 1136797028326305747}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5789936234919811993
@@ -1367,6 +1386,10 @@ PrefabInstance:
     - target: {fileID: 2649632491215615193, guid: e1797b7a862b1534eb0e742215d87439, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3132874686078889609, guid: e1797b7a862b1534eb0e742215d87439, type: 3}
+      propertyPath: m_IsKinematic
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6563288262107800032, guid: e1797b7a862b1534eb0e742215d87439, type: 3}
       propertyPath: m_Name

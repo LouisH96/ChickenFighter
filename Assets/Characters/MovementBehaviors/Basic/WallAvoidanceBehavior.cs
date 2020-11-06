@@ -75,6 +75,11 @@ public class WallAvoidanceBehavior : ArriveBehavior
     }
 
 
+    private void OnDisable()
+    {
+        _isAvoidingWall = false;
+    }
+
     private void CastWallDetectionRay()
     {
         Ray ray = new Ray(transform.position, transform.forward);

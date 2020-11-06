@@ -15,15 +15,27 @@ public class Chicken : MonoBehaviour
     [SerializeField] private ChickenStats _stats = null;
     [SerializeField] private ChickenPhysical _physical = null;
     [SerializeField] private ChickenMovement _movement = null;
-    [SerializeField] private FarmChicken2 _farmChicken = null;
-    [SerializeField] private FightChicken2 _fightChicken = null;
     [SerializeField] private Renderer _highlightRenderer = null;
 
     //---Variables---
     [SerializeField] private ChickenState _state = ChickenState.None;
+    private ChickenBattle _battle = null;
 
     //---Public---
     public ChickenStats Stats { get{ return _stats; } }
+
+    public ChickenBattle Battle { get { return _battle; } }
+
+    public Chicken BattleEnemy
+    {
+        get
+        {
+            if (_battle)
+                return _battle.GetEnemy(this);
+            else
+                return null;
+        }
+    }
 
     void Awake()
     {
@@ -38,9 +50,6 @@ public class Chicken : MonoBehaviour
     {
         _movement.ChangeState(newState);
         _physical.ChangeState(newState);
-
-        _farmChicken.enabled = newState == ChickenState.Farm;
-        _fightChicken.enabled = newState == ChickenState.Fight;
 
         _state = newState;
     }
@@ -64,5 +73,25 @@ public class Chicken : MonoBehaviour
         _movement.ChangeState(ChickenState.Thrown);
 
         _state = ChickenState.Thrown;
+    }
+
+    public void StartBattle(ChickenBattle battle)
+    {
+        if (_battle)
+            _battle.EndBattle();
+
+        _battle = battle;
+
+        ChangeState(ChickenState.Fight);
+    }
+
+    public void EndBattle()
+    {
+        if (_battle)
+            _battle.EndBattle();
+
+        _battle = null;
+
+        ChangeState(ChickenState.Farm);
     }
 }

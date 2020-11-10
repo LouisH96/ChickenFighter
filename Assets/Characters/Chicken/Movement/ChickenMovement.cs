@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ChickenMovement : MonoBehaviour
 {
+    //--- State Enum ---
     //---Components---
     [SerializeField] private Chicken _chicken = null;
     [SerializeField] private MovementAgent _agent = null;
@@ -39,7 +40,7 @@ public class ChickenMovement : MonoBehaviour
 
     void Update()
     {
-
+        
     }
 
     public void  ChangeState(Chicken.ChickenState newState)

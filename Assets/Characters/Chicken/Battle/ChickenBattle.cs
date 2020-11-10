@@ -9,25 +9,25 @@ using UnityEngine.Assertions;
 
 public class ChickenBattle : MonoBehaviour
 {
+    //temp
     [SerializeField] private Chicken _firstChicken = null;
-    [SerializeField] private List<List<Chicken>> _teams = new List<List<Chicken>>();
-
     [SerializeField] private bool _isFarmBattle = true;
-    
+
+    //--- Variables ---
+    private List<List<Chicken>> _teams = new List<List<Chicken>>();
     private bool _fightPaused = true;
 
     public bool IsPaused { get { return _fightPaused; } }
 
-    // Start is called before the first frame update
     void Start()
     {
-        if(_firstChicken && !_isFarmBattle)
-        AddChickenToNewTeam(_firstChicken);
+        if (_firstChicken && !_isFarmBattle)
+            AddChickenToNewTeam(_firstChicken);
     }
 
-    // Update is called once per frame
     void Update()
     {
+
     }
 
     public void TryStartBattle()

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -6,6 +7,7 @@ using UnityEngine.Assertions;
 
 public class ChickenGrab : MonoBehaviour
 {
+
     [SerializeField] private float _chickenEjectionForce = 100.0f;
     [SerializeField] private Transform[] _hoverLocations = null;
     private Chicken _chickenToPickup = null;
@@ -23,12 +25,12 @@ public class ChickenGrab : MonoBehaviour
         if (Input.GetAxis("Action1") > 0.0f
             && _chickenToPickup)
         {
-            Transform location = GetEmptyHoverLocation();
+            Transform location = GetEmptyGrabLocation();
             Assert.IsNotNull(location); //if there is no location available, _chickenToPickup should be null
 
             //change chickenMode
             _chickenToPickup.SetHighlight(false);
-            _chickenToPickup.PickUp(location);
+            _chickenToPickup.Grab(location);
 
             //move chicken
             _chickenToPickup = null;
@@ -58,7 +60,7 @@ public class ChickenGrab : MonoBehaviour
         Assert.IsFalse(IsChickenAlreadyPickedup(chicken)); //if picked up, should no trigger this again
 
         //is there an empty location ?
-        Transform emptyLocation = GetEmptyHoverLocation();
+        Transform emptyLocation = GetEmptyGrabLocation();
         if (!emptyLocation)
             return;
 
@@ -108,7 +110,7 @@ private void UnsetChickenToPickup()
     _chickenToPickup = null;
 }
 
-private Transform GetEmptyHoverLocation()
+public Transform GetEmptyGrabLocation()
 {
     //location is empty if it has no childs
     foreach (Transform location in _hoverLocations)

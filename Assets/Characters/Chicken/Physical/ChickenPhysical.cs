@@ -7,141 +7,187 @@ using UnityEngine.Assertions;
 
 public class ChickenPhysical : MonoBehaviour
 {
+    //--- State-Enum ---
+    public enum PhysicalState
+    {
+        Character, Kinematic, Physics
+    }
+
     //---Components---
     [SerializeField] private Chicken _chicken = null;
-    private List<FightBodyPart> _bodyParts = new List<FightBodyPart>();
-    [SerializeField] FightBodyPart _body = null;
-    private Beak2 _beak = null;
+
+    //--- Character-State Components ---
     [SerializeField] private CharacterController _characterController = null;
-    [SerializeField] private Collider _generalCollider = null;
-    [SerializeField] private Rigidbody _generalRigidbody = null;
+
+    //--- Physics-State components ---
+    [SerializeField] private Collider _collider = null;
+    [SerializeField] private Rigidbody _rigidbody = null;
 
     //---Variables---
-    private Chicken.ChickenState _state = Chicken.ChickenState.None;
-    private Transform _beforePickupTransform = null;
-    private Chicken.ChickenState _beforePickupState = Chicken.ChickenState.None;
-    private bool _tryToGetOutOfThrownState = false;
+    private PhysicalState _state = PhysicalState.Character;
+
+    //--- Physics-State Variables ---
+    private bool _tryToGetOutOfPhysicsState = false;
+
+    //--- Public Variable Accessers ---
+    public PhysicalState State { get { return _state; } }
 
     void Awake()
     {
-        _bodyParts = GetComponentsInChildren<FightBodyPart>().ToList();
 
-        Assert.IsTrue(_bodyParts.TrueForAll(b => b.gameObject.layer == LayerMask.NameToLayer("FightBodyParts")), "Not all FightBodyPart were of that layer");
-
-        _beak = GetComponentInChildren<Beak2>();
     }
 
-    private void Start()
+    void Start()
     {
-        ChangeState(_state);
+        EnableKinematicState(false);
+        EnablePhysicsState(false);
+
+        EnableCharacterState(true);
+        _state = PhysicalState.Character;
     }
 
     void Update()
     {
-        if (_tryToGetOutOfThrownState)
-            TryToGetOutOfThrownState();
+        if (_tryToGetOutOfPhysicsState)
+            TryToGetOutOfPhysicalState();
     }
 
-    private void TryToGetOutOfThrownState()
+    //--- Public Functions ---
+    public void AddForce(Vector3 force)
     {
-        if (_generalRigidbody.velocity.sqrMagnitude < 0.1f)
-        {
-            _tryToGetOutOfThrownState = false;
+        if (_state != PhysicalState.Physics)
+            return;
 
-
-            _chicken.ChangeState(Chicken.ChickenState.Farm);
-
-            if (_chicken.IsInBattle())
-                _chicken.Battle.OnChickenWakeUp(_chicken);
-        }
+        _rigidbody.AddForce(force);
     }
 
-    public void ChangeState(Chicken.ChickenState newState)
+    public void ChangeParent(Transform newParent, bool moveToParentOrigin)
     {
-        switch (newState)
-        {
-            case Chicken.ChickenState.Farm:
-                SetFarmWanderState();
-                break;
-            case Chicken.ChickenState.Fight:
-                SetFightState();
-                break;
-            case Chicken.ChickenState.None:
-                SetNoState();
-                break;
-            case Chicken.ChickenState.PickedUp:
-                break;
-            default:
-                break;
-        }
-    }
-
-    private void SetNoState()
-    {
-        _characterController.enabled = false;
-        _bodyParts.ForEach(b => b.enabled = false);
-        _generalCollider.enabled = false;
-        _generalRigidbody.isKinematic = true;
-
-        _state = Chicken.ChickenState.None;
-    }
-
-    private void SetFarmWanderState()
-    {
-        _characterController.enabled = true;
-        _bodyParts.ForEach(b => b.enabled = false);
-        _generalCollider.enabled = false;
-        _generalRigidbody.isKinematic = true;
-
-        _state = Chicken.ChickenState.Farm;
-    }
-
-    public void SetPickedupState(Transform newParent)
-    {
-        _beforePickupTransform = newParent;
-        _beforePickupState = _state;
-
-        _characterController.enabled = false;
-        _bodyParts.ForEach(b => b.enabled = false);
-
         _chicken.transform.parent = newParent;
-        _chicken.transform.localPosition = Vector3.zero;
 
-        _generalCollider.enabled = false;
-        _generalRigidbody.isKinematic = true;
-
-        _state = Chicken.ChickenState.PickedUp;
+        if(moveToParentOrigin)
+            _chicken.transform.localPosition = Vector3.zero;
     }
 
-    public void SetThrownState(Vector3 force)
+
+    #region --- Change State ---
+    public void ChangeState(PhysicalState newState)
     {
-        _bodyParts.ForEach(b => b.enabled = false);
-        _generalCollider.enabled = true;
-        _generalRigidbody.isKinematic = false;
+        if (_state == newState)
+            return;
 
-        _generalRigidbody.AddForce(force);
+        _state = newState;
 
-        _chicken.transform.parent = _beforePickupTransform;
-        _beforePickupTransform = null;
-
-        Invoke(nameof(EnableTryToGetOutOfThrownState), 0.1f);
-
-        _state = Chicken.ChickenState.Thrown;
+        EnablePhysicsState(newState == PhysicalState.Physics);
+        EnableKinematicState(newState == PhysicalState.Kinematic);
+        EnableCharacterState(newState == PhysicalState.Character);
     }
 
-    private void EnableTryToGetOutOfThrownState()
+    private void EnableCharacterState(bool enable)
     {
-        _tryToGetOutOfThrownState = true;
+        _characterController.enabled = enable;
     }
 
-    private void SetFightState()
+    private void EnableKinematicState(bool enable)
     {
-        _bodyParts.ForEach(b => b.enabled = true);
-        _generalCollider.enabled = false;
-        _generalRigidbody.isKinematic = true;
-        _characterController.enabled = true;
-        _beak.enabled = true;
-
-        _state = Chicken.ChickenState.Fight;
+        _rigidbody.isKinematic = enable;
     }
+
+    private void EnablePhysicsState(bool enable)
+    {
+        _rigidbody.useGravity = enable;
+        _collider.enabled = enable;
+
+        if (enable == true)
+            Invoke(nameof(EnableTryToGetOutOfPhysicsState), 0.1f);
+        else
+        {
+            CancelInvoke(nameof(EnableTryToGetOutOfPhysicsState));
+            _tryToGetOutOfPhysicsState = false;
+        }
+    }
+
+    private void TryToGetOutOfPhysicalState()
+    {
+        Assert.IsTrue(_state == PhysicalState.Physics, "Can only try this if in physical state");
+
+        if (_rigidbody.velocity.sqrMagnitude < 0.1f)
+        {
+            _tryToGetOutOfPhysicsState = false;
+            ChangeState(PhysicalState.Character);
+        }
+    }
+
+    private void EnableTryToGetOutOfPhysicsState()
+    {
+        _tryToGetOutOfPhysicsState = true;
+    }
+
+    #endregion
+
+
+    //private void SetNoState()
+    //{
+    //    _characterController.enabled = false;
+    //    _bodyParts.ForEach(b => b.enabled = false);
+    //    _collider.enabled = false;
+    //    _rigidbody.isKinematic = true;
+
+    //    _state = Chicken.ChickenState.None;
+    //}
+
+    //private void SetFarmWanderState()
+    //{
+    //    _characterController.enabled = true;
+    //    _bodyParts.ForEach(b => b.enabled = false);
+    //    _collider.enabled = false;
+    //    _rigidbody.isKinematic = true;
+
+    //    _state = Chicken.ChickenState.Farm;
+    //}
+
+    //public void SetPickedupState(Transform newParent)
+    //{
+    //    _beforePickupTransform = newParent;
+    //    _beforePickupState = _state;
+
+    //    _characterController.enabled = false;
+    //    _bodyParts.ForEach(b => b.enabled = false);
+
+    //    _chicken.transform.parent = newParent;
+    //    _chicken.transform.localPosition = Vector3.zero;
+
+    //    _collider.enabled = false;
+    //    _rigidbody.isKinematic = true;
+
+    //    _state = Chicken.ChickenState.PickedUp;
+    //}
+
+    //public void SetThrownState(Vector3 force)
+    //{
+    //    _bodyParts.ForEach(b => b.enabled = false);
+    //    _collider.enabled = true;
+    //    _rigidbody.isKinematic = false;
+
+    //    _rigidbody.AddForce(force);
+
+    //    _chicken.transform.parent = _beforePickupTransform;
+    //    _beforePickupTransform = null;
+
+    //    Invoke(nameof(EnableTryToGetOutOfThrownState), 0.1f);
+
+    //    _state = Chicken.ChickenState.Thrown;
+    //}
+
+
+    //private void SetFightState()
+    //{
+    //    _bodyParts.ForEach(b => b.enabled = true);
+    //    _collider.enabled = false;
+    //    _rigidbody.isKinematic = true;
+    //    _characterController.enabled = true;
+    //    _beak.enabled = true;
+
+    //    _state = Chicken.ChickenState.Fight;
+    //}
 }

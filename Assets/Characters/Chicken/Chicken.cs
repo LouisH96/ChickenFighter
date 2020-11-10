@@ -16,6 +16,8 @@ public class Chicken : MonoBehaviour
     [SerializeField] private ChickenStats _stats = null;
     [SerializeField] private ChickenPhysical _physical = null;
     [SerializeField] private ChickenMovement _movement = null;
+    [SerializeField] private CC_Location _location = null;
+    [SerializeField] private ChickenFight _chickenFight = null;
     [SerializeField] private Renderer _highlightRenderer = null;
     [SerializeField] private AttackZone _attackZone = null;
     [SerializeField] private Animator _animator = null;
@@ -35,7 +37,13 @@ public class Chicken : MonoBehaviour
     //---Public---
     public ChickenStats Stats { get { return _stats; } set { _stats = value; } }
 
+    public ChickenPhysical Physical { get { return _physical; } }
+
+    public ChickenFight ChickenFight { get { return _chickenFight; } }
+
     public ChickenBattle Battle { get { return _battle; } }
+
+    public CC_Location LocationComponent { get { return _location; } }
 
     public Chicken BattleClosestEnemy
     {
@@ -96,6 +104,20 @@ public class Chicken : MonoBehaviour
         }
     }
 
+    public void Grab(Transform parent)
+    {
+        _physical.ChangeState(ChickenPhysical.PhysicalState.Kinematic);
+        _physical.ChangeParent(parent, true);
+        _location.SetGrabbed();
+    }
+
+    public void Throw(Vector3 force)
+    {
+        _physical.ChangeState(ChickenPhysical.PhysicalState.Physics);
+        _physical.ChangeParent(null, false);
+        _physical.AddForce(force);
+    }
+
     private void TryBreed()
     {
         Chicken partner = _allChickens
@@ -133,7 +155,7 @@ public class Chicken : MonoBehaviour
     public void ChangeState(ChickenState newState)
     {
         _movement.ChangeState(newState);
-        _physical.ChangeState(newState);
+        //_physical.ChangeState(newState);
 
         _attackZone.enabled = newState == ChickenState.Fight;
         IsAttacking = false;
@@ -146,25 +168,25 @@ public class Chicken : MonoBehaviour
         _highlightRenderer.enabled = isHighlighted;
     }
 
-    public void PickUp(Transform parent)
-    {
-        _physical.SetPickedupState(parent);
-        _movement.ChangeState(ChickenState.PickedUp);
+    //public void PickUp(Transform parent)
+    //{
+    //    _physical.SetPickedupState(parent);
+    //    _movement.ChangeState(ChickenState.PickedUp);
 
-        _attackZone.enabled = false;
+    //    _attackZone.enabled = false;
 
-        _state = ChickenState.PickedUp;
-    }
+    //    _state = ChickenState.PickedUp;
+    //}
 
-    public void Throw(Vector3 force)
-    {
-        _physical.SetThrownState(force);
-        _movement.ChangeState(ChickenState.Thrown);
+    //public void Throw(Vector3 force)
+    //{
+    //    _physical.SetThrownState(force);
+    //    _movement.ChangeState(ChickenState.Thrown);
 
-        _attackZone.enabled = false;
+    //    _attackZone.enabled = false;
 
-        _state = ChickenState.Thrown;
-    }
+    //    _state = ChickenState.Thrown;
+    //}
 
     public void AddToBattle(ChickenBattle battle)
     {

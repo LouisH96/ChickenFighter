@@ -7,7 +7,7 @@ using UnityEngine.Assertions;
 
 public class ChickenGrab : MonoBehaviour
 {
-
+    [SerializeField] private Farmer _farmer = null;   
     [SerializeField] private float _chickenEjectionForce = 100.0f;
     [SerializeField] private Transform[] _hoverLocations = null;
     private Chicken _chickenToPickup = null;
@@ -28,9 +28,13 @@ public class ChickenGrab : MonoBehaviour
             Transform location = GetEmptyGrabLocation();
             Assert.IsNotNull(location); //if there is no location available, _chickenToPickup should be null
 
+            ChickenPhysical chickenPhysical = _chickenToPickup.Physical;
+            if (!chickenPhysical)
+                return;
+
             //change chickenMode
             _chickenToPickup.SetHighlight(false);
-            _chickenToPickup.Grab(location);
+            chickenPhysical.Grab(location);
 
             //move chicken
             _chickenToPickup = null;
@@ -44,7 +48,11 @@ public class ChickenGrab : MonoBehaviour
         {
             foreach (Chicken chicken in GetPickedUpChickens())
             {
-                chicken.Throw(transform.forward * _chickenEjectionForce);
+                ChickenPhysical chickenPhysical = chicken.Physical;
+                if (!chickenPhysical)
+                    continue;
+
+                chickenPhysical.Throw(transform.forward * _chickenEjectionForce);
             }
         }
     }
@@ -52,7 +60,7 @@ public class ChickenGrab : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         //is chicken?
-        Chicken chicken = GetChickenFromCollider(other);
+        Chicken chicken = ChickenPhysical.GetCharacterChickenFromCollider(other);
         if (!chicken)
             return;
 
@@ -64,6 +72,13 @@ public class ChickenGrab : MonoBehaviour
         if (!emptyLocation)
             return;
 
+        ChickenPhysical chickenPhysical = chicken.Physical;
+        if (!chickenPhysical)
+            return;
+
+        if (!chickenPhysical.CanGrab())
+            return;
+
         //prepare for pickup
         SetChickenToPickup(chicken);
     }
@@ -71,7 +86,7 @@ public class ChickenGrab : MonoBehaviour
     private void OnTriggerExit(Collider other)
     {
         //is chicken?
-        Chicken chicken = GetChickenFromCollider(other);
+        Chicken chicken = ChickenPhysical.GetCharacterChickenFromCollider(other);
         if (!chicken)
             return;
 
@@ -80,14 +95,14 @@ public class ChickenGrab : MonoBehaviour
     }
 
 
-    //---Helperfunctions---
-    private Chicken GetChickenFromCollider(Collider collider)
-    {
-        if (collider.GetType() != typeof(CharacterController))
-            return null;
+    ////---Helperfunctions---
+    //private Chicken GetChickenFromCollider(Collider collider)
+    //{
+    //    if (collider.GetType() != typeof(CharacterController))
+    //        return null;
 
-       return collider.gameObject.GetComponent<Chicken>();
-    }
+    //   return collider.gameObject.GetComponent<Chicken>();
+    //}
 
 private void SetChickenToPickup(Chicken chicken)
 {

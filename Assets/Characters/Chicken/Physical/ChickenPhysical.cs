@@ -1,5 +1,7 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using TMPro;
 using UnityEngine;
@@ -7,6 +9,29 @@ using UnityEngine.Assertions;
 
 public class ChickenPhysical : MonoBehaviour
 {
+    #region ---- EventArgs ---
+    public class GrabbingEventArgs : CancelEventArgs
+    {
+
+    }
+    public class GrabbedEventArgs : EventArgs
+    {
+        public Transform Position = null;
+    }
+    public class ThrownEventArgs : EventArgs
+    {
+        public Vector3 Force = Vector3.zero;
+    }
+    #endregion
+
+    #region --- Events ---
+    //grab/throw
+    public event EventHandler<GrabbingEventArgs> Grabbing;
+    public event EventHandler<GrabbedEventArgs> Grabbed;
+    public event EventHandler<ThrownEventArgs> Thrown;
+    public event EventHandler<Chicken> Landed;
+    #endregion
+
     //--- State-Enum ---
     public enum PhysicalState
     {
@@ -46,6 +71,45 @@ public class ChickenPhysical : MonoBehaviour
         _state = PhysicalState.Character;
     }
 
+    public bool CanGrab()
+    {
+        if (_state != PhysicalState.Character)
+            return false;
+
+        var args = new GrabbingEventArgs() { };
+        Grabbing?.Invoke(this, args);
+
+        return !args.Cancel;
+    }
+
+    public void Grab(Transform parent)
+    {
+        if (!CanGrab())
+            return;
+
+        ChangeState(PhysicalState.Kinematic);
+        ChangeParent(parent, true);
+
+        var args = new GrabbedEventArgs
+        {
+            Position = parent
+        };
+        Grabbed?.Invoke(this, args);
+    }
+
+    public void Throw(Vector3 force)
+    {
+        ChangeState(PhysicalState.Physics);
+        ChangeParent(null, false);
+        AddForce(force);
+
+        var args = new ThrownEventArgs()
+        {
+            Force = force
+        };
+        Thrown?.Invoke(this, args);
+    }
+
     void Update()
     {
         if (_tryToGetOutOfPhysicsState)
@@ -65,10 +129,9 @@ public class ChickenPhysical : MonoBehaviour
     {
         _chicken.transform.parent = newParent;
 
-        if(moveToParentOrigin)
+        if (moveToParentOrigin)
             _chicken.transform.localPosition = Vector3.zero;
     }
-
 
     #region --- Change State ---
     public void ChangeState(PhysicalState newState)
@@ -115,6 +178,8 @@ public class ChickenPhysical : MonoBehaviour
         {
             _tryToGetOutOfPhysicsState = false;
             ChangeState(PhysicalState.Character);
+
+            Landed?.Invoke(this, _chicken);
         }
     }
 
@@ -125,69 +190,51 @@ public class ChickenPhysical : MonoBehaviour
 
     #endregion
 
+    #region --- Static Get Chicken From Collider ---
 
-    //private void SetNoState()
-    //{
-    //    _characterController.enabled = false;
-    //    _bodyParts.ForEach(b => b.enabled = false);
-    //    _collider.enabled = false;
-    //    _rigidbody.isKinematic = true;
+    public static Chicken GetChicken(Collider collider)
+    {
+        Chicken chicken = null;
 
-    //    _state = Chicken.ChickenState.None;
-    //}
+        chicken = GetCharacterChickenFromCollider(collider);
+        if (!chicken)
+            chicken = GetPhysicsChickenFromCollider(collider);
 
-    //private void SetFarmWanderState()
-    //{
-    //    _characterController.enabled = true;
-    //    _bodyParts.ForEach(b => b.enabled = false);
-    //    _collider.enabled = false;
-    //    _rigidbody.isKinematic = true;
+        return chicken;
+    }
 
-    //    _state = Chicken.ChickenState.Farm;
-    //}
+    public static Chicken GetCharacterChickenFromCollider(Collider collider)
+    {
+        if (collider.GetType() != typeof(CharacterController))
+            return null;
 
-    //public void SetPickedupState(Transform newParent)
-    //{
-    //    _beforePickupTransform = newParent;
-    //    _beforePickupState = _state;
+        return collider.gameObject.GetComponent<Chicken>();
+    }
 
-    //    _characterController.enabled = false;
-    //    _bodyParts.ForEach(b => b.enabled = false);
+    public static Chicken GetPhysicsChickenFromCollider(Collider collider)
+    {
+        if (collider.CompareTag("Chicken"))
+        {
+            if (collider.GetType() == typeof(BoxCollider))
+            {
+                return collider.transform.parent.GetComponent<Chicken>();
+            }
+        }
+        return null;
+    }
 
-    //    _chicken.transform.parent = newParent;
-    //    _chicken.transform.localPosition = Vector3.zero;
-
-    //    _collider.enabled = false;
-    //    _rigidbody.isKinematic = true;
-
-    //    _state = Chicken.ChickenState.PickedUp;
-    //}
-
-    //public void SetThrownState(Vector3 force)
-    //{
-    //    _bodyParts.ForEach(b => b.enabled = false);
-    //    _collider.enabled = true;
-    //    _rigidbody.isKinematic = false;
-
-    //    _rigidbody.AddForce(force);
-
-    //    _chicken.transform.parent = _beforePickupTransform;
-    //    _beforePickupTransform = null;
-
-    //    Invoke(nameof(EnableTryToGetOutOfThrownState), 0.1f);
-
-    //    _state = Chicken.ChickenState.Thrown;
-    //}
-
-
-    //private void SetFightState()
-    //{
-    //    _bodyParts.ForEach(b => b.enabled = true);
-    //    _collider.enabled = false;
-    //    _rigidbody.isKinematic = true;
-    //    _characterController.enabled = true;
-    //    _beak.enabled = true;
-
-    //    _state = Chicken.ChickenState.Fight;
-    //}
+    public static Chicken GetChicken(Collider collider, PhysicalState state)
+    {
+        switch (state)
+        {
+            case PhysicalState.Character:
+                return GetCharacterChickenFromCollider(collider);
+            case PhysicalState.Kinematic:
+                return null;//todo (unused atm)
+            case PhysicalState.Physics:
+                return GetPhysicsChickenFromCollider(collider);
+        }
+        return null;
+    }
+    #endregion
 }

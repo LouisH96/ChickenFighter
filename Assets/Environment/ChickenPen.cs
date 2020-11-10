@@ -8,163 +8,62 @@ public class ChickenPen : MonoBehaviour
     //--- Variables ---
     List<Chicken> _chickens = new List<Chicken>();
 
-    void Start()
+    private void Update()
     {
-
+        Debug.Log(_chickens.Count + " in pen");
     }
 
-    void Update()
+    public void AddChicken(Chicken chicken)
     {
-
+        if (!_chickens.Contains(chicken))
+        {
+            _chickens.Add(chicken);
+        }
+        else
+        {
+            Assert.IsTrue(true, "chicken is already added to pen, so cannot add it");
+        }
     }
+    public void RemoveChicken(Chicken chicken)
+    {
+        if (_chickens.Contains(chicken))
+        {
+            _chickens.Remove(chicken);
+        }
+        else
+        {
+            Assert.IsTrue(true, "chicken is not added to pen, so cannot delete it");
+        }
+    }
+
 
     private void OnTriggerEnter(Collider other)
     {
-        Chicken chicken = GetPhysicalChicken(other);
+        Chicken chicken = ChickenPhysical.GetChicken(other);
 
         if (!chicken)
             return;
 
         Assert.IsFalse(_chickens.Contains(chicken), "chicken should not be in pen");
 
-        CC_Location locationComponent = chicken.LocationComponent;
+        CC_Location chickenLocation = chicken.Location;
 
-        if (locationComponent)
-            chicken.LocationComponent.OnPenEntered(this);
+        if (!chickenLocation)
+            return;
+
+        chickenLocation.EnterPen(this);
 
     }
     private void OnTriggerExit(Collider other)
     {
-        Chicken chicken = GetPhysicalChicken(other);
-        CC_Location locationComp = null;
-
-        if(chicken)
-        {
-            locationComp = chicken.LocationComponent;
-            if (locationComp)
-                locationComp.OnPenExited(this);
-        }
-        //else
-        //{
-        //    Farmer farmer = GetFarmer(other);
-        //    if(farmer)
-        //    {
-        //        foreach(Chicken grabbedChicken in farmer.GrabbedChickens)
-        //        {
-        //            locationComp = grabbedChicken.LocationComponent;
-        //            if (locationComp)
-        //                locationComp.OnPenExited(this);
-        //        }
-        //    }
-        //}
-    }
-
-    public void EnterPen(Chicken chicken)
-    {
-        if (_chickens.Contains(chicken))
-        {
-            Assert.IsTrue(true, "chicken is already in pen");
+        Chicken chicken = ChickenPhysical.GetChicken(other);
+        if (!chicken)
             return;
-        }
 
-        _chickens.Add(chicken);
+        CC_Location chickenLocation = chicken.Location;
+        if (!chickenLocation)
+            return;
+
+        chickenLocation.ExitPen(this);
     }
-
-    public void ExitPen(Chicken chicken)
-    {
-        if (_chickens.Contains(chicken))
-            _chickens.Remove(chicken);
-        else
-            Assert.IsTrue(true, "cannot exit pen because chicken was not in pen");
-    }
-
-    private List<Chicken> GetChickensFromCollider(Collider other)
-    {
-        Chicken thrownChicken = GetPhysicalChicken(other);
-
-        if (thrownChicken != null)
-            return new List<Chicken> { thrownChicken };
-
-        Farmer farmer = GetFarmer(other);
-
-        if (farmer != null)
-            return farmer.GrabbedChickens;
-
-        else return null;
-    }
-
-    public Farmer GetFarmer(Collider other)
-    {
-        if (other.GetType() == typeof(CharacterController))
-        {
-            if (other.CompareTag("Player"))
-            {
-                return other.GetComponent<Farmer>();
-            }
-        }
-
-        return null;
-    }
-
-    public Chicken GetPhysicalChicken(Collider other)
-    {
-        if (other.CompareTag("Chicken"))
-        {
-            if (other.GetType() == typeof(BoxCollider))
-            {
-                return other.transform.parent.GetComponent<Chicken>();
-            }
-        }
-        return null;
-    }
-
-    //private void OnTriggerEnter(Collider other)
-    //{
-    //    List<Chicken> enteredChickens = GetChickensFromCollider(other);
-
-    //    if (enteredChickens != null)
-    //    {
-    //        foreach (var chicken in enteredChickens)
-    //        {
-    //            //Debug.Log("add " + chicken.name + " to battle");
-    //            if (_isFarmBattle)
-    //                AddChickenToNewTeam(chicken);
-    //            else
-    //            {
-    //                if (_teams.Count > 1)
-    //                    AddChickenToTeam(chicken, _teams[1]);
-    //                else
-    //                    AddChickenToNewTeam(chicken);
-    //            }
-    //        }
-    //    }
-    //}
-    //private void OnTriggerExit(Collider other)
-    //{
-    //    List<Chicken> enteredChickens = GetChickensFromCollider(other);
-
-    //    if (enteredChickens != null)
-    //    {
-    //        foreach (var chicken in enteredChickens)
-    //        {
-    //            //Debug.Log("remove " + chicken.name + " from battle");
-    //            RemoveChickenOutOfBattle(chicken);
-    //        }
-    //    }
-    //}
-
-    //private List<Chicken> GetChickensFromCollider(Collider other)
-    //{
-    //    Chicken thrownChicken = IsThrownChicken(other);
-
-    //    if (thrownChicken != null)
-    //        return new List<Chicken> { thrownChicken };
-
-    //    Farmer farmer = IsFarmer(other);
-
-    //    if (farmer != null)
-    //        return farmer.GrabbedChickens;
-
-    //    else return null;
-    //}
 }

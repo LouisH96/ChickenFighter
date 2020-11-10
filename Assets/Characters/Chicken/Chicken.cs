@@ -1,12 +1,21 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Assertions;
 
 public class Chicken : MonoBehaviour
 {
+    #region --- EventArgs ---
+    #endregion
+
+    #region --- Events ---
+    #endregion
+
+
+
     public enum ChickenState
     {
         Farm, Fight, PickedUp, Thrown, None
@@ -43,7 +52,7 @@ public class Chicken : MonoBehaviour
 
     public ChickenBattle Battle { get { return _battle; } }
 
-    public CC_Location LocationComponent { get { return _location; } }
+    public CC_Location Location { get { return _location; } }
 
     public Chicken BattleClosestEnemy
     {
@@ -102,20 +111,6 @@ public class Chicken : MonoBehaviour
         {
             TryBreed();
         }
-    }
-
-    public void Grab(Transform parent)
-    {
-        _physical.ChangeState(ChickenPhysical.PhysicalState.Kinematic);
-        _physical.ChangeParent(parent, true);
-        _location.SetGrabbed();
-    }
-
-    public void Throw(Vector3 force)
-    {
-        _physical.ChangeState(ChickenPhysical.PhysicalState.Physics);
-        _physical.ChangeParent(null, false);
-        _physical.AddForce(force);
     }
 
     private void TryBreed()

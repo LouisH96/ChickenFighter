@@ -3,14 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
 using TMPro;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Assertions;
 
 public class ChickenBattle : MonoBehaviour
 {
+    [SerializeField] private Chicken _firstChicken = null;
     [SerializeField] private List<List<Chicken>> _teams = new List<List<Chicken>>();
 
     [SerializeField] private bool _isFarmBattle = true;
+    
     private bool _fightPaused = true;
 
     public bool IsPaused { get { return _fightPaused; } }
@@ -18,7 +21,8 @@ public class ChickenBattle : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        if(_firstChicken && !_isFarmBattle)
+        AddChickenToNewTeam(_firstChicken);
     }
 
     // Update is called once per frame
@@ -33,8 +37,8 @@ public class ChickenBattle : MonoBehaviour
              .Where(c => c.CanFight()).ToList()
              .ForEach(c => c.WakeupFromBattlePause());
 
-        if(!ShouldBePaused())
-           _fightPaused = false; 
+        if (!ShouldBePaused())
+            _fightPaused = false;
     }
 
     public void EndBattle()
@@ -103,7 +107,7 @@ public class ChickenBattle : MonoBehaviour
 
     public void OnChickenWakeUp(Chicken chicken)
     {
-        if (!_teams.Any(t=> t.Contains(chicken)))
+        if (!_teams.Any(t => t.Contains(chicken)))
             return;
 
         if (!ShouldBePaused())
@@ -124,7 +128,15 @@ public class ChickenBattle : MonoBehaviour
             foreach (var chicken in enteredChickens)
             {
                 //Debug.Log("add " + chicken.name + " to battle");
-                AddChickenToNewTeam(chicken);
+                if (_isFarmBattle)
+                    AddChickenToNewTeam(chicken);
+                else
+                {
+                    if (_teams.Count > 1)
+                        AddChickenToTeam(chicken, _teams[1]);
+                    else
+                        AddChickenToNewTeam(chicken);
+                }
             }
         }
     }
@@ -152,7 +164,7 @@ public class ChickenBattle : MonoBehaviour
         Farmer farmer = IsFarmer(other);
 
         if (farmer != null)
-                 return farmer.GrabbedChickens;
+            return farmer.GrabbedChickens;
 
         else return null;
     }

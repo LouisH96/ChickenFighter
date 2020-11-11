@@ -14,7 +14,7 @@ public class Beak2 : MonoBehaviour
         if (!bodyPart)
             return;
 
-        if (_chicken.IsEnemy(bodyPart.Chicken))
+        if (_chicken.ChickenFight.Battle.IsEnemy(_chicken, bodyPart.Chicken))
         {
             if(bodyPart.Chicken.CurrentHealth <= _chicken.Stats.Damage)
             {

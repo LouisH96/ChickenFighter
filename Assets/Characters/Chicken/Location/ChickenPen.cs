@@ -1,23 +1,26 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using UnityEngine;
 using UnityEngine.Assertions;
 
 public class ChickenPen : MonoBehaviour
 {
-    //--- Variables ---
-    List<Chicken> _chickens = new List<Chicken>();
+    public event EventHandler<Chicken> ChickenAdded;
+    public event EventHandler<Chicken> ChickenRemoved;
 
-    private void Update()
-    {
-        Debug.Log(_chickens.Count + " in pen");
-    }
+    //--- Variables ---
+    private List<Chicken> _chickens = new List<Chicken>();
+    
+    public ReadOnlyCollection<Chicken> Chickens { get { return _chickens.AsReadOnly(); } }
 
     public void AddChicken(Chicken chicken)
     {
         if (!_chickens.Contains(chicken))
         {
             _chickens.Add(chicken);
+            ChickenAdded?.Invoke(this, chicken);
         }
         else
         {
@@ -29,6 +32,7 @@ public class ChickenPen : MonoBehaviour
         if (_chickens.Contains(chicken))
         {
             _chickens.Remove(chicken);
+            ChickenRemoved?.Invoke(this, chicken);
         }
         else
         {
@@ -36,12 +40,14 @@ public class ChickenPen : MonoBehaviour
         }
     }
 
-
     private void OnTriggerEnter(Collider other)
     {
         Chicken chicken = ChickenPhysical.GetChicken(other);
 
         if (!chicken)
+            return;
+
+        if (_chickens.Contains(chicken))
             return;
 
         Assert.IsFalse(_chickens.Contains(chicken), "chicken should not be in pen");

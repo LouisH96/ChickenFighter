@@ -39,6 +39,11 @@ public class SeekBehavior : MovementBehavior
         }
     }
 
+    void OnEnable()
+    {
+        _target = transform.position;
+    }
+
     public override MovementOutput HandleMovement(MovementAgent agent)
     {
         MovementOutput output = new MovementOutput { IsValid = true, ShouldJump = false };

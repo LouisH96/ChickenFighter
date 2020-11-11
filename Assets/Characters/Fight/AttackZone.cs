@@ -1,19 +1,26 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor;
 using UnityEngine;
 
 public class AttackZone : MonoBehaviour
 {
     //---Components---
     [SerializeField] private Chicken _chicken = null;
+    private Collider _collider = null;
 
     private List<FightBodyPart> _targets = new List<FightBodyPart>();
 
-    // Start is called before the first frame update
+    void Awake()
+    {
+        _collider = GetComponent<Collider>();
+    }
+
     void Start()
     {
-
+        _chicken.ChickenFight.BattleLeft += ChickenFight_BattleLeft;
+        _chicken.ChickenFight.EnemyLeft += ChickenFight_EnemyLeft;
     }
 
     // Update is called once per frame
@@ -31,10 +38,15 @@ public class AttackZone : MonoBehaviour
         if (!bodyPart)
             return;
 
-        if (_chicken.IsEnemy(bodyPart.Chicken))
+        ChickenBattle2 battle = _chicken.ChickenFight.Battle;
+
+        if(battle)
         {
-            _targets.Add(bodyPart);
-            _chicken.IsAttacking = true;
+            if(battle.IsEnemy(_chicken, bodyPart.Chicken))
+            {
+                _targets.Add(bodyPart);
+                _chicken.IsAttacking = true;
+            }
         }
     }
 
@@ -50,7 +62,20 @@ public class AttackZone : MonoBehaviour
             _targets.Remove(bodyPart);
 
             if (_targets.Count == 0)
-                _chicken.IsAttacking = false;
+                _chicken.IsAttacking = true;
         }
+    }
+
+    private void ChickenFight_BattleLeft(object sender, ChickenBattle2 e)
+    {
+        _targets.Clear();
+        _chicken.IsAttacking = false;
+    }
+
+    private void ChickenFight_EnemyLeft(object sender, Chicken e)
+    {
+        _targets.RemoveAll(bodyPart => bodyPart.Chicken == e);
+        if (_targets.Count == 0)
+            _chicken.IsAttacking = false;
     }
 }

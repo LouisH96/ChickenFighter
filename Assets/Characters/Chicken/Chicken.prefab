@@ -90,6 +90,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6217479702954512528}
+  - component: {fileID: 370810097894258247}
   m_Layer: 0
   m_Name: Battle
   m_TagString: Untagged
@@ -111,6 +112,20 @@ Transform:
   m_Father: {fileID: 4698597076384118910}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &370810097894258247
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1475510659239127333}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 548e984c2099e704fb52b0ec27f428db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _chicken: {fileID: 1144447749319598529}
+  _physical: {fileID: 6996034789979718622}
 --- !u!1 &3506942077838322750
 GameObject:
   m_ObjectHideFlags: 0
@@ -168,9 +183,8 @@ MonoBehaviour:
   _physical: {fileID: 6996034789979718622}
   _movement: {fileID: 9187983227317439594}
   _location: {fileID: 4468184143196249458}
-  _chickenFight: {fileID: 0}
+  _chickenFight: {fileID: 370810097894258247}
   _highlightRenderer: {fileID: 873419495765846316}
-  _attackZone: {fileID: 8103873357112265071}
   _animator: {fileID: 8400908323452236361}
   _state: 0
   _breedInterval: 100
@@ -206,7 +220,7 @@ CharacterController:
   serializedVersion: 2
   m_Height: 0
   m_Radius: 0.175
-  m_SlopeLimit: 5
+  m_SlopeLimit: 1
   m_StepOffset: 0.001
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
@@ -478,6 +492,10 @@ PrefabInstance:
     - target: {fileID: 3930603769210975951, guid: e2a98162bc345cf4abfa94c25487d549, type: 3}
       propertyPath: _maxVelocity
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3930603769210975951, guid: e2a98162bc345cf4abfa94c25487d549, type: 3}
+      propertyPath: _maxAngularVelocity
+      value: 200
       objectReference: {fileID: 0}
     - target: {fileID: 4908779257407216049, guid: e2a98162bc345cf4abfa94c25487d549, type: 3}
       propertyPath: m_Name

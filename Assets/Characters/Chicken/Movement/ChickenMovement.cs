@@ -43,14 +43,31 @@ public class ChickenMovement : MonoBehaviour
 
     private void Start()
     {
+        _chicken.ChickenFight.BattleJoined += ChickenFight_BattleJoined;
+        _chicken.ChickenFight.BattleLeft += ChickenFight_BattleLeft;
+
         if (_currentState == State.Begin)
-            ChangeState(State.Idle);
+            ChangeState(State.Wander);
+    }
+
+    private void ChickenFight_BattleLeft(object sender, ChickenBattle2 e)
+    {
+        if (_currentState == State.Fight)
+            ChangeState(State.Wander);
+    }
+
+    private void ChickenFight_BattleJoined(object sender, ChickenBattle2 e)
+    {
+        ChangeState(State.Fight);
     }
 
     private void Physical_StateChanged(object sender, ChickenPhysical.StateChangedEventArgs e)
     {
         if (e.NewState == ChickenPhysical.PhysicalState.Character)
-            ChangeState(State.Wander);
+        {
+            if (_currentState == State.Idle)
+                ChangeState(State.Wander);
+        }
         else
             ChangeState(State.Idle);
     }

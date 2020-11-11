@@ -28,7 +28,6 @@ public class Chicken : MonoBehaviour
     [SerializeField] private CC_Location _location = null;
     [SerializeField] private ChickenFight _chickenFight = null;
     [SerializeField] private Renderer _highlightRenderer = null;
-    [SerializeField] private AttackZone _attackZone = null;
     [SerializeField] private Animator _animator = null;
 
     //---Variables---
@@ -109,7 +108,7 @@ public class Chicken : MonoBehaviour
         }
         else
         {
-            TryBreed();
+            //TryBreed();
         }
     }
 
@@ -152,7 +151,6 @@ public class Chicken : MonoBehaviour
         //_movement.ChangeState(newState);
         //_physical.ChangeState(newState);
 
-        _attackZone.enabled = newState == ChickenState.Fight;
         IsAttacking = false;
 
         _state = newState;
@@ -248,7 +246,7 @@ public class Chicken : MonoBehaviour
 
     public void Damage(float damage)
     {
-        _currentHealth -= damage;
+       // _currentHealth -= damage;
 
         if (_currentHealth <= 0.0f)
         {

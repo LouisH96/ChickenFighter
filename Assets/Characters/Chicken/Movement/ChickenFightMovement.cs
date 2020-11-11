@@ -31,7 +31,7 @@ public class ChickenFightMovement : MonoBehaviour
         _changeTargetTimer += Time.deltaTime;
         if (_changeTargetTimer > _changeTargetInterval)
         {
-            Chicken closest = _chicken.BattleClosestEnemy;
+            Chicken closest = _chicken.ChickenFight.Battle.GetEnemy(_chicken);
             
             _fleeBehavior.LockedTarget = closest.transform;
             _seekBehavior.LockedTarget = closest.transform;

@@ -22,9 +22,9 @@ public class WanderBehavior : SeekBehavior
 
     public override MovementOutput HandleMovement(MovementAgent agent)
     {
-        Target = agent.transform.position;
-        Target += agent.transform.forward * _offset;
-        Target += MyUtils.DegreesToVectorXZ(_currentAngle) * _radius;
+        Target3D = agent.transform.position;
+        Target3D += agent.transform.forward * _offset;
+        Target3D += MyUtils.DegreesToVectorXZ(_currentAngle) * _radius;
 
         return base.HandleMovement(agent);
     }
@@ -46,7 +46,7 @@ public class WanderBehavior : SeekBehavior
 
         Handles.color = Color.white;
         Handles.DrawWireDisc(transform.position + transform.forward * _offset, Vector3.up, _radius);
-        Handles.DrawSolidDisc(Target, Vector3.up, 0.05f);
+        Handles.DrawSolidDisc(Target3D, Vector3.up, 0.05f);
 #endif
     }
 }

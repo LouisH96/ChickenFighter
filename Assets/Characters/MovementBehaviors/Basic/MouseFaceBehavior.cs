@@ -6,6 +6,6 @@ public class MouseFaceBehavior : FaceBehavior
 { 
     void Update()
     {
-        _target = MySessionUtils.Instance.GetWorldMousePosition();
+        Target3D = MySessionUtils.Instance.GetWorldMousePosition();
     }
 }

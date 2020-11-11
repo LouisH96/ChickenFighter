@@ -99,7 +99,7 @@ public class WallAvoidanceBehavior : ArriveBehavior
 
         float randomSign = UnityEngine.Random.value < 0.5 ? -1.0f : 1.0f;
 
-        Vector3 rayVector = Target - transform.position;
+        Vector3 rayVector = Target3D - transform.position;
         rayVector = rayVector.normalized * _wallDetectionRadius;
         Ray ray = new Ray(transform.position, rayVector);
         Quaternion rotation = Quaternion.Euler(0.0f, randomSign * 360.0f / checks, 0.0f);
@@ -110,7 +110,7 @@ public class WallAvoidanceBehavior : ArriveBehavior
             _debugCornerChecks.Add(transform.position + rayVector);
             if (!Physics.Raycast(ray, out RaycastHit hit, _wallDetectionRadius, LayerMask.GetMask("StaticLevel", "DynamicLevel")))
             {
-                Target = rayVector + transform.position;
+                Target3D = rayVector + transform.position;
                 return;
             }
 
@@ -174,7 +174,7 @@ public class WallAvoidanceBehavior : ArriveBehavior
         Vector2 toGoal2D = toWallAvoidance + wallAvoidanceToGoal;
         Vector3 toGoal3D = new Vector3(toGoal2D.x, 0.0f, toGoal2D.y);
 
-        Target = transform.position + toGoal3D;
+        Target3D = transform.position + toGoal3D;
 
         //set debug points
         Vector2 toHitAvoidance = toWallAvoidance + wallToHit;
@@ -217,11 +217,11 @@ public class WallAvoidanceBehavior : ArriveBehavior
                 end = transform.position + _debugToGoal;
                 Debug.DrawLine(start, end);
 
-                Debug.DrawLine(transform.position, Target, Color.green);
+                Debug.DrawLine(transform.position, Target3D, Color.green);
             }
 
             Handles.color = Color.red;
-            Handles.DrawWireDisc(Target, Vector3.up, base.StopRadius);
+            Handles.DrawWireDisc(Target3D, Vector3.up, base.StopRadius);
         }
         else
         {

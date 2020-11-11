@@ -6,6 +6,6 @@ public class MouseArriveBehavior : ArriveBehavior
 {
     void Update()
     {
-        Target = MySessionUtils.Instance.MouseInWorld;
+        Target3D = MySessionUtils.Instance.MouseInWorld;
     }
 }

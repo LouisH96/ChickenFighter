@@ -17,7 +17,8 @@ public class Beak2 : MonoBehaviour
         ChickenBattle2 myBattle = _chicken.ChickenFight.Battle;
         ChickenBattle2 hitChickensBattle = bodyPart.Chicken.ChickenFight.Battle;
 
-        if (myBattle != hitChickensBattle)
+        if (myBattle != hitChickensBattle
+            || myBattle == null || hitChickensBattle == null)
             return;
 
         if (myBattle.IsEnemy(_chicken, bodyPart.Chicken))

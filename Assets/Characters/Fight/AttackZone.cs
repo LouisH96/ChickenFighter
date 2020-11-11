@@ -20,7 +20,6 @@ public class AttackZone : MonoBehaviour
     void Start()
     {
         _chicken.ChickenFight.BattleLeft += ChickenFight_BattleLeft;
-        _chicken.ChickenFight.EnemyLeft += ChickenFight_EnemyLeft;
     }
 
     // Update is called once per frame
@@ -72,9 +71,9 @@ public class AttackZone : MonoBehaviour
         _chicken.IsAttacking = false;
     }
 
-    private void ChickenFight_EnemyLeft(object sender, Chicken e)
+    public void RemoveFromTargets(Chicken chicken)
     {
-        _targets.RemoveAll(bodyPart => bodyPart.Chicken == e);
+        _targets.RemoveAll(bodyPart => bodyPart.Chicken == chicken);
         if (_targets.Count == 0)
             _chicken.IsAttacking = false;
     }

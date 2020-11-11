@@ -6,21 +6,29 @@ using UnityEngine;
 public class AutoRotationBehavior : FaceBehavior
 {
     //---Variables
-    private Vector3? _direction = null;
+    private Vector2? _direction = null;
 
     //---Public---
-    public Vector3? Direction
+    public Vector2? Direction2D
     {
         set { _direction = value; }
         get { return _direction; }
     }
 
-    public override Vector3 Target
+    public override Vector2 Target2D
     {
-        get { return _target; }
         set
         {
-            _target = value;
+            base.Target2D = value;
+            _direction = null;
+        }
+    }
+
+    public override Vector3 Target3D
+    {
+        set
+        {
+            base.Target3D = value;
             _direction = null;
         }
     }
@@ -28,7 +36,7 @@ public class AutoRotationBehavior : FaceBehavior
     public override RotationOutput HandleRotation(MovementAgent agent)
     {
         if (_direction != null)
-            _target = agent.transform.position + (Vector3)_direction;
+            Target2D = agent.Pos2D + (Vector2)_direction;
 
         return base.HandleRotation(agent);
     }

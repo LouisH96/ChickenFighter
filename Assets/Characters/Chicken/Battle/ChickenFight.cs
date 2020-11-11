@@ -20,7 +20,7 @@ public class ChickenFight : MonoBehaviour
     public event EventHandler<ChickenBattle2> BattleJoined;
     public event EventHandler<ChickenBattle2> BattleLeft;
 
-    public event EventHandler<Chicken> EnemyLeft;
+    //public event EventHandler<Chicken> EnemyLeft;
 
     public event EventHandler<DamageTakenEventArgs> DamageTaken;
     public event EventHandler<DamageTakenEventArgs> Died;
@@ -30,6 +30,7 @@ public class ChickenFight : MonoBehaviour
     [SerializeField] private Chicken _chicken;
     [SerializeField] private ChickenPhysical _physical;
     [SerializeField] private ChickenStats _stats;
+    [SerializeField] private AttackZone _attackZone;
 
     //--- Fight Components ---
     private List<FightBodyPart> _bodyParts = new List<FightBodyPart>();
@@ -98,8 +99,9 @@ public class ChickenFight : MonoBehaviour
 
     private void _battle_ChickenLeft(object sender, Chicken e)
     {
-        if(_battle.IsEnemy(_chicken, e))
-            EnemyLeft?.Invoke(this, e);
+        _attackZone.RemoveFromTargets(e);
+        //if(_battle.IsEnemy(_chicken, e))
+            //EnemyLeft?.Invoke(this, e);
     }
 
     public void LeaveBattle(ChickenBattle2 leavingBattle)

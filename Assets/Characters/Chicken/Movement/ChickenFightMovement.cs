@@ -49,7 +49,11 @@ public class ChickenFightMovement : MonoBehaviour
 
     private void OnEnable()
     {
-        Chicken closest = _chicken.BattleClosestEnemy;
+        ChickenBattle2 activeBattle = _chicken.ChickenFight.Battle;
+        if (!activeBattle)
+            return;
+
+        Chicken closest = activeBattle.GetEnemy(_chicken);
         if (!closest)
             return;
 

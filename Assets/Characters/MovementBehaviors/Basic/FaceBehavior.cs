@@ -9,18 +9,22 @@ public class FaceBehavior : RotationBehavior
     [SerializeField] protected float _slowDownAngle = 35.0f;
 
     //---Variables---
-    [SerializeField] protected Vector3 _target = Vector3.zero;
+    [SerializeField] private Vector2 _target = Vector2.zero;
 
     //---Public---
-    public virtual Vector3 Target { get { return _target; } set { _target = value; } }
+    public virtual Vector2 Target2D { get { return _target; } set { _target = value; } }
+    public virtual Vector3 Target3D
+    {
+        get { return new Vector3(_target.x, transform.position.y, _target.y); }
+        set { _target.x = value.x; _target.y = value.z; }
+    }
 
     public override RotationOutput HandleRotation(MovementAgent agent)
     {
         RotationOutput output = new RotationOutput { IsValid = true, DesiredAngularVelocity = 0.0f };
 
         Vector2 agentForward = new Vector2(agent.transform.forward.x, agent.transform.forward.z);
-        Vector2 targetPos = new Vector2(_target.x, _target.z);
-        Vector2 toTarget = new Vector2(_target.x - agent.transform.position.x, _target.z - agent.transform.position.z);
+        Vector2 toTarget = _target - agent.Pos2D;
 
         float angle = Vector2.SignedAngle(toTarget, agentForward);
 

@@ -56,6 +56,13 @@ public class MovementAgent : MonoBehaviour
     public MovementBehavior MovementBehavior { get { return _movementBehavior; } set { _movementBehavior = value; } }
     public RotationBehavior RotationBehavior { get { return _rotationBehavior; } set { _rotationBehavior = value; } }
 
+    public Vector2 Pos2D
+    {
+        get { return new Vector2(transform.position.x, transform.position.z); }
+        set { transform.position = new Vector3(value.x, transform.position.y, value.y); }
+    }
+
+
 
     //---Functions---
     void Awake()

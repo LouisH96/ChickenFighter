@@ -18,7 +18,7 @@ public class ArriveBehavior : SeekBehavior
     {
         MovementOutput output = base.HandleMovement(agent);
 
-        float sqrDistance = (agent.transform.position - Target).sqrMagnitude;
+        float sqrDistance = (agent.Pos2D - Target2D).sqrMagnitude;
 
         if (sqrDistance <= _stopRadius * _stopRadius)
         {
@@ -36,7 +36,7 @@ public class ArriveBehavior : SeekBehavior
 
     public bool IsTargetReached(MovementAgent agent)
     {
-        return (agent.transform.position - Target).sqrMagnitude <= _stopRadius * _stopRadius;
+        return (agent.Pos2D - Target2D).sqrMagnitude <= _stopRadius * _stopRadius;
     }
 
 #if UNITY_EDITOR
@@ -46,12 +46,12 @@ public class ArriveBehavior : SeekBehavior
             return;
 
         Handles.color = Color.red;
-        Handles.DrawWireDisc(Target, Vector3.up, _stopRadius);
+        Handles.DrawWireDisc(Target3D, Vector3.up, _stopRadius);
 
         if (_slowdownRadius > 0.0f)
         {
             Handles.color = new Color(1.0f, 0.5f, 0.0f);
-            Handles.DrawWireDisc(Target, Vector3.up, _slowdownRadius);
+            Handles.DrawWireDisc(Target3D, Vector3.up, _slowdownRadius);
         }
     }
 #endif

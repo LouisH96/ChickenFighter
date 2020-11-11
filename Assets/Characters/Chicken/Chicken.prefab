@@ -126,6 +126,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _chicken: {fileID: 1144447749319598529}
   _physical: {fileID: 6996034789979718622}
+  _stats: {fileID: 9130331117962152763}
 --- !u!1 &3506942077838322750
 GameObject:
   m_ObjectHideFlags: 0

@@ -9,11 +9,19 @@ using UnityEngine.Assertions;
 public class Chicken : MonoBehaviour
 {
     #region --- EventArgs ---
+    public class DamageTakenEventArgs : EventArgs
+    {
+        public Chicken DamageDealer;
+        public float Damage;
+        public float HealthBefore;
+        public float HealthAfter;
+        public bool KilledTarget { get { return HealthBefore > 0.0f && HealthAfter < 0.0f; } }
+    }
     #endregion
 
     #region --- Events ---
+    public event EventHandler<DamageTakenEventArgs> DamageTaken;
     #endregion
-
 
 
     public enum ChickenState
@@ -90,6 +98,13 @@ public class Chicken : MonoBehaviour
         _currentHealth = _stats.Health;
 
         _allChickens.Add(this);
+
+        _chickenFight.Died += _chickenFight_Died;
+    }
+
+    private void _chickenFight_Died(object sender, ChickenFight.DamageTakenEventArgs e)
+    {
+        Destroy(gameObject);
     }
 
     private void Update()
@@ -244,7 +259,7 @@ public class Chicken : MonoBehaviour
             return false;
     }
 
-    public void Damage(float damage)
+    private void TakeDamage(float damage)
     {
        // _currentHealth -= damage;
 

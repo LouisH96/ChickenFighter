@@ -29,13 +29,9 @@ public class ChickenBattle2 : MonoBehaviour
         foreach(var chicken in _pen.Chickens)
         {
             if(_isFightActive)
-            {
                 Assert.AreEqual(chicken.ChickenFight.Battle, this, "every chicken in pen should be in the battle");
-            }
             else
-            {
                 Assert.IsNull(chicken.ChickenFight.Battle, "shouldnt be in a battle");
-            }
         }
     }
 

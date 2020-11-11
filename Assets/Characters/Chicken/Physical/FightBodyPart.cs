@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -6,6 +7,17 @@ using UnityEngine.Assertions;
 [RequireComponent(typeof(Rigidbody))]
 public class FightBodyPart : MonoBehaviour
 {
+    //---Events---
+    public class HitEventArgs : EventArgs
+    {
+        public Chicken Attacked;
+        public Chicken Attacker;
+        public FightBodyPart BodyPart;
+        public float Damage;
+    }
+
+    public event EventHandler<HitEventArgs> Hit;
+
     //---Components---
     [SerializeField] private Rigidbody _rigidbody = null;
     [SerializeField] private Collider _collider = null;
@@ -25,6 +37,24 @@ public class FightBodyPart : MonoBehaviour
 
         if (!_chicken)
             _chicken = GetComponentInParent<Chicken>();
+
+        Chicken.ChickenFight.DamageTaken += ChickenFight_DamageTaken;
+    }
+
+    private void ChickenFight_DamageTaken(object sender, ChickenFight.DamageTakenEventArgs e)
+    {
+
+    }
+
+    public void HitBodyPart(float damage, Chicken damageDealer)
+    {
+        Hit?.Invoke(this, new HitEventArgs
+        {
+            Attacked = _chicken,
+            Attacker = damageDealer,
+            BodyPart = this,
+            Damage = damage
+        });
     }
 
     private void OnEnable()

@@ -14,7 +14,13 @@ public class Beak2 : MonoBehaviour
         if (!bodyPart)
             return;
 
-        if (_chicken.ChickenFight.Battle.IsEnemy(_chicken, bodyPart.Chicken))
+        ChickenBattle2 myBattle = _chicken.ChickenFight.Battle;
+        ChickenBattle2 hitChickensBattle = bodyPart.Chicken.ChickenFight.Battle;
+
+        if (myBattle != hitChickensBattle)
+            return;
+
+        if (myBattle.IsEnemy(_chicken, bodyPart.Chicken))
         {
             if(bodyPart.Chicken.CurrentHealth <= _chicken.Stats.Damage)
             {
@@ -23,6 +29,8 @@ public class Beak2 : MonoBehaviour
             bodyPart.Chicken.Damage(_chicken.Stats.Damage);
         }
     }
+
+
 
     //private Chicken _attackingChicken = null;
 

@@ -31,8 +31,9 @@ public class ChickenFight : MonoBehaviour
     {
         _bodyParts = _physical.gameObject.GetComponentsInChildren<FightBodyPart>().ToList();
         _beak = _physical.gameObject.GetComponentInChildren<Beak2>();
-
         Assert.IsTrue(_bodyParts.TrueForAll(b => b.gameObject.layer == LayerMask.NameToLayer("FightBodyParts")), "Not all FightBodyPart were of that layer");
+
+        EnableFightState(false);
     }
 
     public void JoinBattle(ChickenBattle2 joiningBattle)

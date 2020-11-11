@@ -19,6 +19,26 @@ public class ChickenBattle2 : MonoBehaviour
         _pen.ChickenRemoved += _pen_ChickenRemoved;
     }
 
+    private void Update()
+    {
+        DoDebugChecks();
+    }
+
+    private void DoDebugChecks()
+    {
+        foreach(var chicken in _pen.Chickens)
+        {
+            if(_isFightActive)
+            {
+                Assert.AreEqual(chicken.ChickenFight.Battle, this, "every chicken in pen should be in the battle");
+            }
+            else
+            {
+                Assert.IsNull(chicken.ChickenFight.Battle, "shouldnt be in a battle");
+            }
+        }
+    }
+
     private void _pen_ChickenRemoved(object sender, Chicken e)
     {
         if (_isFightActive)
@@ -33,8 +53,15 @@ public class ChickenBattle2 : MonoBehaviour
 
     private void _pen_ChickenAdded(object sender, Chicken e)
     {
-        if (!_isFightActive && CanFightBeActive())
-            EnableFight(true);
+        if(!_isFightActive)
+        {
+            if(CanFightBeActive())
+                EnableFight(true);
+        }
+        else
+        {
+            e.ChickenFight.JoinBattle(this);
+        }
     }
 
     protected virtual void EnableFight(bool enabled)

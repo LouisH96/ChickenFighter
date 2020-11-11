@@ -39,7 +39,7 @@ public class UI_FightChickenStats : MonoBehaviour
                 _oldMaxHealth = _chicken.Stats.Health;
                 _oldDamage = _chicken.Stats.Damage;
                 _oldHpRegen = _chicken.Stats.HealthRegen;
-                _oldSpeed = _chicken.Stats.MaxSpeed;
+                _oldSpeed = _chicken.Stats.Speed;
                 _oldAcceleration = _chicken.Stats.Acceleration;
 
                 _hptext.color = _defaultHPTextColor;
@@ -96,11 +96,11 @@ public class UI_FightChickenStats : MonoBehaviour
                 _oldHpRegen = Chicken.Stats.HealthRegen;
             }
 
-            if (Chicken.Stats.MaxSpeed != _oldSpeed)
+            if (Chicken.Stats.Speed != _oldSpeed)
             {
                 _speed.color = _upgradedStatColor;
                 _speed.fontStyle = FontStyle.Bold;
-                _oldSpeed = Chicken.Stats.MaxSpeed;
+                _oldSpeed = Chicken.Stats.Speed;
             }
 
             if (Chicken.Stats.Acceleration != _oldAcceleration)

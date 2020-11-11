@@ -153,7 +153,7 @@ public class Chicken : MonoBehaviour
     }
     public void OnMaxSpeedUpgraded()
     {
-        _movement.Agent.MaxVelocity = _stats.MaxSpeed;
+        _movement.Agent.MaxVelocity = _stats.Speed;
     }
 
     public void OnAccelerationUpgraded()

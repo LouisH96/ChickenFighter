@@ -203,12 +203,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d7d7c3633d3ce443839a92bf1ad2b1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _chicken: {fileID: 1144447749319598529}
   _health: 50
   _healthRegen: 0.5
-  _maxSpeed: 2
+  _speed: 3
   _acceleration: 4
   _damage: 1
-  _chicken: {fileID: 1144447749319598529}
 --- !u!143 &2867103570543149643
 CharacterController:
   m_ObjectHideFlags: 0

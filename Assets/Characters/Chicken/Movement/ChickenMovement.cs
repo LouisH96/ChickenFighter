@@ -5,6 +5,11 @@ using UnityEngine;
 public class ChickenMovement : MonoBehaviour
 {
     //--- State Enum ---
+    public enum State
+    {
+        Begin, Wander, Fight, Idle
+    }
+
     //---Components---
     [SerializeField] private Chicken _chicken = null;
     [SerializeField] private MovementAgent _agent = null;
@@ -14,10 +19,11 @@ public class ChickenMovement : MonoBehaviour
     [SerializeField] private ChickenFightMovement _chickenFightMovement = null;
 
     //---Variables---
-    private Chicken.ChickenState _chickenState = Chicken.ChickenState.None;
+    private ChickenMovement.State _currentState = ChickenMovement.State.Begin;
 
     //---Public---
-    public Chicken.ChickenState State { get { return _chickenState; } }
+    public ChickenMovement.State CurrentState { get { return _currentState; } }
+
     public MovementAgent Agent { get { return _agent; } }
 
     void Awake()
@@ -31,38 +37,85 @@ public class ChickenMovement : MonoBehaviour
         {
             _chickenFightMovement = GetComponent<ChickenFightMovement>();
         }
+
+        _chicken.Physical.StateChanged += Physical_StateChanged;
     }
 
     private void Start()
     {
-        ChangeState(_chickenState);
+        if (_currentState == State.Begin)
+            ChangeState(State.Idle);
+    }
+
+    private void Physical_StateChanged(object sender, ChickenPhysical.StateChangedEventArgs e)
+    {
+        if (e.NewState == ChickenPhysical.PhysicalState.Character)
+            ChangeState(State.Wander);
+        else
+            ChangeState(State.Idle);
     }
 
     void Update()
     {
-        
+
     }
 
-    public void  ChangeState(Chicken.ChickenState newState)
+    #region --- MovementState ---
+
+    public void ChangeState(ChickenMovement.State newState)
     {
-        _farmBehavior.enabled = newState == Chicken.ChickenState.Farm;
-        _chickenFightMovement.enabled = newState == Chicken.ChickenState.Fight;
-        _agent.enabled = newState != Chicken.ChickenState.None;
+        if (_currentState == newState)
+            return;
 
-        if (newState == Chicken.ChickenState.Farm)
-        {
-            _agent.MovementBehavior = _farmBehavior;
-            _agent.MaxVelocity = _chicken.Stats.MaxSpeed * 0.75f;
-            _agent.Acceleration = _chicken.Stats.Acceleration * 0.75f;
-        }
-        else if (newState==Chicken.ChickenState.Fight)
-        {
-            _agent.MaxVelocity = _chicken.Stats.MaxSpeed;
-            _agent.Acceleration = _chicken.Stats.Acceleration;
-        }
-        else if (newState == Chicken.ChickenState.PickedUp)
-            _agent.MovementBehavior = null;
+        _currentState = newState;
 
-        _chickenState = newState;
+        EnableWanderState(newState == State.Wander);
+        EnableFightState(newState == State.Fight);
+        EnableIdleState(newState == State.Idle);
     }
+
+    private void EnableWanderState(bool enable)
+    {
+        if (enable)
+            _agent.MovementBehavior = _farmBehavior;
+
+        _farmBehavior.enabled = enable;
+    }
+
+    private void EnableFightState(bool enable)
+    {
+        _chickenFightMovement.enabled = enable;
+    }
+
+    private void EnableIdleState(bool enable)
+    {
+        _agent.enabled = !enable;
+
+        if (enable)
+            _agent.MovementBehavior = null;
+    }
+    #endregion
+
+    //public void ChangeState(Chicken.ChickenState newState)
+    //{
+    //    _farmBehavior.enabled = newState == Chicken.ChickenState.Farm;
+    //    _chickenFightMovement.enabled = newState == Chicken.ChickenState.Fight;
+    //    _agent.enabled = newState != Chicken.ChickenState.None;
+
+    //    if (newState == Chicken.ChickenState.Farm)
+    //    {
+    //        _agent.MovementBehavior = _farmBehavior;
+    //        _agent.MaxVelocity = _chicken.Stats.MaxSpeed * 0.75f;
+    //        _agent.Acceleration = _chicken.Stats.Acceleration * 0.75f;
+    //    }
+    //    else if (newState == Chicken.ChickenState.Fight)
+    //    {
+    //        _agent.MaxVelocity = _chicken.Stats.MaxSpeed;
+    //        _agent.Acceleration = _chicken.Stats.Acceleration;
+    //    }
+    //    else if (newState == Chicken.ChickenState.PickedUp)
+    //        _agent.MovementBehavior = null;
+
+    //    _chickenState = newState;
+    //}
 }

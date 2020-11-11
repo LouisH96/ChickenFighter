@@ -9,53 +9,17 @@ using UnityEngine.Assertions;
 
 public class ChickenPhysical : MonoBehaviour
 {
-    #region ---- EventArgs ---
-    public class GrabbingEventArgs : CancelEventArgs
-    {
-
-    }
-    public class GrabbedEventArgs : EventArgs
-    {
-        public Transform Position = null;
-    }
-    public class ThrownEventArgs : EventArgs
-    {
-        public Vector3 Force = Vector3.zero;
-    }
-    #endregion
-
-    #region --- Events ---
-    //grab/throw
-    public event EventHandler<GrabbingEventArgs> Grabbing;
-    public event EventHandler<GrabbedEventArgs> Grabbed;
-    public event EventHandler<ThrownEventArgs> Thrown;
-    public event EventHandler<Chicken> Landed;
-    #endregion
-
     //--- State-Enum ---
     public enum PhysicalState
     {
-        Character, Kinematic, Physics
+        Begin, Character, Kinematic, Physics
     }
 
     //---Components---
     [SerializeField] private Chicken _chicken = null;
-
-    //--- Character-State Components ---
     [SerializeField] private CharacterController _characterController = null;
-
-    //--- Physics-State components ---
     [SerializeField] private Collider _collider = null;
     [SerializeField] private Rigidbody _rigidbody = null;
-
-    //---Variables---
-    private PhysicalState _state = PhysicalState.Character;
-
-    //--- Physics-State Variables ---
-    private bool _tryToGetOutOfPhysicsState = false;
-
-    //--- Public Variable Accessers ---
-    public PhysicalState State { get { return _state; } }
 
     void Awake()
     {
@@ -64,12 +28,25 @@ public class ChickenPhysical : MonoBehaviour
 
     void Start()
     {
-        EnableKinematicState(false);
-        EnablePhysicsState(false);
-
-        EnableCharacterState(true);
-        _state = PhysicalState.Character;
+        if (_state == PhysicalState.Begin)
+            ChangeState(PhysicalState.Character);
     }
+
+    void Update()
+    {
+        if (_tryToGetOutOfPhysicsState)
+            TryToGetOutOfPhysicalState();
+    }
+
+    #region --- Grab/Throw ---
+    public class GrabbingEventArgs : CancelEventArgs { }
+    public class GrabbedEventArgs : EventArgs { public Transform Position = null; }
+    public class ThrownEventArgs : EventArgs { public Vector3 Force = Vector3.zero; }
+
+    public event EventHandler<GrabbingEventArgs> Grabbing;
+    public event EventHandler<GrabbedEventArgs> Grabbed;
+    public event EventHandler<ThrownEventArgs> Thrown;
+    public event EventHandler<Chicken> Landed;
 
     public bool CanGrab()
     {
@@ -110,13 +87,9 @@ public class ChickenPhysical : MonoBehaviour
         Thrown?.Invoke(this, args);
     }
 
-    void Update()
-    {
-        if (_tryToGetOutOfPhysicsState)
-            TryToGetOutOfPhysicalState();
-    }
+    #endregion
 
-    //--- Public Functions ---
+    #region --- General Functions ---
     public void AddForce(Vector3 force)
     {
         if (_state != PhysicalState.Physics)
@@ -132,20 +105,48 @@ public class ChickenPhysical : MonoBehaviour
         if (moveToParentOrigin)
             _chicken.transform.localPosition = Vector3.zero;
     }
+    #endregion
 
-    #region --- Change State ---
+    #region --- State ---
+    //--- Event Args ---
+    public class StateChangedEventArgs : EventArgs
+    {
+        public PhysicalState OldState;
+        public PhysicalState NewState;
+    }
+
+    //--- Events ---
+    public event EventHandler<StateChangedEventArgs> StateChanged;
+
+    //--- Private variables ---
+    private PhysicalState _state = PhysicalState.Begin;
+    private bool _tryToGetOutOfPhysicsState = false;
+
+    //--- Public variable Access ---
+    public PhysicalState State { get { return _state; } }
+
+    //--- Public Functions ---
     public void ChangeState(PhysicalState newState)
     {
         if (_state == newState)
             return;
+
+        var eventArgs = new StateChangedEventArgs()
+        {
+            OldState = _state,
+            NewState = newState
+        };
 
         _state = newState;
 
         EnablePhysicsState(newState == PhysicalState.Physics);
         EnableKinematicState(newState == PhysicalState.Kinematic);
         EnableCharacterState(newState == PhysicalState.Character);
+
+        StateChanged?.Invoke(this, eventArgs);
     }
 
+    //--- Private Functions ---
     private void EnableCharacterState(bool enable)
     {
         _characterController.enabled = enable;

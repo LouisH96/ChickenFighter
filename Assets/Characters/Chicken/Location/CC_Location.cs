@@ -15,11 +15,10 @@ public class CC_Location : MonoBehaviour
     private bool _isAddedToPen = false;
     private bool _isGrabbed = false;
 
-    // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
-        _chicken.Physical.Grabbed += Physical_Grabbed; ;
-        _chicken.Physical.Thrown += Physical_Thrown; ;
+        _chicken.Physical.Grabbed += Physical_Grabbed;
+        _chicken.Physical.Thrown += Physical_Thrown;
         _chicken.Physical.Landed += Physical_Landed;
     }
 

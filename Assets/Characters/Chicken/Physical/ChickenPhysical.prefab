@@ -854,10 +854,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _chicken: {fileID: 0}
-  _body: {fileID: 0}
   _characterController: {fileID: 0}
-  _generalCollider: {fileID: 168234613674634205}
-  _generalRigidbody: {fileID: 0}
+  _collider: {fileID: 168234613674634205}
+  _rigidbody: {fileID: 0}
 --- !u!65 &168234613674634205
 BoxCollider:
   m_ObjectHideFlags: 0

@@ -403,10 +403,6 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 7574887795398570963}
     - target: {fileID: 4116565722343901612, guid: ae40b607bad172d4d8da3e3d84a70f06, type: 3}
-      propertyPath: _collider
-      value: 
-      objectReference: {fileID: 2867103570543149643}
-    - target: {fileID: 4116565722343901612, guid: ae40b607bad172d4d8da3e3d84a70f06, type: 3}
       propertyPath: _rigidbody
       value: 
       objectReference: {fileID: 7574887795398570963}

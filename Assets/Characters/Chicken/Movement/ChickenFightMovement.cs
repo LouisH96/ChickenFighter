@@ -67,7 +67,6 @@ public class ChickenFightMovement : MonoBehaviour
         _fleeBehavior.LockedTarget = null;
         _seekBehavior.LockedTarget = null;
 
-        _agent.enabled = false;
         _retreatBehavior.enabled = false;
         _attackBehavior.enabled = false;
     }

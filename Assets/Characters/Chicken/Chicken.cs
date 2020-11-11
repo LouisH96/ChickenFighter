@@ -149,7 +149,7 @@ public class Chicken : MonoBehaviour
 
     public void ChangeState(ChickenState newState)
     {
-        _movement.ChangeState(newState);
+        //_movement.ChangeState(newState);
         //_physical.ChangeState(newState);
 
         _attackZone.enabled = newState == ChickenState.Fight;

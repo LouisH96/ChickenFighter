@@ -45,6 +45,8 @@ public class ChickenFight : MonoBehaviour
     //--- Public Variable Access ---
     public ChickenBattle2 Battle { get { return _battle; } }
 
+    public float CurrentHealth { get { return _currentHealth; } }
+
     void Start()
     {
         _bodyParts = _physical.gameObject.GetComponentsInChildren<FightBodyPart>().ToList();
@@ -52,14 +54,24 @@ public class ChickenFight : MonoBehaviour
         Assert.IsTrue(_bodyParts.TrueForAll(b => b.gameObject.layer == LayerMask.NameToLayer("FightBodyParts")), "Not all FightBodyPart were of that layer");
 
         foreach(var bodyPart in _bodyParts)
-            bodyPart.Hit += BodyPart_Hit;
+            bodyPart.TookHit += BodyPart_TookHit;
 
         _currentHealth = _stats.Health;
+        _beak.LandedHit += _beak_LandedHit;
 
         EnableFightState(false);
     }
 
-    private void BodyPart_Hit(object sender, HitEventArgs e)
+    private void _beak_LandedHit(object sender, HitEventArgs e)
+    {
+        Assert.AreNotEqual(_chicken, e.Attacked, "chicken is attacked from itself");
+        Assert.AreEqual(_chicken, e.Attacker, "chicken is not the attacker");
+        
+        if (e.DidKill)
+            TargetKilled?.Invoke(this, e.Attacked);
+    }
+
+    private void BodyPart_TookHit(object sender, HitEventArgs e)
     {
         if (_currentHealth <= 0.0f)
             return;
@@ -81,8 +93,9 @@ public class ChickenFight : MonoBehaviour
 
         if (args.KilledTarget)
         {
+            e.DidKill = true;
             Died?.Invoke(this, args);
-            e.Attacker.ChickenFight.KilledChicken(_chicken);
+            //e.Attacker.ChickenFight.KilledChicken(_chicken);
         }
     }
 
@@ -123,8 +136,8 @@ public class ChickenFight : MonoBehaviour
         _isFighting = enable;
     }
 
-    public void KilledChicken(Chicken killed)
-    {
-        TargetKilled?.Invoke(this, killed);
-    }
+    //public void KilledChicken(Chicken killedByThis)
+    //{
+    //    TargetKilled?.Invoke(this, killedByThis);
+    //}
 }

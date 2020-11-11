@@ -1,9 +1,13 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static FightBodyPart;
 
 public class Beak2 : MonoBehaviour
 {
+    public event EventHandler<HitEventArgs> LandedHit;
+
     //---Components---
     [SerializeField] private Chicken _chicken = null;
 
@@ -28,7 +32,8 @@ public class Beak2 : MonoBehaviour
             //    _chicken.Stats.UpgradeRandomStat();
             //}
 
-            bodyPart.HitBodyPart(_chicken.Stats.Damage, _chicken);
+            var hitArgs = bodyPart.HitBodyPart(_chicken.Stats.Damage, _chicken);
+            LandedHit?.Invoke(this, hitArgs);
         }
     }
 

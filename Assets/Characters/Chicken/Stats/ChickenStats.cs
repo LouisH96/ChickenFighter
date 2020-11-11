@@ -15,6 +15,8 @@ public class ChickenStats : MonoBehaviour
         public ChickenStatDefinition Stat;
     }
 
+    public event EventHandler<ChickenStatEventArgs> StatUpgraded;
+
     [SerializeField] private Chicken _chicken = null;
     [SerializeField] private float _health = 50;
     [SerializeField] private float _healthRegen = 1.0f;
@@ -33,7 +35,12 @@ public class ChickenStats : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        _chicken.ChickenFight.TargetKilled += ChickenFight_TargetKilled;
+    }
 
+    private void ChickenFight_TargetKilled(object sender, Chicken e)
+    {
+        UpgradeRandomStat();
     }
 
     // Update is called once per frame
@@ -52,7 +59,16 @@ public class ChickenStats : MonoBehaviour
 
     public void UpgradeStat(ChickenStatDefinition definition)
     {
-        SetStatValue(definition.UpgradeStat(GetStatValue(definition)), definition);
+        float oldValue = GetStatValue(definition);
+        SetStatValue(definition.UpgradeStat(oldValue), definition);
+        float newValue = GetStatValue(definition);
+
+        StatUpgraded?.Invoke(this, new ChickenStatEventArgs
+        {
+            Stat = definition,
+            OldValue = oldValue,
+            NewValue = newValue
+        });
     }
 
     public float GetStatValue(ChickenStatDefinition definition)

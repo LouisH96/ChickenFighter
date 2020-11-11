@@ -1,133 +1,231 @@
-﻿using System;
+﻿using Assets.Characters.Chicken.Stats;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Assertions;
 using UnityEngine.UI;
 
 public class UI_FightChickenStats : MonoBehaviour
 {
-    [SerializeField] private Image _hp = null;
-    [SerializeField] private Text _hptext = null;
+    [SerializeField] private Image _greenHealthBar = null;
+    [SerializeField] private Text _healthBartext = null;
 
-    [SerializeField] private Text _damage = null;
-    [SerializeField] private Text _hpRegen = null;
-    [SerializeField] private Text _speed = null;
-    [SerializeField] private Text _acceleration = null;
+    [SerializeField] private RectTransform _statsTransform = null;
+    [SerializeField] private Image _statsBackground = null;
+
+    [SerializeField] private Text _hpRegenText = null;
+    [SerializeField] private Text _hpRegenValue = null;
+    [SerializeField] private Text _damageText = null;
+    [SerializeField] private Text _damageValue = null;
+    [SerializeField] private Text _speedText = null;
+    [SerializeField] private Text _speedValue = null;
+    [SerializeField] private Text _accelerationText = null;
+    [SerializeField] private Text _accelerationValue = null;
 
     private Chicken _chicken = null;
-    private float _oldMaxHealth;
-    private float _oldDamage;
-    private float _oldHpRegen;
-    private float _oldSpeed;
-    private float _oldAcceleration;
-
-    [SerializeField] private Image _statsBg = null;
 
     public Chicken Chicken
     {
-        get
-        {
-            return _chicken;
-        }
+        get { return _chicken; }
         set
         {
-            if(value != _chicken
-                && value != null)
-            {
-                _chicken = value;
-                _oldMaxHealth = _chicken.Stats.Health;
-                _oldDamage = _chicken.Stats.Damage;
-                _oldHpRegen = _chicken.Stats.HealthRegen;
-                _oldSpeed = _chicken.Stats.Speed;
-                _oldAcceleration = _chicken.Stats.Acceleration;
-
-                _hptext.color = _defaultHPTextColor;
-                _damage.color = _defaultTextColor;
-                _hpRegen.color = _defaultTextColor;
-                _speed.color = _defaultTextColor;
-                _acceleration.color = _defaultTextColor;
-
-                _hptext.fontStyle = FontStyle.Normal;
-                _damage.fontStyle = FontStyle.Normal;
-                _hpRegen.fontStyle = FontStyle.Normal;
-                _speed.fontStyle = FontStyle.Normal;
-                _acceleration.fontStyle = FontStyle.Normal;
-            }
+            if (_chicken == null)
+                SetChicken(value);
+            else
+                Assert.IsTrue(true, "chicken in ui can only be set once");
         }
     }
 
-    private static Color _defaultTextColor = new Color32(50,50,50, 255);
-    private static Color _defaultHPTextColor = new Color32(0,0,0, 255);
+    [SerializeField] private Color _defaultStatColor = new Color32(50, 50, 50, 255);
+    [SerializeField] private Color _highlightStatColor = new Color32(255, 255, 0, 255);
 
-    [SerializeField] private Color _defaultBgColor = new Color32(255,255,255, 255);
-    [SerializeField] private Color _highlightedBgColor = new Color32(205,205,0, 255);
+    [SerializeField] private Color _defaultBgColor = new Color32(255, 255, 255, 255);
+    [SerializeField] private Color _highlightedBgColor = new Color32(205, 205, 0, 255);
 
-    [SerializeField] private Color _upgradedStatColor = new Color32(255, 255, 0, 255);
+    [SerializeField] private float _highlightDuration = 2.0f;
 
-    // Start is called before the first frame update
     void Start()
     {
+        SetGreenHealthBarRatio(1.0f);
     }
 
-    // Update is called once per frame
     void Update()
     {
-        if (Chicken)
+        if (!_chicken)
+            return;
+
+        float maxHealth = _chicken.Stats.Health;
+        float currentHealth = _chicken.ChickenFight.CurrentHealth;
+
+        _healthBartext.text = _chicken.name + ": " + currentHealth + "/" + maxHealth;
+        SetGreenHealthBarRatio(currentHealth / maxHealth);
+    }
+
+    private void OnDestroy()
+    {
+        if(_chicken)
         {
-            if (Chicken.Stats.Health != _oldMaxHealth)
-            {
-                _hptext.color = _upgradedStatColor;
-                _hptext.fontStyle = FontStyle.Bold;
-                _oldMaxHealth = Chicken.Stats.Health;
-            }
-
-            if (Chicken.Stats.Damage != _oldDamage)
-            {
-                _damage.color = _upgradedStatColor;
-                _damage.fontStyle = FontStyle.Bold;
-                _oldDamage = Chicken.Stats.Damage;
-            }
-
-            if (Chicken.Stats.HealthRegen != _oldHpRegen)
-            {
-                _hpRegen.color = _upgradedStatColor;
-                _hpRegen.fontStyle = FontStyle.Bold;
-                _oldHpRegen = Chicken.Stats.HealthRegen;
-            }
-
-            if (Chicken.Stats.Speed != _oldSpeed)
-            {
-                _speed.color = _upgradedStatColor;
-                _speed.fontStyle = FontStyle.Bold;
-                _oldSpeed = Chicken.Stats.Speed;
-            }
-
-            if (Chicken.Stats.Acceleration != _oldAcceleration)
-            {
-                _acceleration.color = _upgradedStatColor;
-                _acceleration.fontStyle = FontStyle.Bold;
-                _oldAcceleration = Chicken.Stats.Acceleration;
-            }
-
-            _damage.text = "Damage:" + String.Format("{0:0.0}", _oldDamage);
-            _hpRegen.text = "HP Regen:" + String.Format("{0:0.0}", _oldHpRegen);
-            _speed.text = "Speed:" + String.Format("{0:0.0}", _oldSpeed);
-            _acceleration.text = "Acceleration:" + String.Format("{0:0.0}", _oldAcceleration);
-
-            _hptext.text = Chicken.name + ": " + String.Format("{0:0.0}", Chicken.CurrentHealth) + "/" + Chicken.MaxHealth;
-            _hp.transform.localScale = new Vector3(Chicken.CurrentHealthRatio, 1, 1);
-
-            if (Chicken.isHighLighted)
-                _statsBg.color = _highlightedBgColor;
-            else
-                _statsBg.color = _defaultBgColor;
-
+            _chicken.Stats.StatUpgraded -= Stats_StatUpgraded;
         }
+    }
+
+    public void SetCompactmode(bool enable)
+    {
+        _statsTransform.gameObject.SetActive(!enable);
+    }
+
+    public float GetCurrentHeight()
+    {
+        if (_statsTransform.gameObject.activeSelf)
+            return GetFullHeight();
         else
-        {
-            _hptext.text = "empty";
-            _hp.transform.localScale = new Vector3(0.0f, 1, 1);
-        }
+            return GetCompactHeight();
+    }
+
+    public float GetFullHeight()
+    {
+        return GetComponent<RectTransform>().rect.height;
+    }
+
+    public float GetCompactHeight()
+    {
+        return _greenHealthBar.rectTransform.rect.height;
+    }
+
+    private void SetGreenHealthBarRatio(float ratio)
+    {
+        _greenHealthBar.transform.localScale = new Vector3(ratio, 1.0f, 1.0f);
+    }
+
+    private void SetChicken(Chicken chicken)
+    {
+        _chicken = chicken;
+        _chicken.Stats.StatUpgraded += Stats_StatUpgraded;
+
+        _damageValue.text = _chicken.Stats.Damage.ToString();
+        _hpRegenValue.text = _chicken.Stats.HealthRegen.ToString();
+        _speedValue.text = _chicken.Stats.Speed.ToString();
+        _accelerationValue.text = _chicken.Stats.Acceleration.ToString();
+    }
+
+    private void Stats_StatUpgraded(object sender, ChickenStats.ChickenStatEventArgs e)
+    {
+        Text text = GetStatText(e.Stat);
+        Text value = GetStatValue(e.Stat);
+        string resetFunctionName = GetResetStatTextFunctionName(e.Stat);
+
+        text.color = _highlightStatColor;
+        text.fontStyle = FontStyle.Bold;
+        value.color = _highlightStatColor;
+        value.fontStyle = FontStyle.Bold;
+        value.text = e.NewValue.ToString();
+
+        CancelInvoke(resetFunctionName);
+        Invoke(resetFunctionName, _highlightDuration);
+    }
+
+    private void ResetHealthHighlight()
+    {
+        _healthBartext.color = _defaultStatColor;
+        _healthBartext.fontStyle = FontStyle.Normal;
+    }
+
+    private void ResetHPRegenHighlight()
+    {
+        _hpRegenText.color = _defaultStatColor;
+        _hpRegenText.fontStyle = FontStyle.Normal;
+        _hpRegenValue.color = _defaultStatColor;
+        _hpRegenValue.fontStyle = FontStyle.Normal;
+    }
+
+    private void ResetDamageHighlight()
+    {
+        _damageText.color = _defaultStatColor;
+        _damageText.fontStyle = FontStyle.Normal;
+        _damageValue.color = _defaultStatColor;
+        _damageValue.fontStyle = FontStyle.Normal;
+    }
+
+    private void ResetSpeedHighlight()
+    {
+        _damageText.color = _defaultStatColor;
+        _damageText.fontStyle = FontStyle.Normal;
+        _damageValue.color = _defaultStatColor;
+        _damageValue.fontStyle = FontStyle.Normal;
+    }
+
+    private void ResetAccelerationHighlight()
+    {
+        _accelerationText.color = _defaultStatColor;
+        _accelerationText.fontStyle = FontStyle.Normal;
+        _accelerationValue.color = _defaultStatColor;
+        _accelerationValue.fontStyle = FontStyle.Normal;
+    }
+
+    private Text GetStatValue(ChickenStatDefinition definition)
+    {
+        ChickenStatsManager manager = ChickenStatsManager.Instance;
+
+        if (definition == manager.Health)
+            return _healthBartext;
+        else
+           if (definition == manager.HealthRegen)
+            return _hpRegenValue;
+        else
+            if (definition == manager.Damage)
+            return _damageValue;
+        else
+            if (definition == manager.Speed)
+            return _speedValue;
+        else
+            if (definition == manager.Acceleration)
+            return _accelerationValue;
+
+        return null;
+    }
+    private Text GetStatText(ChickenStatDefinition definition)
+    {
+        ChickenStatsManager manager = ChickenStatsManager.Instance;
+
+        if (definition == manager.Health)
+            return _healthBartext;
+        else
+           if (definition == manager.HealthRegen)
+            return _hpRegenText;
+        else
+            if (definition == manager.Damage)
+            return _damageText;
+        else
+            if (definition == manager.Speed)
+            return _speedText;
+        else
+            if (definition == manager.Acceleration)
+            return _accelerationText;
+
+        return null;
+    }
+
+    private string GetResetStatTextFunctionName(ChickenStatDefinition definition)
+    {
+        ChickenStatsManager manager = ChickenStatsManager.Instance;
+
+        if (definition == manager.Health)
+            return nameof(ResetHealthHighlight);
+        else
+           if (definition == manager.HealthRegen)
+            return nameof(ResetHPRegenHighlight);
+        else
+            if (definition == manager.Damage)
+            return nameof(ResetDamageHighlight);
+        else
+            if (definition == manager.Speed)
+            return nameof(ResetSpeedHighlight);
+        else
+            if (definition == manager.Acceleration)
+            return nameof(ResetAccelerationHighlight);
+
+        return null;
     }
 }

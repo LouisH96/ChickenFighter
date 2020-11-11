@@ -14,9 +14,10 @@ public class FightBodyPart : MonoBehaviour
         public Chicken Attacker;
         public FightBodyPart BodyPart;
         public float Damage;
+        public bool DidKill;
     }
 
-    public event EventHandler<HitEventArgs> Hit;
+    public event EventHandler<HitEventArgs> TookHit;
 
     //---Components---
     [SerializeField] private Rigidbody _rigidbody = null;
@@ -46,15 +47,20 @@ public class FightBodyPart : MonoBehaviour
 
     }
 
-    public void HitBodyPart(float damage, Chicken damageDealer)
+    public HitEventArgs HitBodyPart(float damage, Chicken damageDealer)
     {
-        Hit?.Invoke(this, new HitEventArgs
+        var args = new HitEventArgs
         {
             Attacked = _chicken,
             Attacker = damageDealer,
             BodyPart = this,
-            Damage = damage
-        });
+            Damage = damage,
+            DidKill = false
+        };
+
+        TookHit?.Invoke(this, args);
+
+        return args;
     }
 
     private void OnEnable()

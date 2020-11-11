@@ -7,6 +7,7 @@ using UnityEngine;
 
 namespace Assets.Characters.Chicken.Stats
 {
+    [Serializable]
     public class ChickenStatDefinition
     {
         [SerializeField] private float _min;

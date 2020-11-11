@@ -33,6 +33,12 @@ public class CC_Location : MonoBehaviour
         }
     }
 
+    private void OnDisable()
+    {
+        if (_currentPen)
+            ExitPen(_currentPen);
+    }
+
     public void EnterPen(ChickenPen newPen)
     {
         Assert.IsFalse(_isGrabbed, "cannot set pen if grabbed by farmer");

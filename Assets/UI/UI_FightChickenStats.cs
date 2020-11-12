@@ -29,13 +29,7 @@ public class UI_FightChickenStats : MonoBehaviour
     public Chicken Chicken
     {
         get { return _chicken; }
-        set
-        {
-            if (_chicken == null)
-                SetChicken(value);
-            else
-                Assert.IsTrue(true, "chicken in ui can only be set once");
-        }
+        set { SetChicken(value); }
     }
 
     [SerializeField] private Color _defaultStatColor = new Color32(50, 50, 50, 255);
@@ -56,19 +50,21 @@ public class UI_FightChickenStats : MonoBehaviour
         if (!_chicken)
             return;
 
+        UpdateHealthBar();
+    }
+
+    private void OnDestroy()
+    {
+        UnsetChicken();
+    }
+
+    private void UpdateHealthBar()
+    {
         float maxHealth = _chicken.Stats.Health;
         float currentHealth = _chicken.ChickenFight.CurrentHealth;
 
         _healthBartext.text = _chicken.name + ": " + currentHealth + "/" + maxHealth;
         SetGreenHealthBarRatio(currentHealth / maxHealth);
-    }
-
-    private void OnDestroy()
-    {
-        if(_chicken)
-        {
-            _chicken.Stats.StatUpgraded -= Stats_StatUpgraded;
-        }
     }
 
     public void SetCompactmode(bool enable)
@@ -101,6 +97,9 @@ public class UI_FightChickenStats : MonoBehaviour
 
     private void SetChicken(Chicken chicken)
     {
+        if (_chicken)
+            UnsetChicken();
+
         _chicken = chicken;
         _chicken.Stats.StatUpgraded += Stats_StatUpgraded;
 
@@ -108,6 +107,26 @@ public class UI_FightChickenStats : MonoBehaviour
         _hpRegenValue.text = _chicken.Stats.HealthRegen.ToString();
         _speedValue.text = _chicken.Stats.Speed.ToString();
         _accelerationValue.text = _chicken.Stats.Acceleration.ToString();
+        UpdateHealthBar();
+    }
+
+    public void UnsetChicken()
+    {
+        if (!_chicken)
+            return;
+
+        _chicken.Stats.StatUpgraded -= Stats_StatUpgraded;
+
+        CancelInvoke(nameof(ResetHealthHighlight));
+        CancelInvoke(nameof(ResetHPRegenHighlight));
+        CancelInvoke(nameof(ResetDamageHighlight));
+        CancelInvoke(nameof(ResetSpeedHighlight));
+        CancelInvoke(nameof(ResetAccelerationHighlight));
+        ResetHealthHighlight();
+        ResetHPRegenHighlight();
+        ResetDamageHighlight();
+        ResetSpeedHighlight();
+        ResetAccelerationHighlight();
     }
 
     private void Stats_StatUpgraded(object sender, ChickenStats.ChickenStatEventArgs e)

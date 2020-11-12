@@ -7,7 +7,10 @@ using UnityEngine.Assertions;
 
 public class ChickenGrab : MonoBehaviour
 {
-    [SerializeField] private Farmer _farmer = null;   
+    public event EventHandler<Chicken> ChickenHighlighted;
+    public event EventHandler<Chicken> ChickenUnHighlighted;
+
+    [SerializeField] private Farmer _farmer = null;
     [SerializeField] private float _chickenEjectionForce = 100.0f;
     [SerializeField] private Transform[] _hoverLocations = null;
     private Chicken _chickenToPickup = null;
@@ -33,11 +36,13 @@ public class ChickenGrab : MonoBehaviour
                 return;
 
             //change chickenMode
-            _chickenToPickup.SetHighlight(false);
+            UnsetChickenToPickup();
             chickenPhysical.Grab(location);
 
-            //move chicken
-            _chickenToPickup = null;
+            //_chickenToPickup.SetHighlight(false);
+
+            ////move chicken
+            //_chickenToPickup = null;
         }
     }
 
@@ -59,6 +64,9 @@ public class ChickenGrab : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if (_chickenToPickup)
+            return;
+
         //is chicken?
         Chicken chicken = ChickenPhysical.GetCharacterChickenFromCollider(other);
         if (!chicken)
@@ -104,65 +112,69 @@ public class ChickenGrab : MonoBehaviour
     //   return collider.gameObject.GetComponent<Chicken>();
     //}
 
-private void SetChickenToPickup(Chicken chicken)
-{
-    if (!chicken)
-        return;
+    private void SetChickenToPickup(Chicken chicken)
+    {
+        if (!chicken)
+            return;
 
-    if (_chickenToPickup)
-        UnsetChickenToPickup();
+        if (_chickenToPickup)
+            UnsetChickenToPickup();
 
-    _chickenToPickup = chicken;
-    _chickenToPickup.SetHighlight(true);
-}
+        _chickenToPickup = chicken;
+        _chickenToPickup.SetHighlight(true);
 
-private void UnsetChickenToPickup()
-{
-    if (!_chickenToPickup)
-        return;
+        ChickenHighlighted?.Invoke(this, chicken);
+    }
 
-    _chickenToPickup.SetHighlight(false);
-    _chickenToPickup = null;
-}
+    private void UnsetChickenToPickup()
+    {
+        if (!_chickenToPickup)
+            return;
 
-public Transform GetEmptyGrabLocation()
-{
-    //location is empty if it has no childs
-    foreach (Transform location in _hoverLocations)
-        if (location.childCount == 0)
-            return location;
+        ChickenUnHighlighted?.Invoke(this, _chickenToPickup);
 
-    return null;
-}
+        _chickenToPickup.SetHighlight(false);
+        _chickenToPickup = null;
+    }
 
-private bool IsChickenAlreadyPickedup(Chicken chicken)
-{
-    foreach (Transform location in _hoverLocations)
-        if (location.childCount == 1)
-            if (location.GetChild(0) == chicken)
+    public Transform GetEmptyGrabLocation()
+    {
+        //location is empty if it has no childs
+        foreach (Transform location in _hoverLocations)
+            if (location.childCount == 0)
+                return location;
+
+        return null;
+    }
+
+    private bool IsChickenAlreadyPickedup(Chicken chicken)
+    {
+        foreach (Transform location in _hoverLocations)
+            if (location.childCount == 1)
+                if (location.GetChild(0) == chicken)
+                    return true;
+
+        return false;
+    }
+
+    private bool HasChickensPickedUp()
+    {
+        if (_hoverLocations.Length == 0)
+            return false;
+
+        foreach (Transform location in _hoverLocations)
+            if (location.childCount > 0)
                 return true;
 
-    return false;
-}
-
-private bool HasChickensPickedUp()
-{
-    if (_hoverLocations.Length == 0)
         return false;
+    }
 
-    foreach (Transform location in _hoverLocations)
-        if (location.childCount > 0)
-            return true;
-
-    return false;
-}
-
-public List<Chicken> GetPickedUpChickens()
-{
-    return _hoverLocations
-        .Where(l => l.childCount > 0)
-        .Select(l => l.GetChild(0))
-        .Select(c => c.GetComponent<Chicken>())
-        .ToList();
-}
+    public List<Chicken> GetPickedUpChickens()
+    {
+        return _hoverLocations
+            .Where(l => l.childCount > 0)
+            .Select(l => l.GetChild(0))
+            .Select(c => c.GetComponent<Chicken>())
+            .ToList();
+    }
 }

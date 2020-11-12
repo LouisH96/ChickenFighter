@@ -33,6 +33,7 @@ public class UI_FightChickenStats : MonoBehaviour
     }
 
     private Color _defaultStatColor = new Color32(50, 50, 50, 255);
+    private Color _defaultHealthTextColor = Color.white;
     [SerializeField] private Color _highlightStatColor = new Color32(255, 255, 0, 255);
 
     private Color _defaultBgColor = new Color32(255, 255, 255, 255);
@@ -42,6 +43,7 @@ public class UI_FightChickenStats : MonoBehaviour
 
     void Start()
     {
+        _defaultHealthTextColor = _healthBartext.color;
         _defaultStatColor = _damageText.color;
         _defaultBgColor = _statsBackground.color;
 
@@ -167,7 +169,7 @@ public class UI_FightChickenStats : MonoBehaviour
 
     private void ResetHealthHighlight()
     {
-        _healthBartext.color = _defaultStatColor;
+        _healthBartext.color = _defaultHealthTextColor;
         _healthBartext.fontStyle = FontStyle.Normal;
     }
 

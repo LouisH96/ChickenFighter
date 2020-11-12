@@ -15,8 +15,10 @@ public class CC_Breeder : MonoBehaviour
     [SerializeField] private Chicken _chicken = null;
 
     //--- Stats ---
-    [SerializeField] private float _timeOutOnPenEnter = 15.0f;
-    [SerializeField] private float _timeOutAfterBreed = 30.0f;
+    [SerializeField] private float _minNewPenTimeOut  = 5.0f;
+    [SerializeField] private float _maxNewPenTimeOut  = 15.0f;
+    [SerializeField] private float _minAfterBreedTimeOut = 25.0f;
+    [SerializeField] private float _maxAfterBreedTimeOut = 40.0f;
 
     //--- Variables ---
     private bool _isInBreedPen = false;
@@ -60,8 +62,8 @@ public class CC_Breeder : MonoBehaviour
         }
 
         //increase breedTimeOut
-        AddBreedTime(_timeOutAfterBreed);
-        partnerBreeder.AddBreedTime(partnerBreeder._timeOutAfterBreed);
+        AddBreedTime( GetAfterBreedTimeOut());
+        partnerBreeder.AddBreedTime(partnerBreeder.GetAfterBreedTimeOut());
 
         //do breeding
         GameObject child = Instantiate(_chicken.gameObject);
@@ -79,7 +81,7 @@ public class CC_Breeder : MonoBehaviour
 
         //change state
         if (isInBreedPen)
-            AddBreedTime(_timeOutOnPenEnter);
+            AddBreedTime(GetNewPenTimeOut());
 
         //store state
         bool wasBreedable = IsBreedable;
@@ -108,4 +110,13 @@ public class CC_Breeder : MonoBehaviour
     }
 
     //--- Private Functions ---
+    private float GetAfterBreedTimeOut()
+    {
+        return UnityEngine.Random.Range(_minAfterBreedTimeOut, _maxAfterBreedTimeOut);
+    }
+
+    private float GetNewPenTimeOut()
+    {
+        return UnityEngine.Random.Range(_minNewPenTimeOut, _maxNewPenTimeOut);
+    }
 }

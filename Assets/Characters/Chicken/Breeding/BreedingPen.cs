@@ -27,6 +27,8 @@ public class BreedingPen : MonoBehaviour
     {
         if (_breedableChickens.Count > 1)
         {
+            Assert.IsTrue(_breedableChickens.TrueForAll(c => c.Breeder.IsBreedable), "unbreedable chicken in breedablelist");
+
             int desiredBreeds = _pen.MaxAmntOfChickens - _pen.Chickens.Count;
             TryBreed(desiredBreeds);
         }

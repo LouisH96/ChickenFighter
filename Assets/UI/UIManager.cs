@@ -12,9 +12,13 @@ public class UIManager : MonoBehaviour
     [SerializeField] private ChickenPen _battlePen = null;
 
     [SerializeField] private StatsCollection _fightingList = null;
-    [SerializeField] private RectTransform _fightingListDecorations = null;
 
-    [SerializeField] private UI_FightChickenStats _highlightingChicken = null;
+    [SerializeField] private RectTransform _highlightedChickenDecoration = null;
+    [SerializeField] private UI_FightChickenStats _highlightedChicken = null;
+
+    private string _grabbedTextFormat;
+    [SerializeField] private Text _grabbedText = null;
+    [SerializeField] private StatsCollection _grabbedList = null;
 
     private void Start()
     {
@@ -23,19 +27,47 @@ public class UIManager : MonoBehaviour
 
         _chickenGrab.ChickenHighlighted += _chickenGrab_ChickenHighlighted;
         _chickenGrab.ChickenUnHighlighted += _chickenGrab_ChickenUnHighlighted;
-        _highlightingChicken.gameObject.SetActive(false);
+        _highlightedChicken.gameObject.SetActive(false);
+        _highlightedChickenDecoration.gameObject.SetActive(false);
+
+        _chickenGrab.ChickenGrabbed += _chickenGrab_ChickenGrabbed;
+        _chickenGrab.ChickenThrown += _chickenGrab_ChickenThrown;
+
+        _grabbedTextFormat = _grabbedText.text;
+        UpdateGrabbedText();
+    }
+
+    private void _chickenGrab_ChickenThrown(object sender, Chicken e)
+    {
+        _grabbedList.Remove(e);
+        UpdateGrabbedText();
+    }
+
+    private void _chickenGrab_ChickenGrabbed(object sender, Chicken e)
+    {
+        _grabbedList.Add(e);
+        UpdateGrabbedText();
+    }
+
+    private void UpdateGrabbedText()
+    {
+        int max = _chickenGrab.MaxGrabbed;
+        int current = _chickenGrab.AmntGrabbed;
+        _grabbedText.text = string.Format(_grabbedTextFormat, current, max);
     }
 
     private void _chickenGrab_ChickenUnHighlighted(object sender, Chicken e)
     {
-        _highlightingChicken.gameObject.SetActive(false);
-        _highlightingChicken.UnsetChicken();
+        _highlightedChickenDecoration.gameObject.SetActive(false);
+        _highlightedChicken.gameObject.SetActive(false);
+        _highlightedChicken.UnsetChicken();
     }
 
     private void _chickenGrab_ChickenHighlighted(object sender, Chicken e)
     {
-        _highlightingChicken.Chicken = e;
-        _highlightingChicken.gameObject.SetActive(true);
+        _highlightedChicken.Chicken = e;
+        _highlightedChicken.gameObject.SetActive(true);
+        _highlightedChickenDecoration.gameObject.SetActive(true);
     }
 
     private void OnDestroy()
@@ -58,6 +90,5 @@ public class UIManager : MonoBehaviour
 
     private void Update()
     {
-        _fightingListDecorations.gameObject.SetActive(_fightingList.HasItems());
     }
 }

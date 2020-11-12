@@ -8,6 +8,7 @@ public class StatsCollection : MonoBehaviour
     private RectTransform _rectTransform = null;
 
     [SerializeField] private GameObject _template;
+    [SerializeField] RectTransform _decoration;
 
     private float _fullStatHeight = 20.0f;
     private float _collapsedStatsHeight = 10.0f;
@@ -16,9 +17,11 @@ public class StatsCollection : MonoBehaviour
 
     void Awake()
     {
-        foreach (Transform child in transform)
+        while(transform.childCount > 0)
         {
-            GameObject.Destroy(child.gameObject);
+            Transform child = transform.GetChild(0);
+            child.SetParent(null);
+            Destroy(child.gameObject);
         }
 
         _rectTransform = GetComponent<RectTransform>();
@@ -26,11 +29,13 @@ public class StatsCollection : MonoBehaviour
         UI_FightChickenStats templateStats = _template.GetComponent<UI_FightChickenStats>();
         _fullStatHeight = templateStats.GetFullHeight();
         _collapsedStatsHeight = templateStats.GetCompactHeight();
+
+        ListChanged();
     }
 
     void Start()
     {
-
+        ListChanged();
     }
 
     void Update()
@@ -60,7 +65,7 @@ public class StatsCollection : MonoBehaviour
         if (childIndex == -1)
             return;
 
-        RectTransform statsRect =  (RectTransform)_rectTransform.GetChild(childIndex);
+        RectTransform statsRect = (RectTransform)_rectTransform.GetChild(childIndex);
         statsRect.SetParent(null);
         Destroy(statsRect.gameObject);
 
@@ -69,7 +74,7 @@ public class StatsCollection : MonoBehaviour
 
     private void ListChanged()
     {
-        if(_areStatsCollapsed)
+        if (_areStatsCollapsed)
         {
             if (_rectTransform.childCount <= GetMaxAmntOfExpanded())
                 SetCollapseStats(false);
@@ -81,11 +86,14 @@ public class StatsCollection : MonoBehaviour
         }
 
         RecalculatePositions();
+
+        if (_decoration)
+            _decoration.gameObject.SetActive(_rectTransform.childCount > 0);
     }
 
-    private int GetChildIndex (Chicken chicken)
+    private int GetChildIndex(Chicken chicken)
     {
-        for(int i = 0; i < _rectTransform.childCount;i++)
+        for (int i = 0; i < _rectTransform.childCount; i++)
         {
             UI_FightChickenStats stats = _rectTransform.GetChild(i).GetComponent<UI_FightChickenStats>();
             if (!stats)

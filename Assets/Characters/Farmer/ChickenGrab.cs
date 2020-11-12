@@ -10,12 +10,18 @@ public class ChickenGrab : MonoBehaviour
     public event EventHandler<Chicken> ChickenHighlighted;
     public event EventHandler<Chicken> ChickenUnHighlighted;
 
+    public event EventHandler<Chicken> ChickenGrabbed;
+    public event EventHandler<Chicken> ChickenThrown;
+
     [SerializeField] private Farmer _farmer = null;
     [SerializeField] private float _chickenEjectionForce = 100.0f;
     [SerializeField] private Transform[] _hoverLocations = null;
     private Chicken _chickenToPickup = null;
 
     public Chicken HighlightedChicken { get { return _chickenToPickup; } }
+
+    public int MaxGrabbed { get { return _hoverLocations.Count(); } }
+    public int AmntGrabbed { get { return GetPickedUpChickens().Count; } }
 
     void Update()
     {
@@ -38,7 +44,7 @@ public class ChickenGrab : MonoBehaviour
             //change chickenMode
             UnsetChickenToPickup();
             chickenPhysical.Grab(location);
-
+            ChickenGrabbed?.Invoke(this, chickenPhysical.Chicken);
             //_chickenToPickup.SetHighlight(false);
 
             ////move chicken
@@ -58,6 +64,7 @@ public class ChickenGrab : MonoBehaviour
                     continue;
 
                 chickenPhysical.Throw(transform.forward * _chickenEjectionForce);
+                ChickenThrown?.Invoke(this, chickenPhysical.Chicken);
             }
         }
     }

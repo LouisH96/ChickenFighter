@@ -22,6 +22,8 @@ public class ChickenPhysical : MonoBehaviour
     [SerializeField] private Collider _collider = null;
     [SerializeField] private Rigidbody _rigidbody = null;
 
+    public Chicken Chicken { get { return _chicken; } }
+
     void Awake()
     {
 

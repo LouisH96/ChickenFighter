@@ -66,7 +66,7 @@ public class UI_FightChickenStats : MonoBehaviour
         float maxHealth = _chicken.Stats.Health;
         float currentHealth = _chicken.ChickenFight.CurrentHealth;
 
-        _healthBartext.text = _chicken.name + ": " + currentHealth + "/" + maxHealth;
+        _healthBartext.text = _chicken.name + ": " + String.Format("{0:0.#}",  currentHealth) + "/" + String.Format("{0:0.#}", maxHealth);
         SetGreenHealthBarRatio(currentHealth / maxHealth);
     }
 
@@ -159,7 +159,7 @@ public class UI_FightChickenStats : MonoBehaviour
         text.fontStyle = FontStyle.Bold;
         value.color = _highlightStatColor;
         value.fontStyle = FontStyle.Bold;
-        value.text = e.NewValue.ToString();
+        value.text = String.Format("{0:0.#}", e.NewValue);
 
         CancelInvoke(resetFunctionName);
         Invoke(resetFunctionName, _highlightDuration);

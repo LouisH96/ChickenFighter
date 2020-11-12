@@ -72,8 +72,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23f0f861b014f6d489c0d4c703512a44, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _healthStatDefinition:
-    Min: 0
-    UpgradeAmount: 0
-    breedMaxDecrease: 0
-    breedMaxIncrease: 0
+  _health:
+    _min: 15
+    _upgradeAmount: 5
+    _breedMaxChange: 15
+  _healthRegen:
+    _min: 0.2
+    _upgradeAmount: 0.25
+    _breedMaxChange: 0.5
+  _damage:
+    _min: 0.5
+    _upgradeAmount: 1
+    _breedMaxChange: 1.5
+  _speed:
+    _min: 0
+    _upgradeAmount: 0.5
+    _breedMaxChange: 1
+  _acceleration:
+    _min: 0.5
+    _upgradeAmount: 0.25
+    _breedMaxChange: 1

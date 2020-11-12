@@ -34,7 +34,7 @@ public class Chicken : MonoBehaviour
     [SerializeField] private ChickenPhysical _physical = null;
     [SerializeField] private ChickenMovement _movement = null;
     [SerializeField] private CC_Location _location = null;
-    [SerializeField] private ChickenFight _chickenFight = null;
+    [SerializeField] private CC_Fighter _chickenFight = null;
     //[SerializeField] private Renderer _highlightRenderer = null;
     [SerializeField] private Animator _animator = null;
 
@@ -54,7 +54,7 @@ public class Chicken : MonoBehaviour
 
     public ChickenPhysical Physical { get { return _physical; } }
 
-    public ChickenFight ChickenFight { get { return _chickenFight; } }
+    public CC_Fighter ChickenFight { get { return _chickenFight; } }
 
     public CC_Location Location { get { return _location; } }
 
@@ -88,7 +88,7 @@ public class Chicken : MonoBehaviour
         _chickenFight.Died += _chickenFight_Died;
     }
 
-    private void _chickenFight_Died(object sender, ChickenFight.DamageTakenEventArgs e)
+    private void _chickenFight_Died(object sender, CC_Fighter.DamageTakenEventArgs e)
     {
         Destroy(gameObject);
     }

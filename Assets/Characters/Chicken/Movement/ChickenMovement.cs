@@ -50,13 +50,13 @@ public class ChickenMovement : MonoBehaviour
             ChangeState(State.Wander);
     }
 
-    private void ChickenFight_BattleLeft(object sender, ChickenBattle2 e)
+    private void ChickenFight_BattleLeft(object sender, Battle e)
     {
         if (_currentState == State.Fight)
             ChangeState(State.Wander);
     }
 
-    private void ChickenFight_BattleJoined(object sender, ChickenBattle2 e)
+    private void ChickenFight_BattleJoined(object sender, Battle e)
     {
         ChangeState(State.Fight);
     }

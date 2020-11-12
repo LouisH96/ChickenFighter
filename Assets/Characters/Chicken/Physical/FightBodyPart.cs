@@ -42,7 +42,7 @@ public class FightBodyPart : MonoBehaviour
         Chicken.ChickenFight.DamageTaken += ChickenFight_DamageTaken;
     }
 
-    private void ChickenFight_DamageTaken(object sender, ChickenFight.DamageTakenEventArgs e)
+    private void ChickenFight_DamageTaken(object sender, CC_Fighter.DamageTakenEventArgs e)
     {
 
     }

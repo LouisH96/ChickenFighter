@@ -6,7 +6,8 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using static FightBodyPart;
 
-public class ChickenFight : MonoBehaviour
+//ChickenComponent_Fighter
+public class CC_Fighter : MonoBehaviour
 {
     public class DamageTakenEventArgs : EventArgs
     {
@@ -17,8 +18,8 @@ public class ChickenFight : MonoBehaviour
         public bool KilledTarget { get { return HealthBefore > 0.0f && HealthAfter <= 0.0f; } }
     }
 
-    public event EventHandler<ChickenBattle2> BattleJoined;
-    public event EventHandler<ChickenBattle2> BattleLeft;
+    public event EventHandler<Battle> BattleJoined;
+    public event EventHandler<Battle> BattleLeft;
 
     //public event EventHandler<Chicken> EnemyLeft;
 
@@ -34,23 +35,23 @@ public class ChickenFight : MonoBehaviour
 
     //--- Fight Components ---
     private List<FightBodyPart> _bodyParts = new List<FightBodyPart>();
-    private Beak2 _beak = null;
+    private Beak _beak = null;
 
     //--- Variables ---
-    private ChickenBattle2 _battle = null;
+    private Battle _battle = null;
     private bool _isFighting = false;
     private float _currentHealth = 1.0f;
   
 
     //--- Public Variable Access ---
-    public ChickenBattle2 Battle { get { return _battle; } }
+    public Battle Battle { get { return _battle; } }
 
     public float CurrentHealth { get { return _currentHealth; } }
 
     void Start()
     {
         _bodyParts = _physical.gameObject.GetComponentsInChildren<FightBodyPart>().ToList();
-        _beak = _physical.gameObject.GetComponentInChildren<Beak2>();
+        _beak = _physical.gameObject.GetComponentInChildren<Beak>();
         Assert.IsTrue(_bodyParts.TrueForAll(b => b.gameObject.layer == LayerMask.NameToLayer("FightBodyParts")), "Not all FightBodyPart were of that layer");
 
         foreach(var bodyPart in _bodyParts)
@@ -106,7 +107,7 @@ public class ChickenFight : MonoBehaviour
         }
     }
 
-    public void JoinBattle(ChickenBattle2 joiningBattle)
+    public void JoinBattle(Battle joiningBattle)
     {
         Assert.IsNull(_battle, "cannot join 2 battles");
         _battle = joiningBattle;
@@ -124,7 +125,7 @@ public class ChickenFight : MonoBehaviour
             //EnemyLeft?.Invoke(this, e);
     }
 
-    public void LeaveBattle(ChickenBattle2 leavingBattle)
+    public void LeaveBattle(Battle leavingBattle)
     {
         Assert.AreEqual(_battle, leavingBattle, "leaving a battle chicken is not in");
         _battle.ChickenLeft -= _battle_ChickenLeft;

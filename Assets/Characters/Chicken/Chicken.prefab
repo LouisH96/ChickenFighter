@@ -90,9 +90,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6217479702954512528}
-  - component: {fileID: 370810097894258247}
+  - component: {fileID: 5015321941742885647}
   m_Layer: 0
-  m_Name: Battle
+  m_Name: Fighter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -112,7 +112,7 @@ Transform:
   m_Father: {fileID: 4698597076384118910}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &370810097894258247
+--- !u!114 &5015321941742885647
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -121,7 +121,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1475510659239127333}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 548e984c2099e704fb52b0ec27f428db, type: 3}
+  m_Script: {fileID: 11500000, guid: 707fd07c064b22e4e8c5f49ffa636706, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _chicken: {fileID: 1144447749319598529}
@@ -185,7 +185,7 @@ MonoBehaviour:
   _physical: {fileID: 6996034789979718622}
   _movement: {fileID: 9187983227317439594}
   _location: {fileID: 4468184143196249458}
-  _chickenFight: {fileID: 370810097894258247}
+  _chickenFight: {fileID: 5015321941742885647}
   _animator: {fileID: 8400908323452236361}
   _state: 0
   _breedInterval: 100
@@ -350,6 +350,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 4698597076384118910}
     m_Modifications:
     - target: {fileID: 205920026159181857, guid: ae40b607bad172d4d8da3e3d84a70f06, type: 3}
+      propertyPath: _chicken
+      value: 
+      objectReference: {fileID: 1144447749319598529}
+    - target: {fileID: 440234370392777470, guid: ae40b607bad172d4d8da3e3d84a70f06, type: 3}
       propertyPath: _chicken
       value: 
       objectReference: {fileID: 1144447749319598529}

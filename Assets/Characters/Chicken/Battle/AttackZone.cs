@@ -37,7 +37,7 @@ public class AttackZone : MonoBehaviour
         if (!bodyPart)
             return;
 
-        ChickenBattle2 battle = _chicken.ChickenFight.Battle;
+        Battle battle = _chicken.ChickenFight.Battle;
 
         if(battle)
         {
@@ -65,7 +65,7 @@ public class AttackZone : MonoBehaviour
         }
     }
 
-    private void ChickenFight_BattleLeft(object sender, ChickenBattle2 e)
+    private void ChickenFight_BattleLeft(object sender, Battle e)
     {
         _targets.Clear();
         _chicken.IsAttacking = false;

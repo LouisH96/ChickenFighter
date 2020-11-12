@@ -49,7 +49,7 @@ public class ChickenFightMovement : MonoBehaviour
 
     private void OnEnable()
     {
-        ChickenBattle2 activeBattle = _chicken.ChickenFight.Battle;
+        Battle activeBattle = _chicken.ChickenFight.Battle;
         if (!activeBattle)
             return;
 

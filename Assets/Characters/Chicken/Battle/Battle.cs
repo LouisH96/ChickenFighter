@@ -5,7 +5,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.Assertions;
 
-public class ChickenBattle2 : MonoBehaviour
+public class Battle : MonoBehaviour
 {
     public event EventHandler<Chicken> ChickenLeft;
 

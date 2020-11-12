@@ -35,7 +35,6 @@ public class CC_Breeder : MonoBehaviour
             if (IsBreedable)
                 BreedableStateChanged?.Invoke(this, true);
         }
-
     }
 
     //--- Public Functions ---

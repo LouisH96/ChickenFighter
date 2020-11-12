@@ -7,7 +7,7 @@ using UnityEngine.Assertions;
 public class BreedingPen : MonoBehaviour
 {
     //--- Components ---
-    [SerializeField] private ChickenPen _pen;
+    [SerializeField] private ChickenPen _pen = null;
 
     //--- Variables ---
     private List<Chicken> _breedableChickens = new List<Chicken>();

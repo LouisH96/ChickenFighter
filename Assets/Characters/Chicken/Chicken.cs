@@ -35,7 +35,7 @@ public class Chicken : MonoBehaviour
     [SerializeField] private ChickenMovement _movement = null;
     [SerializeField] private CC_Location _location = null;
     [SerializeField] private ChickenFight _chickenFight = null;
-    [SerializeField] private Renderer _highlightRenderer = null;
+    //[SerializeField] private Renderer _highlightRenderer = null;
     [SerializeField] private Animator _animator = null;
 
     //---Variables---
@@ -78,10 +78,10 @@ public class Chicken : MonoBehaviour
         set { _animator.SetBool("Attack", value); }
     }
 
-    public bool isHighLighted
-    {
-        get { return _highlightRenderer.enabled; }
-    }
+    //public bool isHighLighted
+    //{
+    //    get { return _highlightRenderer.enabled; }
+    //}
 
     public float CurrentHealthRatio { get { return _currentHealth / _stats.Health; } }
     public float CurrentHealth { get { return _currentHealth; } }
@@ -171,10 +171,10 @@ public class Chicken : MonoBehaviour
         _state = newState;
     }
 
-    public void SetHighlight(bool isHighlighted)
-    {
-        _highlightRenderer.enabled = isHighlighted;
-    }
+    //public void SetHighlight(bool isHighlighted)
+    //{
+    //    _highlightRenderer.enabled = isHighlighted;
+    //}
 
     //public void PickUp(Transform parent)
     //{

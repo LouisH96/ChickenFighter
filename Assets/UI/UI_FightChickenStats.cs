@@ -32,16 +32,19 @@ public class UI_FightChickenStats : MonoBehaviour
         set { SetChicken(value); }
     }
 
-    [SerializeField] private Color _defaultStatColor = new Color32(50, 50, 50, 255);
+    private Color _defaultStatColor = new Color32(50, 50, 50, 255);
     [SerializeField] private Color _highlightStatColor = new Color32(255, 255, 0, 255);
 
-    [SerializeField] private Color _defaultBgColor = new Color32(255, 255, 255, 255);
+    private Color _defaultBgColor = new Color32(255, 255, 255, 255);
     [SerializeField] private Color _highlightedBgColor = new Color32(205, 205, 0, 255);
 
     [SerializeField] private float _highlightDuration = 2.0f;
 
     void Start()
     {
+        _defaultStatColor = _damageText.color;
+        _defaultBgColor = _statsBackground.color;
+
         SetGreenHealthBarRatio(1.0f);
     }
 
@@ -102,12 +105,27 @@ public class UI_FightChickenStats : MonoBehaviour
 
         _chicken = chicken;
         _chicken.Stats.StatUpgraded += Stats_StatUpgraded;
+        _chicken.Physical.Highlighted += Physical_Highlighted; ;
+        _chicken.Physical.UnHighlighted += Physical_UnHighlighted;
 
         _damageValue.text = _chicken.Stats.Damage.ToString();
         _hpRegenValue.text = _chicken.Stats.HealthRegen.ToString();
         _speedValue.text = _chicken.Stats.Speed.ToString();
         _accelerationValue.text = _chicken.Stats.Acceleration.ToString();
         UpdateHealthBar();
+
+        if (_chicken.Physical.IsHighLighted)
+            _statsBackground.color = _highlightedBgColor;
+    }
+
+    private void Physical_Highlighted(object sender, Farmer e)
+    {
+        _statsBackground.color = _highlightedBgColor;
+    }
+
+    private void Physical_UnHighlighted(object sender, Farmer e)
+    {
+        _statsBackground.color = _defaultBgColor;
     }
 
     public void UnsetChicken()
@@ -116,6 +134,8 @@ public class UI_FightChickenStats : MonoBehaviour
             return;
 
         _chicken.Stats.StatUpgraded -= Stats_StatUpgraded;
+        _chicken.Physical.Highlighted -= Physical_Highlighted; ;
+        _chicken.Physical.UnHighlighted -= Physical_UnHighlighted;
 
         CancelInvoke(nameof(ResetHealthHighlight));
         CancelInvoke(nameof(ResetHPRegenHighlight));
@@ -169,10 +189,10 @@ public class UI_FightChickenStats : MonoBehaviour
 
     private void ResetSpeedHighlight()
     {
-        _damageText.color = _defaultStatColor;
-        _damageText.fontStyle = FontStyle.Normal;
-        _damageValue.color = _defaultStatColor;
-        _damageValue.fontStyle = FontStyle.Normal;
+        _speedText.color = _defaultStatColor;
+        _speedText.fontStyle = FontStyle.Normal;
+        _speedValue.color = _defaultStatColor;
+        _speedValue.fontStyle = FontStyle.Normal;
     }
 
     private void ResetAccelerationHighlight()

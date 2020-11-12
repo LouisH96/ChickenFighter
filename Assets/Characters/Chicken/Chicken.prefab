@@ -186,7 +186,6 @@ MonoBehaviour:
   _movement: {fileID: 9187983227317439594}
   _location: {fileID: 4468184143196249458}
   _chickenFight: {fileID: 370810097894258247}
-  _highlightRenderer: {fileID: 873419495765846316}
   _animator: {fileID: 8400908323452236361}
   _state: 0
   _breedInterval: 100
@@ -422,6 +421,10 @@ PrefabInstance:
       propertyPath: _rigidbody
       value: 
       objectReference: {fileID: 7574887795398570963}
+    - target: {fileID: 4116565722343901612, guid: ae40b607bad172d4d8da3e3d84a70f06, type: 3}
+      propertyPath: _highlightRenderer
+      value: 
+      objectReference: {fileID: 873419495765846316}
     - target: {fileID: 7376994887483075727, guid: ae40b607bad172d4d8da3e3d84a70f06, type: 3}
       propertyPath: _chicken
       value: 

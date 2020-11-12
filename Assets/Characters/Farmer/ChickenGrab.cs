@@ -121,7 +121,7 @@ public class ChickenGrab : MonoBehaviour
             UnsetChickenToPickup();
 
         _chickenToPickup = chicken;
-        _chickenToPickup.SetHighlight(true);
+        _chickenToPickup.Physical.SetHighlighted(true, _farmer);
 
         ChickenHighlighted?.Invoke(this, chicken);
     }
@@ -133,7 +133,7 @@ public class ChickenGrab : MonoBehaviour
 
         ChickenUnHighlighted?.Invoke(this, _chickenToPickup);
 
-        _chickenToPickup.SetHighlight(false);
+        _chickenToPickup.Physical.SetHighlighted(false, _farmer);
         _chickenToPickup = null;
     }
 

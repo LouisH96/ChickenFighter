@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using TMPro;
 using UnityEngine;
@@ -28,6 +29,8 @@ public class ChickenPhysical : MonoBehaviour
 
     void Start()
     {
+        _highlightRenderer.enabled = false;
+
         if (_state == PhysicalState.Begin)
             ChangeState(PhysicalState.Character);
     }
@@ -37,6 +40,29 @@ public class ChickenPhysical : MonoBehaviour
         if (_tryToGetOutOfPhysicsState)
             TryToGetOutOfPhysicalState();
     }
+
+    #region --- Highlight ---
+    public event EventHandler<Farmer> Highlighted;
+    public event EventHandler<Farmer> UnHighlighted;
+
+    [SerializeField] private Renderer _highlightRenderer = null;
+
+    public bool IsHighLighted
+    {
+        get { return _highlightRenderer.enabled; }
+    }
+
+    public void SetHighlighted(bool isHighlighted, Farmer farmer)
+    {
+        _highlightRenderer.enabled = isHighlighted;
+
+        if (isHighlighted)
+            Highlighted?.Invoke(this, farmer);
+        else
+            UnHighlighted?.Invoke(this, farmer);
+    }
+
+    #endregion
 
     #region --- Grab/Throw ---
     public class GrabbingEventArgs : CancelEventArgs { }

@@ -166,7 +166,7 @@ public class Chicken : MonoBehaviour
         //_movement.ChangeState(newState);
         //_physical.ChangeState(newState);
 
-        IsAttacking = false;
+        //IsAttacking = false;
 
         _state = newState;
     }

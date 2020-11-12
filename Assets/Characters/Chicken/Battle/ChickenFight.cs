@@ -62,6 +62,13 @@ public class ChickenFight : MonoBehaviour
         EnableFightState(false);
     }
 
+    private void Update()
+    {
+        _currentHealth += _stats.HealthRegen * Time.deltaTime;
+        if (_currentHealth > _stats.Health)
+            _currentHealth = _stats.Health;
+    }
+
     private void _beak_LandedHit(object sender, HitEventArgs e)
     {
         Assert.AreNotEqual(_chicken, e.Attacked, "chicken is attacked from itself");

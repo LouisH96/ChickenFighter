@@ -40,7 +40,6 @@ public class Chicken : MonoBehaviour
 
     //---Variables---
     [SerializeField] private ChickenState _state = ChickenState.None;
-    private ChickenBattle _battle = null;
     private float _currentHealth = 50.0f;
 
     [SerializeField] private float _breedInterval = 100.0f;
@@ -57,20 +56,7 @@ public class Chicken : MonoBehaviour
 
     public ChickenFight ChickenFight { get { return _chickenFight; } }
 
-    public ChickenBattle Battle { get { return _battle; } }
-
     public CC_Location Location { get { return _location; } }
-
-    public Chicken BattleClosestEnemy
-    {
-        get
-        {
-            if (_battle)
-                return _battle.GetClosestEnemy(this);
-            else
-                return null;
-        }
-    }
 
     public bool IsAttacking
     {
@@ -127,22 +113,22 @@ public class Chicken : MonoBehaviour
         }
     }
 
-    private void TryBreed()
-    {
-        Chicken partner = _allChickens
-            .Where(c => c!= this && c._battle == null)
-            .FirstOrDefault(c => (c.transform.position - transform.position).sqrMagnitude < _sqrBreedRange);
+    //private void TryBreed()
+    //{
+    //    Chicken partner = _allChickens
+    //        .Where(c => c!= this && c._battle == null)
+    //        .FirstOrDefault(c => (c.transform.position - transform.position).sqrMagnitude < _sqrBreedRange);
 
-        if(partner)
-        {
-            GameObject childChicken =  Instantiate(this.gameObject);
-            _stats.BreedStats(partner.Stats, childChicken.GetComponent<ChickenStats>());
+    //    if(partner)
+    //    {
+    //        GameObject childChicken =  Instantiate(this.gameObject);
+    //        _stats.BreedStats(partner.Stats, childChicken.GetComponent<ChickenStats>());
 
-            partner._breedTimer = 0.0f;
-            _breedTimer = 0.0f;
-            _isBreedable = false;
-        }
-    }
+    //        partner._breedTimer = 0.0f;
+    //        _breedTimer = 0.0f;
+    //        _isBreedable = false;
+    //    }
+    //}
 
     public void OnMaxHealthUpgraded(float amount)
     {
@@ -196,81 +182,81 @@ public class Chicken : MonoBehaviour
     //    _state = ChickenState.Thrown;
     //}
 
-    public void AddToBattle(ChickenBattle battle)
-    {
-        if (_battle == battle)
-            return;
+    //public void AddToBattle(ChickenBattle battle)
+    //{
+    //    if (_battle == battle)
+    //        return;
 
-        if (_battle)
-            _battle.RemoveChickenOutOfBattle(this);
+    //    if (_battle)
+    //        _battle.RemoveChickenOutOfBattle(this);
 
-        _battle = battle;
+    //    _battle = battle;
 
-        if (CanFight())
-            ChangeState(ChickenState.Fight);
-    }
+    //    if (CanFight())
+    //        ChangeState(ChickenState.Fight);
+    //}
 
-    public void RemoveFromBattle()
-    {
-        if (!_battle)
-            return;
+    //public void RemoveFromBattle()
+    //{
+    //    if (!_battle)
+    //        return;
 
-        _battle.RemoveChickenOutOfBattle(this);
-        _battle = null;
+    //    _battle.RemoveChickenOutOfBattle(this);
+    //    _battle = null;
 
-        if (_state == ChickenState.Fight)
-            ChangeState(ChickenState.Farm);
-    }
+    //    if (_state == ChickenState.Fight)
+    //        ChangeState(ChickenState.Farm);
+    //}
 
-    public void WakeupFromBattlePause()
-    {
-        if (!IsPauzedFromBattle())
-            return;
+    //public void WakeupFromBattlePause()
+    //{
+    //    if (!IsPauzedFromBattle())
+    //        return;
 
-        ChangeState(ChickenState.Fight);
-    }
+    //    ChangeState(ChickenState.Fight);
+    //}
 
-    public bool IsInBattle()
-    {
-        return _battle != null;
-    }
+    //public bool IsInBattle()
+    //{
+    //    return _battle != null;
+    //}
 
-    public bool IsPauzedFromBattle()
-    {
-        return IsInBattle() && _state != ChickenState.Fight;
-    }
+    //public bool IsPauzedFromBattle()
+    //{
+    //    return IsInBattle() && _state != ChickenState.Fight;
+    //}
 
-    public bool CanFight()
-    {
-        return _state == ChickenState.Farm || _state == ChickenState.Fight;
-    }
+    //public bool CanFight()
+    //{
+    //    return _state == ChickenState.Farm || _state == ChickenState.Fight;
+    //}
 
-    public void PauzeBattle()
-    {
-        if (_state == ChickenState.Fight)
-            ChangeState(ChickenState.Farm);
-    }
+    //public void PauzeBattle()
+    //{
+    //    if (_state == ChickenState.Fight)
+    //        ChangeState(ChickenState.Farm);
+    //}
 
-    public bool IsEnemy(Chicken possibleEnemy)
-    {
-        if (_battle)
-            return _battle.IsEnemy(this, possibleEnemy);
-        else
-            return false;
-    }
+    //public bool IsEnemy(Chicken possibleEnemy)
+    //{
+    //    if (_battle)
+    //        return _battle.IsEnemy(this, possibleEnemy);
+    //    else
+    //        return false;
+    //}
 
-    private void TakeDamage(float damage)
-    {
-       // _currentHealth -= damage;
+    //private void TakeDamage(float damage)
+    //{
+    //   // _currentHealth -= damage;
 
-        if (_currentHealth <= 0.0f)
-        {
-            if (_battle)
-            {
-                _battle.RemoveChickenOutOfBattle(this);
-            }
-            _allChickens.Remove(this);
-            Destroy(this.gameObject);
-        }
-    }
+    //    if (_currentHealth <= 0.0f)
+    //    {
+    //        if (_battle)
+    //        {
+    //            _battle.RemoveChickenOutOfBattle(this);
+    //        }
+    //        _allChickens.Remove(this);
+    //        Destroy(this.gameObject);
+    //    }
+    //}
 }

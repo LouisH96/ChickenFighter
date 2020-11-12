@@ -20,6 +20,7 @@ public class Chicken : MonoBehaviour
     [SerializeField] private ChickenMovement _movement = null;
     [SerializeField] private CC_Location _location = null;
     [SerializeField] private CC_Fighter _chickenFight = null;
+    [SerializeField] private CC_Breeder _breeder = null;
     [SerializeField] private Animator _animator = null;
 
     //---Variables---
@@ -34,6 +35,8 @@ public class Chicken : MonoBehaviour
     public CC_Fighter Fighter { get { return _chickenFight; } }
 
     public CC_Location Location { get { return _location; } }
+
+    public CC_Breeder Breeder { get { return _breeder; } }
 
     public bool IsAttacking
     {

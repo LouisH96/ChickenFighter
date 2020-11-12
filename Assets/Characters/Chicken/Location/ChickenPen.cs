@@ -7,12 +7,17 @@ using UnityEngine.Assertions;
 
 public class ChickenPen : MonoBehaviour
 {
+    //--- Events ---
     public event EventHandler<Chicken> ChickenAdded;
     public event EventHandler<Chicken> ChickenRemoved;
+
+    //--- Stats ---
+    [SerializeField] private int _maxChickens = 10;
 
     //--- Variables ---
     private List<Chicken> _chickens = new List<Chicken>();
     
+    //--- Public Member Access ---
     public ReadOnlyCollection<Chicken> Chickens { get { return _chickens.AsReadOnly(); } }
 
     public void AddChicken(Chicken chicken)

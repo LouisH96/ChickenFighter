@@ -463,7 +463,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3646685099449687513, guid: e83ba38faef1c214ebf71d0965f17daf, type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3646685099449687513, guid: e83ba38faef1c214ebf71d0965f17daf, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -512,8 +512,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 4.31, y: 3.81, z: 4.33}
-  m_Center: {x: 0, y: 1.71, z: -1.55}
+  m_Size: {x: 4.34, y: 0.95, z: 4.33}
+  m_Center: {x: 0.02, y: 0.35, z: -1.55}
 --- !u!114 &377186692
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -526,6 +526,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b6e3096878acff4489869adba145616, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _maxChickens: 10
+--- !u!114 &377186693
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 377186690}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f890f39f89ec8f24b9836e7bd164fd77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _pen: {fileID: 377186692}
 --- !u!114 &389140991 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1848545229557009172, guid: 0b01f24cb6621af46b8fc350fea4ad6b, type: 3}

@@ -10,9 +10,9 @@ namespace Assets.Characters.Chicken.Stats
     [Serializable]
     public class ChickenStatDefinition
     {
-        [SerializeField] private float _min;
-        [SerializeField] private float _upgradeAmount;
-        [SerializeField] private float _breedMaxChange;
+        [SerializeField] private float _min = 0.0f;
+        [SerializeField] private float _upgradeAmount = 0.0f;
+        [SerializeField] private float _breedMaxChange = 0.0f;
 
         public float UpgradeStat(float current)
         {

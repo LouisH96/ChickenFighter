@@ -28,10 +28,10 @@ public class CC_Fighter : MonoBehaviour
     public event EventHandler<Chicken> TargetKilled;
 
     //--- Components ---
-    [SerializeField] private Chicken _chicken;
-    [SerializeField] private ChickenPhysical _physical;
-    [SerializeField] private ChickenStats _stats;
-    [SerializeField] private AttackZone _attackZone;
+    [SerializeField] private Chicken _chicken = null;
+    [SerializeField] private ChickenPhysical _physical = null;
+    [SerializeField] private ChickenStats _stats = null;
+    [SerializeField] private AttackZone _attackZone = null;
 
     //--- Fight Components ---
     private List<FightBodyPart> _bodyParts = new List<FightBodyPart>();

@@ -8,7 +8,7 @@ using UnityEngine.Assertions;
 public class CC_Location : MonoBehaviour
 {
     //--- Components ---
-    [SerializeField] private Chicken _chicken;
+    [SerializeField] private Chicken _chicken = null;
 
     //--- Variables ---
     private ChickenPen _currentPen = null;

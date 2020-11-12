@@ -7,8 +7,8 @@ public class StatsCollection : MonoBehaviour
 {
     private RectTransform _rectTransform = null;
 
-    [SerializeField] private GameObject _template;
-    [SerializeField] RectTransform _decoration;
+    [SerializeField] private GameObject _template = null;
+    [SerializeField] RectTransform _decoration = null;
 
     private float _fullStatHeight = 20.0f;
     private float _collapsedStatsHeight = 10.0f;

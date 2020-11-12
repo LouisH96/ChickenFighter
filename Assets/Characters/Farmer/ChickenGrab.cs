@@ -90,21 +90,6 @@ public class ChickenGrab : MonoBehaviour
 
         if (!_highlightedChicken)
             TryHightlightNext();
-
-        ////is there an empty location ?
-        //Transform emptyLocation = GetEmptyGrabLocation();
-        //if (!emptyLocation)
-        //    return;
-
-        //ChickenPhysical chickenPhysical = chicken.Physical;
-        //if (!chickenPhysical)
-        //    return;
-
-        //if (!chickenPhysical.CanGrab())
-        //    return;
-
-        ////prepare for pickup
-        //AddChickenToPickup(chicken);
     }
 
     private void OnTriggerExit(Collider other)

@@ -29,9 +29,9 @@ public class Battle : MonoBehaviour
         foreach(var chicken in _pen.Chickens)
         {
             if(_isFightActive)
-                Assert.AreEqual(chicken.ChickenFight.Battle, this, "every chicken in pen should be in the battle");
+                Assert.AreEqual(chicken.Fighter.Battle, this, "every chicken in pen should be in the battle");
             else
-                Assert.IsNull(chicken.ChickenFight.Battle, "shouldnt be in a battle");
+                Assert.IsNull(chicken.Fighter.Battle, "shouldnt be in a battle");
         }
     }
 
@@ -39,7 +39,7 @@ public class Battle : MonoBehaviour
     {
         if (_isFightActive)
         {
-            e.ChickenFight.LeaveBattle(this);
+            e.Fighter.LeaveBattle(this);
 
             if (!CanFightBeActive())
                 EnableFight(false);
@@ -56,7 +56,7 @@ public class Battle : MonoBehaviour
         }
         else
         {
-            e.ChickenFight.JoinBattle(this);
+            e.Fighter.JoinBattle(this);
         }
     }
 
@@ -70,9 +70,9 @@ public class Battle : MonoBehaviour
         foreach (var fighter in _pen.Chickens)
         {
             if (enabled)
-                fighter.ChickenFight.JoinBattle(this);
+                fighter.Fighter.JoinBattle(this);
             else
-                fighter.ChickenFight.LeaveBattle(this);
+                fighter.Fighter.LeaveBattle(this);
         }
 
         _isFightActive = enabled;

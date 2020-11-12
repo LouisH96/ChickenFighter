@@ -103,7 +103,6 @@ public class CC_Fighter : MonoBehaviour
         {
             e.DidKill = true;
             Died?.Invoke(this, args);
-            //e.Attacker.ChickenFight.KilledChicken(_chicken);
         }
     }
 
@@ -121,8 +120,6 @@ public class CC_Fighter : MonoBehaviour
     private void _battle_ChickenLeft(object sender, Chicken e)
     {
         _attackZone.RemoveFromTargets(e);
-        //if(_battle.IsEnemy(_chicken, e))
-            //EnemyLeft?.Invoke(this, e);
     }
 
     public void LeaveBattle(Battle leavingBattle)
@@ -143,9 +140,4 @@ public class CC_Fighter : MonoBehaviour
 
         _isFighting = enable;
     }
-
-    //public void KilledChicken(Chicken killedByThis)
-    //{
-    //    TargetKilled?.Invoke(this, killedByThis);
-    //}
 }

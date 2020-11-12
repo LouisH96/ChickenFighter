@@ -39,7 +39,7 @@ public class FightBodyPart : MonoBehaviour
         if (!_chicken)
             _chicken = GetComponentInParent<Chicken>();
 
-        Chicken.ChickenFight.DamageTaken += ChickenFight_DamageTaken;
+        Chicken.Fighter.DamageTaken += ChickenFight_DamageTaken;
     }
 
     private void ChickenFight_DamageTaken(object sender, CC_Fighter.DamageTakenEventArgs e)

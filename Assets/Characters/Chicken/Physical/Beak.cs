@@ -18,8 +18,8 @@ public class Beak : MonoBehaviour
         if (!bodyPart)
             return;
 
-        Battle myBattle = _chicken.ChickenFight.Battle;
-        Battle hitChickensBattle = bodyPart.Chicken.ChickenFight.Battle;
+        Battle myBattle = _chicken.Fighter.Battle;
+        Battle hitChickensBattle = bodyPart.Chicken.Fighter.Battle;
 
         if (myBattle != hitChickensBattle
             || myBattle == null || hitChickensBattle == null)

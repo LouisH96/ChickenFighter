@@ -43,8 +43,8 @@ public class ChickenMovement : MonoBehaviour
 
     private void Start()
     {
-        _chicken.ChickenFight.BattleJoined += ChickenFight_BattleJoined;
-        _chicken.ChickenFight.BattleLeft += ChickenFight_BattleLeft;
+        _chicken.Fighter.BattleJoined += ChickenFight_BattleJoined;
+        _chicken.Fighter.BattleLeft += ChickenFight_BattleLeft;
 
         if (_currentState == State.Begin)
             ChangeState(State.Wander);
@@ -70,11 +70,6 @@ public class ChickenMovement : MonoBehaviour
         }
         else
             ChangeState(State.Idle);
-    }
-
-    void Update()
-    {
-
     }
 
     #region --- MovementState ---
@@ -112,27 +107,4 @@ public class ChickenMovement : MonoBehaviour
             _agent.MovementBehavior = null;
     }
     #endregion
-
-    //public void ChangeState(Chicken.ChickenState newState)
-    //{
-    //    _farmBehavior.enabled = newState == Chicken.ChickenState.Farm;
-    //    _chickenFightMovement.enabled = newState == Chicken.ChickenState.Fight;
-    //    _agent.enabled = newState != Chicken.ChickenState.None;
-
-    //    if (newState == Chicken.ChickenState.Farm)
-    //    {
-    //        _agent.MovementBehavior = _farmBehavior;
-    //        _agent.MaxVelocity = _chicken.Stats.MaxSpeed * 0.75f;
-    //        _agent.Acceleration = _chicken.Stats.Acceleration * 0.75f;
-    //    }
-    //    else if (newState == Chicken.ChickenState.Fight)
-    //    {
-    //        _agent.MaxVelocity = _chicken.Stats.MaxSpeed;
-    //        _agent.Acceleration = _chicken.Stats.Acceleration;
-    //    }
-    //    else if (newState == Chicken.ChickenState.PickedUp)
-    //        _agent.MovementBehavior = null;
-
-    //    _chickenState = newState;
-    //}
 }

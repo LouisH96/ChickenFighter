@@ -24,11 +24,6 @@ public class ChickenPhysical : MonoBehaviour
 
     public Chicken Chicken { get { return _chicken; } }
 
-    void Awake()
-    {
-
-    }
-
     void Start()
     {
         _highlightRenderer.enabled = false;

@@ -35,7 +35,7 @@ public class ChickenStats : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _chicken.ChickenFight.TargetKilled += ChickenFight_TargetKilled;
+        _chicken.Fighter.TargetKilled += ChickenFight_TargetKilled;
     }
 
     private void ChickenFight_TargetKilled(object sender, Chicken e)

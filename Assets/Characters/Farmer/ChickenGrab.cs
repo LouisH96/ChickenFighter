@@ -45,10 +45,6 @@ public class ChickenGrab : MonoBehaviour
             UnsetChickenToPickup();
             chickenPhysical.Grab(location);
             ChickenGrabbed?.Invoke(this, chickenPhysical.Chicken);
-            //_chickenToPickup.SetHighlight(false);
-
-            ////move chicken
-            //_chickenToPickup = null;
         }
     }
 
@@ -108,16 +104,6 @@ public class ChickenGrab : MonoBehaviour
         if (chicken == _chickenToPickup)
             UnsetChickenToPickup();
     }
-
-
-    ////---Helperfunctions---
-    //private Chicken GetChickenFromCollider(Collider collider)
-    //{
-    //    if (collider.GetType() != typeof(CharacterController))
-    //        return null;
-
-    //   return collider.gameObject.GetComponent<Chicken>();
-    //}
 
     private void SetChickenToPickup(Chicken chicken)
     {

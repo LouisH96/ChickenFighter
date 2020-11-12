@@ -83,10 +83,4 @@ public class CC_Location : MonoBehaviour
         Assert.IsFalse(_isAddedToPen, "cannot be thrown if already added to pen (means it is landed in the pen)");
         _isGrabbed = false;
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
 }

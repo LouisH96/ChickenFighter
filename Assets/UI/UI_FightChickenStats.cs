@@ -66,7 +66,7 @@ public class UI_FightChickenStats : MonoBehaviour
     private void UpdateHealthBar()
     {
         float maxHealth = _chicken.Stats.Health;
-        float currentHealth = _chicken.ChickenFight.CurrentHealth;
+        float currentHealth = _chicken.Fighter.CurrentHealth;
 
         _healthBartext.text = _chicken.name + ": " + String.Format("{0:0.#}",  currentHealth) + "/" + String.Format("{0:0.#}", maxHealth);
         SetGreenHealthBarRatio(currentHealth / maxHealth);

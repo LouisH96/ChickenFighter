@@ -19,10 +19,9 @@ public class AttackZone : MonoBehaviour
 
     void Start()
     {
-        _chicken.ChickenFight.BattleLeft += ChickenFight_BattleLeft;
+        _chicken.Fighter.BattleLeft += ChickenFight_BattleLeft;
     }
 
-    // Update is called once per frame
     void Update()
     {
         _targets.RemoveAll(p => p == null);
@@ -37,7 +36,7 @@ public class AttackZone : MonoBehaviour
         if (!bodyPart)
             return;
 
-        Battle battle = _chicken.ChickenFight.Battle;
+        Battle battle = _chicken.Fighter.Battle;
 
         if(battle)
         {

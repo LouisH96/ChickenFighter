@@ -65,6 +65,8 @@ public class ChickenGrab : MonoBehaviour
                 if (!chickenPhysical)
                     continue;
 
+                chicken.Died -= Chicken_Died;
+
                 chickenPhysical.Throw(transform.forward * _chickenEjectionForce);
                 ChickenThrown?.Invoke(this, chickenPhysical.Chicken);
             }
@@ -87,6 +89,7 @@ public class ChickenGrab : MonoBehaviour
             return;
 
         _pickupQueue.Add(chicken);
+        chicken.Died += Chicken_Died;
 
         if (!_highlightedChicken)
             TryHightlightNext();
@@ -99,6 +102,8 @@ public class ChickenGrab : MonoBehaviour
         if (!chicken)
             return;
 
+        chicken.Died -= Chicken_Died;
+
         if (_highlightedChicken == chicken)
         {
             Assert.IsFalse(_pickupQueue.Contains(_highlightedChicken), "highlighted chicken should not be in queue");
@@ -110,6 +115,27 @@ public class ChickenGrab : MonoBehaviour
             Assert.IsTrue(_pickupQueue.Contains(chicken), "chicken cannot not exit trigger, if not in system first");
             _pickupQueue.Remove(chicken);
         }
+    }
+
+    private void Chicken_Died(object sender, EventArgs e)
+    {
+        Chicken chicken = (Chicken)sender;
+        Assert.IsNotNull(chicken, "sender should be chicken");
+
+        chicken.Died -= Chicken_Died;
+
+        if (_pickupQueue.Contains(chicken))
+        {
+            _pickupQueue.Remove(chicken);
+            Assert.AreNotEqual(_highlightedChicken, chicken, "chicken cant be the highlighted one and in queue");
+        }
+        else if (_highlightedChicken == chicken)
+        {
+            UnHighlightChicken();
+            TryHightlightNext();
+        }
+        else if(IsChickenAlreadyPickedup(chicken))
+            Debug.LogWarning("Chickengrab should not be subscribed to death event of this chicken");
     }
 
     private void TryHightlightNext()

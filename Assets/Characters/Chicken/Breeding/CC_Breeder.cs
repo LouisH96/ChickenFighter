@@ -65,11 +65,7 @@ public class CC_Breeder : MonoBehaviour
         AddBreedTime( GetAfterBreedTimeOut());
         partnerBreeder.AddBreedTime(partnerBreeder.GetAfterBreedTimeOut());
 
-        //do breeding
-        GameObject child = Instantiate(_chicken.gameObject);
-
-        //return child
-        return child.GetComponent<Chicken>();
+        return MakeChild(partner);
     }
     public void SetIsInBreedPen(bool isInBreedPen)
     {
@@ -118,5 +114,15 @@ public class CC_Breeder : MonoBehaviour
     private float GetNewPenTimeOut()
     {
         return UnityEngine.Random.Range(_minNewPenTimeOut, _maxNewPenTimeOut);
+    }
+
+    private Chicken MakeChild(Chicken partner)
+    {
+        GameObject gameObject = Instantiate(_chicken.gameObject);
+        Chicken child = gameObject.GetComponent<Chicken>();
+
+        this._chicken.Stats.BreedStats(partner.Stats, child.Stats);
+
+        return child;
     }
 }

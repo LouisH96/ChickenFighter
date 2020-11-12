@@ -111,10 +111,10 @@ public class UI_FightChickenStats : MonoBehaviour
         _chicken.Physical.Highlighted += Physical_Highlighted; ;
         _chicken.Physical.UnHighlighted += Physical_UnHighlighted;
 
-        _damageValue.text = _chicken.Stats.Damage.ToString();
-        _hpRegenValue.text = _chicken.Stats.HealthRegen.ToString();
-        _speedValue.text = _chicken.Stats.Speed.ToString();
-        _accelerationValue.text = _chicken.Stats.Acceleration.ToString();
+        _damageValue.text = String.Format("{0:0.#}", _chicken.Stats.Damage);
+        _hpRegenValue.text = String.Format("{0:0.#}", _chicken.Stats.HealthRegen);
+        _speedValue.text = String.Format("{0:0.#}", _chicken.Stats.Speed);
+        _accelerationValue.text = String.Format("{0:0.#}", _chicken.Stats.Acceleration);
         UpdateHealthBar();
 
         if (_chicken.Physical.IsHighLighted)

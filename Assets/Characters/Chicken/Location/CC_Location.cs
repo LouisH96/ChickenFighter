@@ -22,21 +22,29 @@ public class CC_Location : MonoBehaviour
         _chicken.Physical.Landed += Physical_Landed;
     }
 
+    private void Start()
+    {
+        _chicken.Died += _chicken_Died;
+    }
+
+    private void _chicken_Died(object sender, System.EventArgs e)
+    {
+        Chicken chicken = sender as Chicken;
+        chicken.Died -= _chicken_Died;
+
+        if (_currentPen)
+            ExitPen(_currentPen);
+    }
+
     private void Physical_Landed(object sender, Chicken e)
     {
         Assert.IsFalse(_isAddedToPen, "cannot be already added to pen & land");
         Assert.IsFalse(_isGrabbed, "cannot land and be grabbed at the same time");
-        if(_currentPen)
+        if (_currentPen)
         {
             _currentPen.AddChicken(_chicken);
             _isAddedToPen = true;
         }
-    }
-
-    private void OnDisable()
-    {
-        if (_currentPen)
-            ExitPen(_currentPen);
     }
 
     public void EnterPen(ChickenPen newPen)
@@ -49,7 +57,7 @@ public class CC_Location : MonoBehaviour
             Assert.IsNull(_currentPen, "cannot set pen if one is already set");
             _currentPen = newPen;
 
-            if(_chicken.Physical.State == ChickenPhysical.PhysicalState.Character)
+            if (_chicken.Physical.State == ChickenPhysical.PhysicalState.Character)
             {
                 _currentPen.AddChicken(_chicken);
                 _isAddedToPen = true;

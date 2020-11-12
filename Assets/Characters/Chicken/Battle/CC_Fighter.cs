@@ -24,7 +24,7 @@ public class CC_Fighter : MonoBehaviour
     //public event EventHandler<Chicken> EnemyLeft;
 
     public event EventHandler<DamageTakenEventArgs> DamageTaken;
-    public event EventHandler<DamageTakenEventArgs> Died;
+    public event EventHandler<DamageTakenEventArgs> OutOfHealth;
     public event EventHandler<Chicken> TargetKilled;
 
     //--- Components ---
@@ -102,7 +102,7 @@ public class CC_Fighter : MonoBehaviour
         if (args.KilledTarget)
         {
             e.DidKill = true;
-            Died?.Invoke(this, args);
+            OutOfHealth?.Invoke(this, args);
         }
     }
 

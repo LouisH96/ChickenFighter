@@ -9,9 +9,21 @@ using UnityEngine.Assertions;
 public class Chicken : MonoBehaviour
 {
     #region --- EventArgs ---
+    public class DiedEventArgs : EventArgs
+    {
+        private float _destroyDelay = 0.0f;
+        public float DestroyDelay { get { return _destroyDelay; } }
+
+        public void RequestDelayBeforeDestroy(float delay)
+        {
+            if (delay > _destroyDelay)
+                _destroyDelay = delay;
+        }
+    }
     #endregion
 
     #region --- Events ---
+    public event EventHandler<DiedEventArgs> Died;
     #endregion
 
     //---Components---
@@ -50,12 +62,19 @@ public class Chicken : MonoBehaviour
 
     private void Start()
     {
-        _chickenFight.Died += _chickenFight_Died;
+        _chickenFight.OutOfHealth += _chickenFight_OutOfHealth;
     }
 
-    private void _chickenFight_Died(object sender, CC_Fighter.DamageTakenEventArgs e)
+    private void _chickenFight_OutOfHealth(object sender, CC_Fighter.DamageTakenEventArgs e)
     {
-        Destroy(gameObject);
+        var args = new DiedEventArgs();
+        Died?.Invoke(this, args);
+        Destroy(gameObject, args.DestroyDelay);
+    }
+
+    private void OnDestroy()
+    {
+        Died?.Invoke(this, new DiedEventArgs());
     }
 
     private void Update()

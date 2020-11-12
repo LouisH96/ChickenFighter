@@ -19,6 +19,7 @@ public class ChickenPen : MonoBehaviour
     
     //--- Public Member Access ---
     public ReadOnlyCollection<Chicken> Chickens { get { return _chickens.AsReadOnly(); } }
+    public int MaxAmntOfChickens { get { return _maxChickens; } }
 
     public void AddChicken(Chicken chicken)
     {

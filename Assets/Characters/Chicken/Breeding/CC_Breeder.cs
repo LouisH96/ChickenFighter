@@ -40,26 +40,34 @@ public class CC_Breeder : MonoBehaviour
     //--- Public Functions ---
     public Chicken Breed(Chicken partner)
     {
+        CC_Breeder partnerBreeder = partner.Breeder;
+
         //check if code that calls this, calls it on the right time/state
         if (!IsBreedable)
         {
             Debug.LogWarning("chicken should not breed if it is not breedable");
             return null;
         }
+        if (!partnerBreeder)
+        {
+            Debug.LogWarning("partner has no breed component");
+            return null;
+        }
+        if (!partnerBreeder.IsBreedable)
+        {
+            Debug.LogWarning("partnerchicken should not breed if it is not breedable");
+            return null;
+        }
 
         //increase breedTimeOut
-        if (_breedTimeOut < 0.0f) _breedTimeOut = 0.0f;
-        _breedTimeOut += _timeOutAfterBreed;
-
-        //invoke breedable event
-        if (_breedTimeOut > 0.0f)
-            BreedableStateChanged?.Invoke(this, false);
+        AddBreedTime(_timeOutAfterBreed);
+        partnerBreeder.AddBreedTime(partnerBreeder._timeOutAfterBreed);
 
         //do breeding
-        Debug.Log("Breed " + _chicken.name + " + " + partner.name);
+        GameObject child = Instantiate(_chicken.gameObject);
 
         //return child
-        return null;
+        return child.GetComponent<Chicken>();
     }
     public void SetIsInBreedPen(bool isInBreedPen)
     {
@@ -69,20 +77,33 @@ public class CC_Breeder : MonoBehaviour
             return;
         }
 
-        //store current state
+        //change state
+        if (isInBreedPen)
+            AddBreedTime(_timeOutOnPenEnter);
+
+        //store state
         bool wasBreedable = IsBreedable;
 
         //change state
-        if (isInBreedPen)
-        {
-            //increase breedTimeOut
-            if (_breedTimeOut < 0.0f) _breedTimeOut = 0.0f;
-            _breedTimeOut += _timeOutOnPenEnter;
-        }
         _isInBreedPen = isInBreedPen;
 
         //raise event on state changed
         if (wasBreedable != IsBreedable)
+            BreedableStateChanged?.Invoke(this, IsBreedable);
+    }
+    public void AddBreedTime(float amount)
+    {
+        //store current state
+        bool wasBreedable = IsBreedable;
+
+        //change state
+        if (_breedTimeOut < 0.0f)
+            _breedTimeOut = amount;
+        else
+            _breedTimeOut += amount;
+
+        //invoke event on state change
+        if (IsBreedable != wasBreedable)
             BreedableStateChanged?.Invoke(this, IsBreedable);
     }
 

@@ -7,21 +7,28 @@ using UnityEngine.Assertions;
 
 public class ChickenGrab : MonoBehaviour
 {
+    //--- Events ---
     public event EventHandler<Chicken> ChickenHighlighted;
     public event EventHandler<Chicken> ChickenUnHighlighted;
 
     public event EventHandler<Chicken> ChickenGrabbed;
     public event EventHandler<Chicken> ChickenThrown;
 
+    //--- Components ---
     [SerializeField] private Farmer _farmer = null;
-    [SerializeField] private float _chickenEjectionForce = 100.0f;
     [SerializeField] private Transform[] _hoverLocations = null;
-    private Chicken _chickenToPickup = null;
 
-    public Chicken HighlightedChicken { get { return _chickenToPickup; } }
+    //--- Stats ---
+    [SerializeField] private float _chickenEjectionForce = 100.0f;
 
+    //--- Variables ---
+    private Chicken _highlightedChicken = null;
+    private List<Chicken> _pickupQueue = new List<Chicken>();
+
+    //--- Public Member Access ---
+    public Chicken HighlightedChicken { get { return _highlightedChicken; } }
     public int MaxGrabbed { get { return _hoverLocations.Count(); } }
-    public int AmntGrabbed { get { return GetPickedUpChickens().Count; } }
+    public int AmntGrabbed { get { return GetPickedUpChickens().Count(); } }
 
     void Update()
     {
@@ -32,19 +39,18 @@ public class ChickenGrab : MonoBehaviour
     private void HandlePickupChicken()
     {
         if (Input.GetAxis("Action1") > 0.0f
-            && _chickenToPickup)
+            && HighlightedChicken)
         {
             Transform location = GetEmptyGrabLocation();
             Assert.IsNotNull(location); //if there is no location available, _chickenToPickup should be null
 
-            ChickenPhysical chickenPhysical = _chickenToPickup.Physical;
-            if (!chickenPhysical)
-                return;
+            ChickenPhysical chickenPhysical = HighlightedChicken.Physical;
 
             //change chickenMode
-            UnsetChickenToPickup();
+            UnHighlightChicken();
             chickenPhysical.Grab(location);
             ChickenGrabbed?.Invoke(this, chickenPhysical.Chicken);
+            TryHightlightNext();
         }
     }
 
@@ -67,31 +73,38 @@ public class ChickenGrab : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (_chickenToPickup)
-            return;
-
         //is chicken?
         Chicken chicken = ChickenPhysical.GetCharacterChickenFromCollider(other);
         if (!chicken)
             return;
 
-        //not already picked up ?
-        Assert.IsFalse(IsChickenAlreadyPickedup(chicken)); //if picked up, should no trigger this again
+        //not already in grab-system ?
+        Assert.IsFalse(_highlightedChicken == chicken, "chicken already highlighted");
+        Assert.IsFalse(_pickupQueue.Contains(chicken), "chicken already in queue");
+        Assert.IsFalse(IsChickenAlreadyPickedup(chicken), "chicken already grabbed"); //if picked up, should no trigger this again
 
-        //is there an empty location ?
-        Transform emptyLocation = GetEmptyGrabLocation();
-        if (!emptyLocation)
+        if (!CouldBePickedUp(chicken))
             return;
 
-        ChickenPhysical chickenPhysical = chicken.Physical;
-        if (!chickenPhysical)
-            return;
+        _pickupQueue.Add(chicken);
 
-        if (!chickenPhysical.CanGrab())
-            return;
+        if (!_highlightedChicken)
+            TryHightlightNext();
 
-        //prepare for pickup
-        SetChickenToPickup(chicken);
+        ////is there an empty location ?
+        //Transform emptyLocation = GetEmptyGrabLocation();
+        //if (!emptyLocation)
+        //    return;
+
+        //ChickenPhysical chickenPhysical = chicken.Physical;
+        //if (!chickenPhysical)
+        //    return;
+
+        //if (!chickenPhysical.CanGrab())
+        //    return;
+
+        ////prepare for pickup
+        //AddChickenToPickup(chicken);
     }
 
     private void OnTriggerExit(Collider other)
@@ -101,33 +114,56 @@ public class ChickenGrab : MonoBehaviour
         if (!chicken)
             return;
 
-        if (chicken == _chickenToPickup)
-            UnsetChickenToPickup();
+        if (_highlightedChicken == chicken)
+        {
+            Assert.IsFalse(_pickupQueue.Contains(_highlightedChicken), "highlighted chicken should not be in queue");
+            UnHighlightChicken();
+            TryHightlightNext();
+        }
+        else
+        {
+            Assert.IsTrue(_pickupQueue.Contains(chicken), "chicken cannot not exit trigger, if not in system first");
+            _pickupQueue.Remove(chicken);
+        }
     }
 
-    private void SetChickenToPickup(Chicken chicken)
+    private void TryHightlightNext()
     {
-        if (!chicken)
+        if (_pickupQueue.Count == 0)
             return;
 
-        if (_chickenToPickup)
-            UnsetChickenToPickup();
+        if (GetEmptyGrabLocation() == null)
+            return;
 
-        _chickenToPickup = chicken;
-        _chickenToPickup.Physical.SetHighlighted(true, _farmer);
+        if (_highlightedChicken)
+            UnHighlightChicken();
 
-        ChickenHighlighted?.Invoke(this, chicken);
+        foreach (var chicken in _pickupQueue)
+        {
+            if (!chicken.Physical.CanGrab())
+                continue;
+
+            //make chicken the highlighted one
+            _pickupQueue.Remove(chicken);
+            chicken.Physical.SetHighlighted(true, _farmer);
+            _highlightedChicken = chicken;
+            ChickenHighlighted?.Invoke(this, _highlightedChicken);
+            return;
+        }
     }
 
-    private void UnsetChickenToPickup()
+    private void UnHighlightChicken()
     {
-        if (!_chickenToPickup)
-            return;
+        Assert.IsNotNull(_highlightedChicken, "cannot unhighlight chicken if there is none");
 
-        ChickenUnHighlighted?.Invoke(this, _chickenToPickup);
+        _highlightedChicken.Physical.SetHighlighted(false, _farmer);
+        ChickenUnHighlighted?.Invoke(this, _highlightedChicken);
+        _highlightedChicken = null;
+    }
 
-        _chickenToPickup.Physical.SetHighlighted(false, _farmer);
-        _chickenToPickup = null;
+    private bool CouldBePickedUp(Chicken chicken)
+    {
+        return chicken.Physical;
     }
 
     public Transform GetEmptyGrabLocation()
@@ -162,12 +198,12 @@ public class ChickenGrab : MonoBehaviour
         return false;
     }
 
-    public List<Chicken> GetPickedUpChickens()
+    public IEnumerable<Chicken> GetPickedUpChickens()
     {
         return _hoverLocations
             .Where(l => l.childCount > 0)
             .Select(l => l.GetChild(0))
             .Select(c => c.GetComponent<Chicken>())
-            .ToList();
+            .Where(c => c != null);
     }
 }

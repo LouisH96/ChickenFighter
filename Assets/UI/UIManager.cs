@@ -8,10 +8,11 @@ using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
-    [SerializeField] private ChickenGrab _chickenGrab= null;
-    [SerializeField] private ChickenPen _battlePen = null;
+    [SerializeField] private ChickenGrab _chickenGrab = null;
 
-    [SerializeField] private StatsCollection _fightingList = null;
+    private ChickenPen _displayedPen = null;
+    [SerializeField] private StatsCollection _displayedPenList = null;
+    [SerializeField] private Text _displayedPenText = null;
 
     [SerializeField] private RectTransform _highlightedChickenDecoration = null;
     [SerializeField] private UI_FightChickenStats _highlightedChicken = null;
@@ -20,11 +21,11 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Text _grabbedText = null;
     [SerializeField] private StatsCollection _grabbedList = null;
 
+    //--- Public Member Access ---
+    public ChickenPen DisplayedPen { get { return _displayedPen; } }
+
     private void Start()
     {
-        _battlePen.ChickenAdded += _battlePen_ChickenAdded;
-        _battlePen.ChickenRemoved += _battlePen_ChickenRemoved;
-
         _chickenGrab.ChickenHighlighted += _chickenGrab_ChickenHighlighted;
         _chickenGrab.ChickenUnHighlighted += _chickenGrab_ChickenUnHighlighted;
         _highlightedChicken.gameObject.SetActive(false);
@@ -72,23 +73,45 @@ public class UIManager : MonoBehaviour
 
     private void OnDestroy()
     {
-        _battlePen.ChickenAdded -= _battlePen_ChickenAdded;
-        _battlePen.ChickenRemoved -= _battlePen_ChickenRemoved;
+        UndisplayPen();
         _chickenGrab.ChickenHighlighted -= _chickenGrab_ChickenHighlighted;
         _chickenGrab.ChickenUnHighlighted -= _chickenGrab_ChickenUnHighlighted;
     }
 
-    private void _battlePen_ChickenRemoved(object sender, Chicken e)
+    public void DisplayPen(ChickenPen pen)
     {
-        _fightingList.Remove(e);
+        if (_displayedPen)
+            UndisplayPen();
+
+        pen.ChickenAdded += Pen_ChickenAdded;
+        pen.ChickenRemoved += Pen_ChickenRemoved;
+
+        _displayedPen = pen;
+        _displayedPenText.text = pen.name;
+
+        foreach (var chicken in pen.Chickens)
+            _displayedPenList.Add(chicken);
     }
 
-    private void _battlePen_ChickenAdded(object sender, Chicken e)
+    public void UndisplayPen()
     {
-        _fightingList.Add(e);
+        if (_displayedPen)
+        {
+            _displayedPenList.RemoveAll();
+            _displayedPenText.text = "";
+            _displayedPen.ChickenAdded -= Pen_ChickenAdded;
+            _displayedPen.ChickenRemoved -= Pen_ChickenRemoved;
+            _displayedPen = null;
+        }
     }
 
-    private void Update()
+    private void Pen_ChickenAdded(object sender, Chicken e)
     {
+        _displayedPenList.Add(e);
+    }
+
+    private void Pen_ChickenRemoved(object sender, Chicken e)
+    {
+        _displayedPenList.Remove(e);
     }
 }

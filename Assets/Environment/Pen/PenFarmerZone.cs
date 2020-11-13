@@ -14,7 +14,7 @@ public class PenFarmerZone : MonoBehaviour
         if (!farmer)
             return;
 
-        Debug.Log("farmer entered");
+        farmer.PenAreaEntered(_pen);
     }
 
     private void OnTriggerExit(Collider other)
@@ -23,6 +23,6 @@ public class PenFarmerZone : MonoBehaviour
         if (!farmer)
             return;
 
-        Debug.Log("farmer exit");
+        farmer.PenAreaExit(_pen);
     }
 }

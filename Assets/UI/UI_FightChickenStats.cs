@@ -64,6 +64,8 @@ public class UI_FightChickenStats : MonoBehaviour
             UnsetChicken();
     }
 
+
+
     private void UpdateHealthBar()
     {
         float maxHealth = _chicken.Stats.Health;

@@ -134,8 +134,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _chickenGrab: {fileID: 0}
-  _battlePen: {fileID: 0}
-  _fightingList: {fileID: 4110906872377088618}
+  _displayedPenList: {fileID: 4110906872377088618}
+  _displayedPenText: {fileID: 4285836762555405012}
   _highlightedChickenDecoration: {fileID: 8836522069154749479}
   _highlightedChicken: {fileID: 2263423006958404756}
   _grabbedText: {fileID: 2135051368899006789}
@@ -424,7 +424,7 @@ GameObject:
   m_Component:
   - component: {fileID: 383706042679483944}
   m_Layer: 5
-  m_Name: FightingChickens
+  m_Name: DisplayedPen
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -675,10 +675,10 @@ PrefabInstance:
     - target: {fileID: 1525987373887965999, guid: 18cf7481ec3f05e4ab47534467a15e2f, type: 3}
       propertyPath: _decoration
       value: 
-      objectReference: {fileID: 3151402219972000971}
+      objectReference: {fileID: 0}
     - target: {fileID: 3720792235836995123, guid: 18cf7481ec3f05e4ab47534467a15e2f, type: 3}
       propertyPath: m_Name
-      value: FightingList
+      value: DisplayedPenList
       objectReference: {fileID: 0}
     - target: {fileID: 4329628639078564876, guid: 18cf7481ec3f05e4ab47534467a15e2f, type: 3}
       propertyPath: m_LocalPosition.x

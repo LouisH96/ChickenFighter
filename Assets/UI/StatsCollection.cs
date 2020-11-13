@@ -79,6 +79,12 @@ public class StatsCollection : MonoBehaviour
         ListChanged();
     }
 
+    public void RemoveAll()
+    {
+        foreach (var chicken in GetAllChickens())
+            Remove(chicken);
+    }
+
     public List<Chicken> GetAllChickens()
     {
         List<Chicken> chickens = new List<Chicken>();

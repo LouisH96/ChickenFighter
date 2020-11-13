@@ -40,7 +40,8 @@ public class StatsCollection : MonoBehaviour
 
     void Update()
     {
-
+        if (_decoration)
+            _decoration.gameObject.SetActive(_rectTransform.childCount > 0);
     }
 
     private void OnDestroy()
@@ -115,9 +116,6 @@ public class StatsCollection : MonoBehaviour
         }
 
         RecalculatePositions();
-
-        if (_decoration)
-            _decoration.gameObject.SetActive(_rectTransform.childCount > 0);
     }
 
     private void Chicken_Died(object sender, Chicken.DiedEventArgs e)

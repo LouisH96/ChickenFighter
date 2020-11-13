@@ -60,17 +60,22 @@ public class ChickenGrab : MonoBehaviour
         if (Input.GetAxis("Action2") > 0.0f
             && HasChickensPickedUp())
         {
-            foreach (Chicken chicken in GetPickedUpChickens())
-            {
-                ChickenPhysical chickenPhysical = chicken.Physical;
-                if (!chickenPhysical)
-                    continue;
+            ThrowAll();
+        }
+    }
 
-                chicken.Died -= Chicken_Died;
+    public void ThrowAll()
+    {
+        foreach (Chicken chicken in GetPickedUpChickens())
+        {
+            ChickenPhysical chickenPhysical = chicken.Physical;
+            if (!chickenPhysical)
+                continue;
 
-                chickenPhysical.Throw(transform.forward * _chickenEjectionForce);
-                ChickenThrown?.Invoke(this, chickenPhysical.Chicken);
-            }
+            chicken.Died -= Chicken_Died;
+
+            chickenPhysical.Throw(transform.forward * _chickenEjectionForce);
+            ChickenThrown?.Invoke(this, chickenPhysical.Chicken);
         }
     }
 

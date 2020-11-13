@@ -49,16 +49,21 @@ public class Farmer : MonoBehaviour
     //--- Public Functions ---
     public void PenAreaEntered(ChickenPen pen)
     {
-        Assert.IsFalse(_closePens.Contains(pen), "pen already in closePens");
-        Assert.IsFalse(_displayedPen == pen, "pen already displayed");
+        //Assert.IsFalse(_closePens.Contains(pen), "pen already in closePens");
+        //Assert.IsFalse(_displayedPen == pen, "pen already displayed");
+
+        if (_closePens.Contains(pen))
+            return;
 
         _closePens.Add(pen);
     }
 
     public void PenAreaExit(ChickenPen pen)
     {
-        Assert.IsTrue(_closePens.Contains(pen), "pen is not in closePens");
+        //Assert.IsTrue(_closePens.Contains(pen), "pen is not in closePens");
 
+        if (!_closePens.Contains(pen))
+            return;
         _closePens.Remove(pen);
 
         if (_displayedPen == pen)

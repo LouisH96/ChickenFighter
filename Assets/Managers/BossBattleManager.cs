@@ -18,18 +18,13 @@ public class BossBattleManager : MonoBehaviour
         _boss = Instantiate(_bossTemplate, _bossSpawn.transform.position, _bossSpawn.transform.rotation);
         _bossBattle.Boss = _boss;
 
-
         int allyCount = _trunk.Chickens.Count;
         for(int i = 0; i < allyCount; i ++)
         {
             Chicken ally = _trunk.Chickens[0];
-            ally.Location.ExitPen(_trunk);
             _bossBattle.Allies.Add(ally);
-            ally.Physical.ChangeState(ChickenPhysical.PhysicalState.Physics);
-            ally.transform.position = _allySpawns[i].position;
-            ally.transform.rotation = _allySpawns[i].rotation;
-            //ally.Movement.Agent.enabled = true;
 
+            ally.MoveTo(_allySpawns[i].position, _allySpawns[i].rotation);
         }
     }
 }

@@ -88,4 +88,14 @@ public class Chicken : MonoBehaviour
     private void Update()
     {
     }
+
+    public void MoveTo(Vector3 position, Quaternion rotation)
+    {
+        if(_location.Pen)
+            _location.ExitPen(_location.Pen);
+
+        _physical.ChangeState(ChickenPhysical.PhysicalState.Physics);
+        transform.position = position;
+        transform.rotation = rotation;
+    }
 }

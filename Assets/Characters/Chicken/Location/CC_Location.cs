@@ -16,6 +16,8 @@ public class CC_Location : MonoBehaviour
     private bool _isAddedToPen = false;
     private bool _isGrabbed = false;
 
+    public ChickenPen Pen { get { return _currentPen; } }
+
     void Awake()
     {
         _chicken.Physical.Grabbed += Physical_Grabbed;

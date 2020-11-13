@@ -20,6 +20,10 @@ public class BossBattleManager : MonoBehaviour
     {
         _bossBattle.Boss = _boss;
         _bossBattle.FightEnded += _bossBattle_FightEnded;
+
+        _uiManager.ShowChatTime = 15.0f;
+        _uiManager.ChatText = "Duke: Hi buddy, I heard there's alot of money to earn if you can KILL Dave's GOLDEN CHICKEN.\n You should breed the ultimate fighter chicken.";
+        _uiManager.ShowChatTime = 4.0f;
     }
 
     private void _bossBattle_FightEnded(object sender, bool e)
@@ -31,13 +35,13 @@ public class BossBattleManager : MonoBehaviour
 
         if (e)
         {
-            _uiManager.ChatText = "Wow you killed him, congratulations.\n (Press 'alt' + 'F4' to close the game)";
+            _uiManager.ChatText = "Dave: Wow you killed him, congratulations here's a million dollar.\n (You won the game, press 'alt' + 'F4' to close the game)";
             Time.timeScale = 0.0f;
         }
         else
         {
             _boss.Fighter.ResetHealth();
-            _uiManager.ChatText = "Try again buddy";
+            _uiManager.ChatText = "Dave: Try again buddy";
         }
 
         _fightActivated = false;
@@ -49,15 +53,15 @@ public class BossBattleManager : MonoBehaviour
 
         if (amntGrabbed == 0)
         {
-            _uiManager.ChatText = "Grab your fighter chicken to start the fight.";
+            _uiManager.ChatText = "Dave: GRAB your fighter chicken to start the fight.";
             return;
         }
         if (amntGrabbed != 1)
         {
-            _uiManager.ChatText = "You can only fight with one chicken.";
+            _uiManager.ChatText = "Dave: You can only fight with one chicken.";
             return;
         }
-        _uiManager.ChatText = "Here we go.";
+        _uiManager.ChatText = "Dave: Here we go.";
 
         _bossBattle.Allies.Clear();
         Chicken grabbed = _farmer.ChickenGrab.GetPickedUpChickens()[0];

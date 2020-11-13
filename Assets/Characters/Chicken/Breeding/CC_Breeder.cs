@@ -15,10 +15,12 @@ public class CC_Breeder : MonoBehaviour
     [SerializeField] private Chicken _chicken = null;
 
     //--- Stats ---
-    [SerializeField] private float _minNewPenTimeOut  = 5.0f;
-    [SerializeField] private float _maxNewPenTimeOut  = 15.0f;
+    [SerializeField] private float _minNewPenTimeOut = 5.0f;
+    [SerializeField] private float _maxNewPenTimeOut = 15.0f;
     [SerializeField] private float _minAfterBreedTimeOut = 25.0f;
     [SerializeField] private float _maxAfterBreedTimeOut = 40.0f;
+    [SerializeField] private bool _superiorRace = false;
+    [SerializeField] private GameObject _bornFVXTemplate = null;
 
     //--- Variables ---
     private bool _isInBreedPen = false;
@@ -27,6 +29,8 @@ public class CC_Breeder : MonoBehaviour
     //--- Public Member Access ---
     public Chicken Chicken { get { return _chicken; } }
     public bool IsBreedable { get { return _isInBreedPen && _breedTimeOut <= 0.0f; } }
+
+    public bool IsSuperiorRace { get { return _superiorRace; } }
 
     //--- Unity Functions ---
     private void Start()
@@ -47,6 +51,9 @@ public class CC_Breeder : MonoBehaviour
     //--- Public Functions ---
     public Chicken Breed(Chicken partner)
     {
+        if (!_superiorRace && partner.Breeder._superiorRace)
+            return partner.Breeder.Breed(_chicken);
+
         CC_Breeder partnerBreeder = partner.Breeder;
 
         //check if code that calls this, calls it on the right time/state
@@ -67,8 +74,15 @@ public class CC_Breeder : MonoBehaviour
         }
 
         //increase breedTimeOut
-        AddBreedTime( GetAfterBreedTimeOut());
+        AddBreedTime(GetAfterBreedTimeOut());
         partnerBreeder.AddBreedTime(partnerBreeder.GetAfterBreedTimeOut());
+
+        //spawn & destroy vfx
+        if (_bornFVXTemplate)
+        {
+            GameObject vfx = Instantiate(_bornFVXTemplate, transform.position, Quaternion.LookRotation(Vector3.up));
+            Destroy(vfx, 2.0f);
+        }
 
         return MakeChild(partner);
     }

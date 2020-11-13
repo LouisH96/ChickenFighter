@@ -48,6 +48,8 @@ MonoBehaviour:
   _maxNewPenTimeOut: 15
   _minAfterBreedTimeOut: 25
   _maxAfterBreedTimeOut: 50
+  _superiorRace: 0
+  _bornFVXTemplate: {fileID: 3592363182432919665, guid: 02b9e093da9bfaf4fa0ac38b3eed6b61, type: 3}
 --- !u!1 &271132464496149154
 GameObject:
   m_ObjectHideFlags: 0
@@ -249,6 +251,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d7d7c3633d3ce443839a92bf1ad2b1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _vfxTemplate: {fileID: 3592363182432919665, guid: f7f7e67863813804499e17c6bc985dff, type: 3}
   _chicken: {fileID: 1144447749319598529}
   _health: 50
   _healthRegen: 0.5

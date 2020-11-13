@@ -33,7 +33,7 @@ public class Tutorial1 : MonoBehaviour
         _bill.transform.Rotate(Vector3.forward, -90.0f, Space.Self);
         _bill.transform.Rotate(Vector3.up, -90.0f, Space.Self);
         _uIManager.ShowChatTime = delay;
-        _uIManager.ChatText = "Bill: Ooh no I just died from a hearthattack.\n The ranch is yours now Billy.";
+        _uIManager.ChatText = "Bill: Ooh no I just died from a heartattack.\n The ranch is yours now Billy.";
         Invoke(nameof(EndTutorial), delay);
     }
 

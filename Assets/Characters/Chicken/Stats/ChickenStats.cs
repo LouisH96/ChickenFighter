@@ -18,6 +18,9 @@ public class ChickenStats : MonoBehaviour
 
     public event EventHandler<ChickenStatEventArgs> StatUpgraded;
 
+    //--- Components ---
+    [SerializeField] private GameObject _vfxTemplate = null;
+
     [SerializeField] private Chicken _chicken = null;
     [SerializeField] private float _health = 50;
     [SerializeField] private float _healthRegen = 1.0f;
@@ -54,6 +57,12 @@ public class ChickenStats : MonoBehaviour
     {
         int statIndex = UnityEngine.Random.Range(0, 5);
         var definition = GetStatDefinition(statIndex);
+
+        if (_vfxTemplate)
+        {
+            GameObject vfx = Instantiate(_vfxTemplate, transform.position, Quaternion.LookRotation(Vector3.up));
+            Destroy(vfx, 2.0f);
+        }
 
         UpgradeStat(definition);
     }

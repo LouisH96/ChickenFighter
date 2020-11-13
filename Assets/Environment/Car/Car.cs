@@ -8,10 +8,11 @@ public class Car : MonoBehaviour
     //--- Components ---
     [SerializeField] private Text _text = null;
     private string _textContent = "";
+    [SerializeField] private BossBattleManager _bossBattleManager = null;
 
     //--- Variables ---
     private Farmer _farmerAtDoor = null;
-
+    private bool _activated = false;
 
     void Start()
     {
@@ -21,10 +22,12 @@ public class Car : MonoBehaviour
 
     void Update()
     {
-        if(_farmerAtDoor &&
+        if(_farmerAtDoor && ! _activated &&
             Input.GetAxis("Action1") > 0.0f)
         {
             _farmerAtDoor.ChickenGrab.ThrowAll();
+            _bossBattleManager.StartBossBattle();
+            _activated = true;
             Debug.Log("ToCity");
         }
     }

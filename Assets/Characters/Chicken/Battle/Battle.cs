@@ -35,7 +35,7 @@ public class Battle : MonoBehaviour
         }
     }
 
-    private void _pen_ChickenRemoved(object sender, Chicken e)
+    protected virtual void _pen_ChickenRemoved(object sender, Chicken e)
     {
         if (_isFightActive)
         {

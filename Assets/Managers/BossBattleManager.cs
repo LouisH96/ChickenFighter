@@ -27,9 +27,12 @@ public class BossBattleManager : MonoBehaviour
         if (!_fightActivated)
             return;
 
+
+
         if (e)
         {
-            _uiManager.ChatText = "Wow you killed him, congratulations.";
+            _uiManager.ChatText = "Wow you killed him, congratulations.\n (Press 'alt' + 'F4' to close the game)";
+            Time.timeScale = 0.0f;
         }
         else
         {
@@ -44,12 +47,12 @@ public class BossBattleManager : MonoBehaviour
     {
         int amntGrabbed = _farmer.ChickenGrab.AmntGrabbed;
 
-        if(amntGrabbed == 0)
+        if (amntGrabbed == 0)
         {
             _uiManager.ChatText = "Grab your fighter chicken to start the fight.";
             return;
         }
-        if(amntGrabbed != 1)
+        if (amntGrabbed != 1)
         {
             _uiManager.ChatText = "You can only fight with one chicken.";
             return;
@@ -77,7 +80,9 @@ public class BossBattleManager : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         _farmer = Farmer.GetFromCollider(other);
-        _text.text = _startFightText;
+
+        if (!_fightActivated)
+            _text.text = _startFightText;
     }
 
     private void OnTriggerExit(Collider other)

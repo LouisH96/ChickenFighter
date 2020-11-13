@@ -50,7 +50,7 @@ GameObject:
   - component: {fileID: 6904886767021533754}
   - component: {fileID: 4141646559664981865}
   m_Layer: 5
-  m_Name: ToCityText
+  m_Name: TopText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -73,7 +73,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0, y: -60}
-  m_SizeDelta: {x: 500, y: 45.1}
+  m_SizeDelta: {x: 1235, y: 45.1}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &6904886767021533754
 CanvasRenderer:
@@ -412,6 +412,9 @@ MonoBehaviour:
   _grabbedList: {fileID: 1523525377955400269}
   _chat: {fileID: 789101403357322552}
   _chatText: {fileID: 9002930375643370815}
+  _showChatTime: 4
+  _topText: {fileID: 4141646559664981865}
+  _displayPenCount: 0
 --- !u!1 &6807243635938561780
 GameObject:
   m_ObjectHideFlags: 0

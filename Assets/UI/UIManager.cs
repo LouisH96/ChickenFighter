@@ -23,9 +23,17 @@ public class UIManager : MonoBehaviour
 
     [SerializeField] private Transform _chat = null;
     [SerializeField] private Text _chatText = null;
+    [SerializeField] private float _showChatTime = 4.0f;
+
+    [SerializeField] private Text _topText = null;
+    [SerializeField] private bool _displayPenCount = false;
 
     //--- Public Member Access ---
     public ChickenPen DisplayedPen { get { return _displayedPen; } }
+
+    public string TopText { get { return _topText.text; } set { _topText.text = value; } }
+
+    public float ShowChatTime { get { return _showChatTime; } set { _showChatTime = value; } }
 
     public string ChatText
     {
@@ -41,7 +49,7 @@ public class UIManager : MonoBehaviour
             {
                 _chat.gameObject.SetActive(true);
                 CancelInvoke(nameof(RemoveChatScreen));
-                Invoke(nameof(RemoveChatScreen), 3.0f);
+                Invoke(nameof(RemoveChatScreen), _showChatTime);
             }
         }
     }
@@ -59,7 +67,16 @@ public class UIManager : MonoBehaviour
         _grabbedTextFormat = _grabbedText.text;
         UpdateGrabbedText();
 
-        ChatText = "";
+        if (_chatText.text == "")
+            _chat.gameObject.SetActive(false);
+    }
+
+    private void Update()
+    {
+        if(_displayedPen && _displayPenCount)
+        {
+            _displayedPenText.text = _displayedPen.name + " " + _displayedPen.Chickens.Count + "/" + _displayedPen.MaxAmntOfChickens;
+        }
     }
 
     private void RemoveChatScreen()

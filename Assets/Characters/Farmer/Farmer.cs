@@ -6,49 +6,65 @@ using UnityEngine.Assertions;
 
 public class Farmer : MonoBehaviour
 {
+    //--- Stats ---
+    [SerializeField] private bool _displayClosestPen = true;
+
     //---Components---
     [SerializeField] private ChickenGrab _chickenGrab = null;
     [SerializeField] private UIManager _uiManager = null;
 
     //--- Variables ---
     private List<ChickenPen> _closePens = new List<ChickenPen>();
-    private ChickenPen _displayedPen = null;
+    [SerializeField] private ChickenPen _displayedPen = null;
 
     //--- Public Member Access ---
     public ChickenGrab ChickenGrab { get { return _chickenGrab; } }
     public UIManager UIManager { get { return _uiManager; } }
 
     //--- Unity Functions ---
+
+    private void Start()
+    {
+        if (_displayedPen)
+            _uiManager.DisplayPen(_displayedPen);
+    }
+
     private void Update()
     {
-        ChickenPen closest = null;
-
-        if (_closePens.Count > 0)
+        if (_displayClosestPen)
         {
-            float sqrClosestDist = 0.0f;
+            ChickenPen closest = null;
 
-            foreach(var pen in _closePens)
+            if (_closePens.Count > 0)
             {
-                float sqrPenDist = (pen.transform.position - transform.position).sqrMagnitude;
+                float sqrClosestDist = 0.0f;
 
-                if(closest == null
-                    || sqrPenDist < sqrClosestDist)
+                foreach (var pen in _closePens)
                 {
-                    closest = pen;
-                    sqrClosestDist = sqrPenDist;
+                    float sqrPenDist = (pen.transform.position - transform.position).sqrMagnitude;
+
+                    if (closest == null
+                        || sqrPenDist < sqrClosestDist)
+                    {
+                        closest = pen;
+                        sqrClosestDist = sqrPenDist;
+                    }
                 }
             }
-        }
 
-        if (closest)
-            DisplayPen(closest);
-        else
-            UndisplayPen();
+            if (closest)
+                DisplayPen(closest);
+            else
+                UndisplayPen();
+        }
     }
 
     //--- Public Functions ---
     public void PenAreaEntered(ChickenPen pen)
     {
+        if (!_displayClosestPen)
+            return;
+
         if (_closePens.Contains(pen))
             return;
 
@@ -57,6 +73,9 @@ public class Farmer : MonoBehaviour
 
     public void PenAreaExit(ChickenPen pen)
     {
+        if (!_displayClosestPen)
+            return;
+
         if (!_closePens.Contains(pen))
             return;
         _closePens.Remove(pen);

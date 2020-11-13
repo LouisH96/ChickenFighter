@@ -490,6 +490,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _chickenGrab: {fileID: 5005992512218567781}
+  _uiManager: {fileID: 0}
 --- !u!1 &3139965401649570088
 GameObject:
   m_ObjectHideFlags: 0
@@ -1454,11 +1455,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2586456158921437198, guid: d9859ca1dcbc424428ee5cdbb2b01a7b, type: 3}
       propertyPath: m_Size.y
-      value: 0.5
+      value: 1.2
       objectReference: {fileID: 0}
     - target: {fileID: 2586456158921437198, guid: d9859ca1dcbc424428ee5cdbb2b01a7b, type: 3}
       propertyPath: m_Size.z
       value: 1.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2586456158921437198, guid: d9859ca1dcbc424428ee5cdbb2b01a7b, type: 3}
+      propertyPath: m_Center.y
+      value: 0.36
       objectReference: {fileID: 0}
     - target: {fileID: 2586456158921437199, guid: d9859ca1dcbc424428ee5cdbb2b01a7b, type: 3}
       propertyPath: m_Enabled

@@ -11,6 +11,7 @@ public class BossBattleManager : MonoBehaviour
     [SerializeField] private Transform[] _allySpawns = null;
     [SerializeField] private Text _text = null;
     [SerializeField] private string _startFightText = "'LMB' to start the fight";
+    [SerializeField] private UIManager _uiManager = null;
 
     private Farmer _farmer = null;
     private bool _fightActivated = false;
@@ -28,12 +29,12 @@ public class BossBattleManager : MonoBehaviour
 
         if (e)
         {
-            Debug.Log("won");
+            _uiManager.ChatText = "Wow you killed him, congratulations.";
         }
         else
         {
             _boss.Fighter.ResetHealth();
-            Debug.Log("Lost");
+            _uiManager.ChatText = "Try again buddy";
         }
 
         _fightActivated = false;
@@ -43,11 +44,17 @@ public class BossBattleManager : MonoBehaviour
     {
         int amntGrabbed = _farmer.ChickenGrab.AmntGrabbed;
 
-        if(amntGrabbed != 1)
+        if(amntGrabbed == 0)
         {
-            Debug.Log("only 1");
+            _uiManager.ChatText = "Grab your fighter chicken to start the fight.";
             return;
         }
+        if(amntGrabbed != 1)
+        {
+            _uiManager.ChatText = "You can only fight with one chicken.";
+            return;
+        }
+        _uiManager.ChatText = "Here we go.";
 
         _bossBattle.Allies.Clear();
         Chicken grabbed = _farmer.ChickenGrab.GetPickedUpChickens()[0];

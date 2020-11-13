@@ -11342,11 +11342,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3583856671823760920, guid: 8cd9eb43de7ba114295f77d72c10008a, type: 3}
   m_PrefabInstance: {fileID: 997352014}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &1002999191 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 885526964992357742, guid: 79f52f2e0e352f74e97cf1a02df31b52, type: 3}
-  m_PrefabInstance: {fileID: 4564207743110505959}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1016005801
 GameObject:
   m_ObjectHideFlags: 0
@@ -17403,19 +17398,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79b8f3d2807e7ae4d861ca5d5f5e0058, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _bossTemplate: {fileID: 3623419563111990198, guid: bf82d9fa7fd86cf4285064fa2c604aaf, type: 3}
   _boss: {fileID: 1107954368}
-  _allyWaitingPen: {fileID: 0}
   _bossBattle: {fileID: 46473331}
-  _bossSpawn: {fileID: 1002999191}
   _allySpawns:
   - {fileID: 1998980700}
   - {fileID: 498937129}
   - {fileID: 1524716545}
   _text: {fileID: 140311587}
   _startFightText: '''LMB'' to start the fight'
-  _previewBossSpawn: {fileID: 0}
-  _maxAllies: 1
+  _uiManager: {fileID: 491396290}
 --- !u!1001 &1544633638
 PrefabInstance:
   m_ObjectHideFlags: 0

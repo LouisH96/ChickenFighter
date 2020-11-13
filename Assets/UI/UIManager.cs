@@ -21,8 +21,30 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Text _grabbedText = null;
     [SerializeField] private StatsCollection _grabbedList = null;
 
+    [SerializeField] private Transform _chat = null;
+    [SerializeField] private Text _chatText = null;
+
     //--- Public Member Access ---
     public ChickenPen DisplayedPen { get { return _displayedPen; } }
+
+    public string ChatText
+    {
+        get { return _chatText.text; }
+        set
+        {
+            _chatText.text = value;
+            if (value == "")
+            {
+                _chat.gameObject.SetActive(false);
+            }
+            else
+            {
+                _chat.gameObject.SetActive(true);
+                CancelInvoke(nameof(RemoveChatScreen));
+                Invoke(nameof(RemoveChatScreen), 3.0f);
+            }
+        }
+    }
 
     private void Start()
     {
@@ -36,6 +58,13 @@ public class UIManager : MonoBehaviour
 
         _grabbedTextFormat = _grabbedText.text;
         UpdateGrabbedText();
+
+        ChatText = "";
+    }
+
+    private void RemoveChatScreen()
+    {
+        ChatText = "";
     }
 
     private void _chickenGrab_ChickenThrown(object sender, Chicken e)

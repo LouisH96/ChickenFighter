@@ -47,7 +47,7 @@ public class Battle : MonoBehaviour
         ChickenLeft?.Invoke(this, e);
     }
 
-    private void _pen_ChickenAdded(object sender, Chicken e)
+    protected virtual void _pen_ChickenAdded(object sender, Chicken e)
     {
         if(!_isFightActive)
         {

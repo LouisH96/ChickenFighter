@@ -27,6 +27,18 @@ public class BossBattle : Battle
         base._pen_ChickenRemoved(sender, e);
     }
 
+    protected override void _pen_ChickenAdded(object sender, Chicken e)
+    {
+        base._pen_ChickenAdded(sender, e);
+        if (e != _boss
+            && !_allies.Contains(e))
+        {
+            Destroy(e);
+            Destroy(e.gameObject);
+            return;
+        }
+    }
+
     void Update()
     {
         

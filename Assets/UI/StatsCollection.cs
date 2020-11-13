@@ -94,6 +94,7 @@ public class StatsCollection : MonoBehaviour
 
     private void Chicken_Died(object sender, Chicken.DiedEventArgs e)
     {
+        e.Chicken.Died -= Chicken_Died;
         Remove(e.Chicken);
     }
 

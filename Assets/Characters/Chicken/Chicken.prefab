@@ -44,8 +44,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _chicken: {fileID: 1144447749319598529}
-  _timeOutOnPenEnter: 10
-  _timeOutAfterBreed: 30
+  _minNewPenTimeOut: 5
+  _maxNewPenTimeOut: 15
+  _minAfterBreedTimeOut: 25
+  _maxAfterBreedTimeOut: 50
 --- !u!1 &271132464496149154
 GameObject:
   m_ObjectHideFlags: 0

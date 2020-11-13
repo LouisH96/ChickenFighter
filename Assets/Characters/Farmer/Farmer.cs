@@ -13,4 +13,13 @@ public class Farmer : MonoBehaviour
     public UIManager UIManager { get { return _uiManager; } }
 
 
+    public static Farmer GetFromCollider(Collider collider)
+    {
+        Farmer farmer = null;
+
+        if (collider.CompareTag("Player"))
+            farmer = collider.gameObject.GetComponent<Farmer>();
+
+        return farmer;
+    }
 }

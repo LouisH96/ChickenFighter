@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEditorInternal;
 using UnityEngine;
 using UnityEngine.Assertions;
+using static Chicken;
 
 //ChickenComponent_Location
 public class CC_Location : MonoBehaviour
@@ -27,9 +28,9 @@ public class CC_Location : MonoBehaviour
         _chicken.Died += _chicken_Died;
     }
 
-    private void _chicken_Died(object sender, System.EventArgs e)
+    private void _chicken_Died(object sender, DiedEventArgs e)
     {
-        Chicken chicken = sender as Chicken;
+        Chicken chicken = e.Chicken;
         chicken.Died -= _chicken_Died;
 
         if (_currentPen)

@@ -53,7 +53,7 @@ public class StatsCollection : MonoBehaviour
         rectTransform.anchoredPosition = new Vector2(0.0f, GetNextY());
 
         stats.Chicken = chicken;
-
+        chicken.Died += Chicken_Died;
         ListChanged();
     }
 
@@ -68,6 +68,7 @@ public class StatsCollection : MonoBehaviour
         RectTransform statsRect = (RectTransform)_rectTransform.GetChild(childIndex);
         statsRect.SetParent(null);
         Destroy(statsRect.gameObject);
+        chicken.Died -= Chicken_Died;
 
         ListChanged();
     }
@@ -89,6 +90,11 @@ public class StatsCollection : MonoBehaviour
 
         if (_decoration)
             _decoration.gameObject.SetActive(_rectTransform.childCount > 0);
+    }
+
+    private void Chicken_Died(object sender, Chicken.DiedEventArgs e)
+    {
+        Remove(e.Chicken);
     }
 
     private int GetChildIndex(Chicken chicken)

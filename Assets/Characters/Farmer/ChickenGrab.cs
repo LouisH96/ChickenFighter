@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Assertions;
+using static Chicken;
 
 public class ChickenGrab : MonoBehaviour
 {
@@ -117,11 +118,9 @@ public class ChickenGrab : MonoBehaviour
         }
     }
 
-    private void Chicken_Died(object sender, EventArgs e)
+    private void Chicken_Died(object sender, DiedEventArgs e)
     {
-        Chicken chicken = (Chicken)sender;
-        Assert.IsNotNull(chicken, "sender should be chicken");
-
+        Chicken chicken = e.Chicken;
         chicken.Died -= Chicken_Died;
 
         if (_pickupQueue.Contains(chicken))

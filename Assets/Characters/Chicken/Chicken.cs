@@ -12,7 +12,15 @@ public class Chicken : MonoBehaviour
     public class DiedEventArgs : EventArgs
     {
         private float _destroyDelay = 0.0f;
+        private Chicken _chicken = null;
+
         public float DestroyDelay { get { return _destroyDelay; } }
+        public Chicken Chicken { get { return _chicken; } }
+
+        public DiedEventArgs(Chicken chicken)
+        {
+            _chicken = chicken;
+        }
 
         public void RequestDelayBeforeDestroy(float delay)
         {
@@ -67,14 +75,14 @@ public class Chicken : MonoBehaviour
 
     private void _chickenFight_OutOfHealth(object sender, CC_Fighter.DamageTakenEventArgs e)
     {
-        var args = new DiedEventArgs();
+        var args = new DiedEventArgs(this);
         Died?.Invoke(this, args);
         Destroy(gameObject, args.DestroyDelay);
     }
 
     private void OnDestroy()
     {
-        Died?.Invoke(this, new DiedEventArgs());
+        Died?.Invoke(this, new DiedEventArgs(this));
     }
 
     private void Update()

@@ -72,7 +72,7 @@ public class StatsCollection : MonoBehaviour
             return;
 
         RectTransform statsRect = (RectTransform)_rectTransform.GetChild(childIndex);
-        statsRect.SetParent(null);
+        //statsRect.SetParent(null);
         Destroy(statsRect.gameObject);
         chicken.Died -= Chicken_Died;
 

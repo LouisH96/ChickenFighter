@@ -18,12 +18,14 @@ public class ChickenMovement : MonoBehaviour
     [SerializeField] private MovementBehavior _farmBehavior = null;
     [SerializeField] private ChickenFightMovement _chickenFightMovement = null;
 
+    //--- Stats ---
+    private float _linearAngularVelRatio = 1.0f;
+
     //---Variables---
     private ChickenMovement.State _currentState = ChickenMovement.State.Begin;
 
     //---Public---
     public ChickenMovement.State CurrentState { get { return _currentState; } }
-
     public MovementAgent Agent { get { return _agent; } }
 
     void Awake()
@@ -39,6 +41,7 @@ public class ChickenMovement : MonoBehaviour
         }
 
         _chicken.Physical.StateChanged += Physical_StateChanged;
+        _linearAngularVelRatio = _agent.MaxAngularVelocity / _agent.MaxVelocity;
     }
 
     private void Start()
@@ -46,8 +49,25 @@ public class ChickenMovement : MonoBehaviour
         _chicken.Fighter.BattleJoined += ChickenFight_BattleJoined;
         _chicken.Fighter.BattleLeft += ChickenFight_BattleLeft;
 
+        _chicken.Stats.StatUpgraded += Stats_StatUpgraded;
+
+        ApplyStats();
+
         if (_currentState == State.Begin)
             ChangeState(State.Wander);
+    }
+
+    private void Stats_StatUpgraded(object sender, ChickenStats.ChickenStatEventArgs e)
+    {
+        ApplyStats();
+    }
+
+    private void ApplyStats()
+    {
+        ChickenStats stats = _chicken.Stats;
+        _agent.MaxVelocity = stats.Speed;
+        _agent.MaxAngularVelocity = stats.Speed * _linearAngularVelRatio;
+        _agent.Acceleration = stats.Acceleration;
     }
 
     private void ChickenFight_BattleLeft(object sender, Battle e)

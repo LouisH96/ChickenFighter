@@ -139,7 +139,7 @@ public class UI_FightChickenStats : MonoBehaviour
             return;
 
         _chicken.Stats.StatUpgraded -= Stats_StatUpgraded;
-        _chicken.Physical.Highlighted -= Physical_Highlighted; ;
+        _chicken.Physical.Highlighted -= Physical_Highlighted;
         _chicken.Physical.UnHighlighted -= Physical_UnHighlighted;
 
         CancelInvoke(nameof(ResetHealthHighlight));

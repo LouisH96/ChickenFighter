@@ -252,7 +252,7 @@ MonoBehaviour:
   _chicken: {fileID: 1144447749319598529}
   _health: 50
   _healthRegen: 0.5
-  _speed: 3
+  _speed: 2
   _acceleration: 4
   _damage: 1
 --- !u!143 &2867103570543149643

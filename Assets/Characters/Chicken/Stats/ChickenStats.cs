@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Assertions;
 using UnityEngine.UIElements;
 using Random = UnityEngine.Random;
 
@@ -89,7 +90,10 @@ public class ChickenStats : MonoBehaviour
             if (definition == manager.Acceleration)
             return _acceleration;
         else
+        {
+            Debug.LogWarning("unkown stat");
             return -1.0f;
+        }
     }
 
     public void SetStatValue(float newValue, ChickenStatDefinition definition)
@@ -107,8 +111,10 @@ public class ChickenStats : MonoBehaviour
         if (definition == manager.Speed)
             _speed = newValue;
         else
-            if (definition == manager.Acceleration)
+        if (definition == manager.Acceleration)
             _acceleration = newValue;
+        else
+            Debug.LogWarning("unkown stat");
     }
 
     private ChickenStatDefinition GetStatDefinition(int statIndex)
@@ -122,6 +128,7 @@ public class ChickenStats : MonoBehaviour
             case 3: return manager.Acceleration;
             case 4: return manager.Damage;
         }
+        Debug.LogWarning("unkown stat");
         return null;
     }
 

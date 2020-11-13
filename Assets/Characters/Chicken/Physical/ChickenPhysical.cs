@@ -22,7 +22,12 @@ public class ChickenPhysical : MonoBehaviour
     [SerializeField] private Collider _collider = null;
     [SerializeField] private Rigidbody _rigidbody = null;
 
+    //--- Stats ---
+    [SerializeField] private bool _canPickup = true;
+
+    //--- public member access ---
     public Chicken Chicken { get { return _chicken; } }
+    public bool CanPickup { get { return _canPickup; } set { _canPickup = value; } }
 
     void Start()
     {
@@ -73,6 +78,9 @@ public class ChickenPhysical : MonoBehaviour
 
     public bool CanGrab()
     {
+        if (!_canPickup)
+            return false;
+
         if (_state != PhysicalState.Character)
             return false;
 

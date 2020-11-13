@@ -6,6 +6,7 @@ using UnityEngine.Assertions;
 public class StatsCollection : MonoBehaviour
 {
     private RectTransform _rectTransform = null;
+    [SerializeField] private Transform _trash = null;
 
     [SerializeField] private GameObject _template = null;
     [SerializeField] RectTransform _decoration = null;
@@ -73,7 +74,7 @@ public class StatsCollection : MonoBehaviour
             return;
 
         RectTransform statsRect = (RectTransform)_rectTransform.GetChild(childIndex);
-        //statsRect.SetParent(null);
+       statsRect.SetParent(_trash);
         Destroy(statsRect.gameObject);
         chicken.Died -= Chicken_Died;
 

@@ -3,54 +3,66 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+//dirty because lack of time
 public class BossBattleManager : MonoBehaviour
 {
-    [SerializeField] private Chicken _bossTemplate = null;
-    private Chicken _boss = null;
-
-    [SerializeField] private ChickenPen _allyWaitingPen = null;
+    [SerializeField] private Chicken _boss = null;
     [SerializeField] private BossBattle _bossBattle = null;
-
-    [SerializeField] private Transform _bossSpawn = null;
     [SerializeField] private Transform[] _allySpawns = null;
-
-    private Farmer _farmer = null;
     [SerializeField] private Text _text = null;
     [SerializeField] private string _startFightText = "'LMB' to start the fight";
-    [SerializeField] private Transform _previewBossSpawn = null;
-    private Chicken _previewBoss = null;
 
-    private bool _activated = false;
+    private Farmer _farmer = null;
+    private bool _fightActivated = false;
 
     public void Start()
     {
-        _previewBoss = Instantiate(_bossTemplate, _previewBossSpawn);
-        _previewBoss.Location.ExitPen(_previewBoss.Location.Pen);
-        _previewBoss.gameObject.SetActive(false);
+        _bossBattle.Boss = _boss;
+        _bossBattle.FightEnded += _bossBattle_FightEnded;
+    }
+
+    private void _bossBattle_FightEnded(object sender, bool e)
+    {
+        if (!_fightActivated)
+            return;
+
+        if (e)
+        {
+            Debug.Log("won");
+        }
+        else
+        {
+            _boss.Fighter.ResetHealth();
+            Debug.Log("Lost");
+        }
+
+        _fightActivated = false;
     }
 
     public void StartBossBattle()
     {
-        _previewBoss.gameObject.SetActive(true);
+        int amntGrabbed = _farmer.ChickenGrab.AmntGrabbed;
 
-        _boss = Instantiate(_bossTemplate, _bossSpawn.transform.position, _bossSpawn.transform.rotation);
-        _bossBattle.Boss = _boss;
-
-        int allyCount = _allyWaitingPen.Chickens.Count;
-        for (int i = 0; i < allyCount; i++)
+        if(amntGrabbed != 1)
         {
-            Chicken ally = _allyWaitingPen.Chickens[0];
-            _bossBattle.Allies.Add(ally);
-
-            ally.MoveTo(_allySpawns[i].position, _allySpawns[i].rotation);
+            Debug.Log("only 1");
+            return;
         }
+
+        _bossBattle.Allies.Clear();
+        Chicken grabbed = _farmer.ChickenGrab.GetPickedUpChickens()[0];
+        _farmer.ChickenGrab.ThrowAll();
+        _bossBattle.Allies.Add(grabbed);
+        grabbed.Physical.CanPickup = false;
+        grabbed.MoveTo(_allySpawns[0].position, _allySpawns[0].rotation);
+
+        _fightActivated = true;
     }
 
     private void Update()
     {
-        if (!_activated && Input.GetAxis("Action1") > 0.0f && _farmer)
+        if (!_fightActivated && Input.GetAxis("Action1") > 0.0f && _farmer)
         {
-            _activated = true;
             StartBossBattle();
         }
     }

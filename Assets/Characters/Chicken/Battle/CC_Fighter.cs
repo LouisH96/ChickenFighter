@@ -70,6 +70,11 @@ public class CC_Fighter : MonoBehaviour
             _currentHealth = _stats.Health;
     }
 
+    public void ResetHealth()
+    {
+        _currentHealth = _stats.Health;
+    }
+
     private void _beak_LandedHit(object sender, HitEventArgs e)
     {
         Assert.AreNotEqual(_chicken, e.Attacked, "chicken is attacked from itself");

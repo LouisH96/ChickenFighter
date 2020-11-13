@@ -5,7 +5,7 @@ using UnityEngine;
 //Dirty because lack of time
 public class SwitchLocationManager : MonoBehaviour
 {
-    [SerializeField] private Car[] _cars;
+    [SerializeField] private Car[] _cars = null;
     [SerializeField] private GameObject _player = null;
     [SerializeField] private CharacterController _farmerCharacterController = null;
     [SerializeField] private Farmer _farmer = null;

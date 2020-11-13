@@ -213,12 +213,13 @@ public class ChickenGrab : MonoBehaviour
         return false;
     }
 
-    public IEnumerable<Chicken> GetPickedUpChickens()
+    public List<Chicken> GetPickedUpChickens()
     {
         return _hoverLocations
             .Where(l => l.childCount > 0)
             .Select(l => l.GetChild(0))
             .Select(c => c.GetComponent<Chicken>())
-            .Where(c => c != null);
+            .Where(c => c != null)
+            .ToList();
     }
 }

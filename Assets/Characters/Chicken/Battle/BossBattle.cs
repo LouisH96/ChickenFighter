@@ -1,9 +1,13 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//dirty because lack of time
 public class BossBattle : Battle
 {
+    public event EventHandler<bool> FightEnded;
+
     //--- Components ---
 
     //--- Variables ---
@@ -20,10 +24,23 @@ public class BossBattle : Battle
 
     protected override void _pen_ChickenRemoved(object sender, Chicken e)
     {
+        bool isBossFightChicken = false;
         if (e == _boss)
+        {
             _boss = null;
+            isBossFightChicken = true;
+        }
         else
+        {
             _allies.Remove(e);
+            isBossFightChicken = true;
+        }
+
+        if(isBossFightChicken && !CanFightBeActive())
+        {
+            FightEnded?.Invoke(this, _boss == null);
+        }
+
         base._pen_ChickenRemoved(sender, e);
     }
 
@@ -33,6 +50,9 @@ public class BossBattle : Battle
         if (e != _boss
             && !_allies.Contains(e))
         {
+            e.Location.Pen.RemoveChicken(e);
+            e.Location.ExitPen(e.Location.Pen);
+            //e.MoveTo(new Vector3(0.0f, -50.0f, 0.0f), e.transform.rotation);
             Destroy(e);
             Destroy(e.gameObject);
             return;

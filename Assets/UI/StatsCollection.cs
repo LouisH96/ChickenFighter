@@ -43,6 +43,12 @@ public class StatsCollection : MonoBehaviour
 
     }
 
+    private void OnDestroy()
+    {
+        foreach(var chicken in GetAllChickens())
+            chicken.Died -= Chicken_Died;
+    }
+
     public void Add(Chicken chicken)
     {
         GameObject statsGameObject = Instantiate(_template, _rectTransform);
@@ -73,6 +79,22 @@ public class StatsCollection : MonoBehaviour
         ListChanged();
     }
 
+    public List<Chicken> GetAllChickens()
+    {
+        List<Chicken> chickens = new List<Chicken>();
+
+        foreach(RectTransform child in _rectTransform)
+        {
+            UI_FightChickenStats uiStats = child.gameObject.GetComponent<UI_FightChickenStats>();
+            if (!uiStats)
+                Debug.LogWarning("all childs should be UI_FightChickenStats");
+            else
+                chickens.Add(uiStats.Chicken);
+        }
+
+        return chickens;
+    }
+
     private void ListChanged()
     {
         if (_areStatsCollapsed)
@@ -94,7 +116,6 @@ public class StatsCollection : MonoBehaviour
 
     private void Chicken_Died(object sender, Chicken.DiedEventArgs e)
     {
-        e.Chicken.Died -= Chicken_Died;
         Remove(e.Chicken);
     }
 

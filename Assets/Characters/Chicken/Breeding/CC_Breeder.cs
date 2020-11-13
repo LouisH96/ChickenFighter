@@ -29,6 +29,11 @@ public class CC_Breeder : MonoBehaviour
     public bool IsBreedable { get { return _isInBreedPen && _breedTimeOut <= 0.0f; } }
 
     //--- Unity Functions ---
+    private void Start()
+    {
+        _breedTimeOut = GetAfterBreedTimeOut();
+    }
+
     private void Update()
     {
         if (_breedTimeOut > 0.0f)
@@ -118,7 +123,7 @@ public class CC_Breeder : MonoBehaviour
 
     private Chicken MakeChild(Chicken partner)
     {
-        GameObject gameObject = Instantiate(_chicken.gameObject);
+        GameObject gameObject = Instantiate(_chicken.gameObject, transform.position, partner.transform.rotation);
         Chicken child = gameObject.GetComponent<Chicken>();
 
         this._chicken.Stats.BreedStats(partner.Stats, child.Stats);
